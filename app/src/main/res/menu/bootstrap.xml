@@ -15,12 +15,12 @@
         android:id="@+id/timer"
         android:icon="@drawable/ic_action_timer"
         bootstrap:showAsAction="always"
-        android:title="@string/title_timer">
+        android:title="@string/title_settings">
     </item>
 
     <item
         android:id="@+id/logout"
-        bootstrap:showAsAction="never"
+        bootstrap:showAsAction="always"
         android:title="@string/logout_action" >
     </item>
 

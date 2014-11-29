@@ -44,7 +44,7 @@ public class BootstrapTimerActivity extends BootstrapFragmentActivity implements
 
         setContentView(R.layout.bootstrap_timer);
 
-        setTitle(R.string.title_timer);
+        setTitle(R.string.title_settings);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

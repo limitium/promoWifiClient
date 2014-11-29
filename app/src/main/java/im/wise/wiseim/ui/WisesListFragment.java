@@ -58,9 +58,9 @@ public class WisesListFragment extends ItemListFragment<Wise> {
         listView.setFastScrollEnabled(true);
         listView.setDividerHeight(0);
 
-        getListAdapter()
-                .addHeader(activity.getLayoutInflater()
-                        .inflate(R.layout.wise_list_item_labels, null));
+//        getListAdapter()
+//                .addHeader(activity.getLayoutInflater()
+//                        .inflate(R.layout.wise_list_item_labels, null));
     }
 
     @Override
@@ -109,6 +109,52 @@ public class WisesListFragment extends ItemListFragment<Wise> {
     @Subscribe
     public void onNewWiseEvent(NewWiseEvent newWiseEvent) {
         try {
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
+            items.add(newWiseEvent.getWise());
             items.add(newWiseEvent.getWise());
         }catch (Exception e){
             System.out.println(e.getMessage());

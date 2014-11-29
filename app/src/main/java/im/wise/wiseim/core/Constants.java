@@ -101,6 +101,23 @@ public final class Constants {
 
     }
 
+    public static final class Prefs {
+        private Prefs() {}
+
+        public static final String NAME = Auth.BOOTSTRAP_ACCOUNT_TYPE;
+        public static final String FILTER_SALE_PERCENT = "FILTER_SALE_PERCENT";
+        public static final String FILTER_ELECTRONICS= "FILTER_ELECTRONICS";
+        public static final String FILTER_ENTERTAIMENT = "FILTER_ENTERTAIMENT";
+        public static final String FILTER_FASHION = "FILTER_FASHION";
+        public static final String FILTER_MOTOR = "FILTER_MOTOR";
+        public static final String FILTER_COLLECTINABLES_ART= "FILTER_COLLECTINABLES_ART";
+        public static final String FILTER_HOME_GARDEN = "FILTER_HOME_GARDEN";
+        public static final String FILTER_SPORTS= "FILTER_SPORTS";
+        public static final String FILTER_TOYS_HOBBIES= "FILTER_TOYS_HOBBIES";
+
+
+    }
+
     public static final class Intent {
         private Intent() {}
 

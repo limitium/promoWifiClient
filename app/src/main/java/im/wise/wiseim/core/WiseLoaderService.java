@@ -14,6 +14,7 @@ import com.squareup.otto.Subscribe;
 
 import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import im.wise.wiseim.Injector;
 import im.wise.wiseim.R;
 import im.wise.wiseim.core.events.NewWifiNetworkEvent;
 import im.wise.wiseim.core.events.NewWiseEvent;
+import im.wise.wiseim.core.models.WifiInfo;
 import im.wise.wiseim.core.models.Wise;
 import im.wise.wiseim.util.Ln;
 import im.wise.wiseim.util.SafeAsyncTask;
@@ -89,10 +91,10 @@ public class WiseLoaderService extends Service {
         loadWifiNetworkInfo(wifiNetworkEvent.getWifi());
     }
 
-    private void loadWifiNetworkInfo(final ScanResult wifi) {
+    private void loadWifiNetworkInfo(final WifiInfo wifi) {
         new SafeAsyncTask<List<Wise>>() {
             public List<Wise> call() throws Exception {
-                return bootstrapService.getWifiInfos(wifi.SSID);
+                return bootstrapService.getWifiInfos(wifi.getSSID());
             }
 
             @Override
@@ -132,9 +134,11 @@ public class WiseLoaderService extends Service {
     }
 
     private void cleanCache(long currentTimeMillis) {
-        for (Map.Entry<BigInteger, Long> cachedEntry : shown.entrySet()) {
-            if (currentTimeMillis == 0 || currentTimeMillis - cachedEntry.getValue() > shownTime) {
-                shown.remove(cachedEntry.getKey());
+        Iterator<BigInteger> iterator = shown.keySet().iterator();
+        while (iterator.hasNext()) {
+            BigInteger key = iterator.next();
+            if (currentTimeMillis == 0 || currentTimeMillis - shown.get(key) > shownTime) {
+                iterator.remove();
             }
         }
     }

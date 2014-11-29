@@ -2,14 +2,16 @@ package im.wise.wiseim.core.events;
 
 import android.net.wifi.ScanResult;
 
-public class NewWifiNetworkEvent {
-    private ScanResult wifi;
+import im.wise.wiseim.core.models.WifiInfo;
 
-    public NewWifiNetworkEvent(ScanResult wifi) {
+public class NewWifiNetworkEvent {
+    private WifiInfo wifi;
+
+    public NewWifiNetworkEvent(WifiInfo wifi) {
         this.wifi = wifi;
     }
 
-    public ScanResult getWifi() {
+    public WifiInfo getWifi() {
         return wifi;
     }
 }

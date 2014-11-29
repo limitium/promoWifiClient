@@ -3,30 +3,80 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:id="@+id/chronometer"
+        android:id="@+id/filterSalesTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Show sales from"
-        style="@style/TimerChronometer"
+        style="@style/FilterSale"
+        />
+    <TextView
+        android:id="@+id/filterSalesPercent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="30%"
+        style="@style/FilterSale"
         />
 
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar"
+        android:id="@+id/filterSalesSeek"
         android:layout_gravity="center_horizontal"/>
 
-    <Switch
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Switch"
-        android:id="@+id/switch1"
-        android:layout_gravity="center_horizontal" />
+        android:text="Fashion"
+        style="@style/FilterSaleCheck"
+        android:id="@+id/filterFashion" />
 
-    <Switch
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Switch"
-        android:id="@+id/switch2"
-        android:layout_gravity="center_horizontal" />
+        android:text="Electrics"
+        style="@style/FilterSaleCheck"
+        android:id="@+id/filterElectronics" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Collectiables &amp; Art"
+        style="@style/FilterSaleCheck"
+        android:id="@+id/filtersCollectiablesArt" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home &amp; Garden"
+        style="@style/FilterSaleCheck"
+        android:id="@+id/filtersHomeGarden" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sporting"
+        style="@style/FilterSaleCheck"
+        android:id="@+id/filterSports" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Motors"
+        style="@style/FilterSaleCheck"
+        android:id="@+id/filterMotor" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Toys &amp; Hobbies"
+        style="@style/FilterSaleCheck"
+        android:id="@+id/filterToysHobbies" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entertainment"
+        style="@style/FilterSaleCheck"
+        android:id="@+id/filterEntertainment" />
+
+
 </LinearLayout>

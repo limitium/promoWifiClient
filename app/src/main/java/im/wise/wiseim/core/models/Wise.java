@@ -1,5 +1,7 @@
 package im.wise.wiseim.core.models;
 
+import android.net.wifi.ScanResult;
+
 import java.io.Serializable;
 import java.math.BigInteger;
 
@@ -9,6 +11,10 @@ public class Wise implements Serializable {
     private String name;
     private String message;
     private String type;
+    private String category;
+    private long addedAt;
+    private WifiInfo wifiInfo;
+
 
     public BigInteger getId() {
         return id;
@@ -40,5 +46,29 @@ public class Wise implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public long getAddedAt() {
+        return addedAt;
+    }
+
+    public void setAddedAt(long addedAt) {
+        this.addedAt = addedAt;
+    }
+
+    public WifiInfo getWifiInfo() {
+        return wifiInfo;
+    }
+
+    public void setWifiInfo(WifiInfo wifiInfo) {
+        this.wifiInfo = wifiInfo;
     }
 }

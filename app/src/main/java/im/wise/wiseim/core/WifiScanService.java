@@ -15,6 +15,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -24,6 +25,7 @@ import im.wise.wiseim.R;
 import im.wise.wiseim.core.events.NewWifiNetworkEvent;
 import im.wise.wiseim.core.events.TimerTickEvent;
 import im.wise.wiseim.core.events.WifiScannedEvent;
+import im.wise.wiseim.core.models.WifiInfo;
 import im.wise.wiseim.core.receivers.WifiReceiver;
 import im.wise.wiseim.ui.BootstrapTimerActivity;
 import im.wise.wiseim.util.Ln;
@@ -108,16 +110,18 @@ public class WifiScanService extends Service {
             if (!checked.containsKey(scanResult.SSID)) {
                 checked.put(scanResult.SSID, currentTimeMillis);
                 scans++;
-                eventBus.post(new NewWifiNetworkEvent(scanResult));
+                eventBus.post(new NewWifiNetworkEvent(new WifiInfo(scanResult)));
             }
         }
         updateNotification("scans:" + scans);
     }
 
     private void cleanCache(long currentTimeMillis) {
-        for (Map.Entry<String, Long> cachedEntry : checked.entrySet()) {
-            if (currentTimeMillis == 0 || currentTimeMillis - cachedEntry.getValue() > cachedTime) {
-                checked.remove(cachedEntry.getKey());
+        Iterator<String> iterator = checked.keySet().iterator();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            if (currentTimeMillis == 0 || currentTimeMillis - checked.get(key) > cachedTime) {
+                iterator.remove();
             }
         }
     }
