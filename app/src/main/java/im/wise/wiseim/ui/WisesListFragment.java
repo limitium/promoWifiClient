@@ -106,61 +106,7 @@ public class WisesListFragment extends ItemListFragment<Wise> {
         return new WisesListAdapter(getActivity().getLayoutInflater(), items);
     }
 
-    @Subscribe
-    public void onNewWiseEvent(NewWiseEvent newWiseEvent) {
-        try {
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-            items.add(newWiseEvent.getWise());
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        System.out.println(11);
-    }
+
 
     public void onListItemClick(ListView l, View v, int position, long id) {
         Wise wise = ((Wise) l.getItemAtPosition(position));

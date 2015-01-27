@@ -55,6 +55,7 @@
         <service android:name=".core.TimerService" android:enabled="true" android:exported="false" />
         <service android:name=".core.WifiScanService" android:enabled="true" android:exported="false" />
         <service android:name=".core.WiseLoaderService" android:enabled="true" android:exported="false" />
+        <service android:name=".core.WiseStorageService" android:enabled="true" android:exported="false" />
 
         <service
             android:name=".authenticator.AccountAuthenticatorService"

@@ -12,6 +12,7 @@ public class Wise implements Serializable {
     private String message;
     private String type;
     private String category;
+    private String img;
     private long addedAt;
     private WifiInfo wifiInfo;
 
@@ -70,5 +71,12 @@ public class Wise implements Serializable {
 
     public void setWifiInfo(WifiInfo wifiInfo) {
         this.wifiInfo = wifiInfo;
+    }
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

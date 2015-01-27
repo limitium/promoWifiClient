@@ -14,6 +14,7 @@ import im.wise.wiseim.core.WiseLoaderService;
 import im.wise.wiseim.core.WifiScanService;
 import im.wise.wiseim.core.TimerService;
 import im.wise.wiseim.core.UserAgentProvider;
+import im.wise.wiseim.core.WiseStorageService;
 import im.wise.wiseim.ui.BootstrapTimerActivity;
 import im.wise.wiseim.ui.CheckInsListFragment;
 import im.wise.wiseim.ui.FilterFragment;
@@ -55,6 +56,7 @@ import retrofit.converter.GsonConverter;
                 FilterFragment.class,
                 TimerService.class,
                 WifiScanService.class,
+                WiseStorageService.class,
                 WiseLoaderService.class
         }
 )

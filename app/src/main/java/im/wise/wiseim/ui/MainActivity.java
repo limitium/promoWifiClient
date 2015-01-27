@@ -19,6 +19,7 @@ import im.wise.wiseim.core.BootstrapService;
 import im.wise.wiseim.core.WiseLoaderService;
 import im.wise.wiseim.core.WifiScanService;
 import im.wise.wiseim.core.TimerService;
+import im.wise.wiseim.core.WiseStorageService;
 import im.wise.wiseim.events.NavItemSelectedEvent;
 import im.wise.wiseim.util.Ln;
 import im.wise.wiseim.util.SafeAsyncTask;
@@ -140,6 +141,7 @@ public class MainActivity extends BootstrapFragmentActivity {
             startService(new Intent(this, WiseLoaderService.class));
             startService(new Intent(this, TimerService.class));
             startService(new Intent(this, WifiScanService.class));
+            startService(new Intent(this, WiseStorageService.class));
 
             Ln.d("Foo");
             final FragmentManager fragmentManager = getSupportFragmentManager();

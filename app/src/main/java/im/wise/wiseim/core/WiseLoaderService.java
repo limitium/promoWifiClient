@@ -32,15 +32,16 @@ import retrofit.RetrofitError;
 
 
 import static im.wise.wiseim.core.Constants.Notification.INFO_NOTIFICATION_ID;
+import static im.wise.wiseim.core.Constants.Notification.SCAN_NOTIFICATION_ID;
 
 public class WiseLoaderService extends Service {
 
     @Inject
     protected Bus eventBus;
     @Inject
-    NotificationManager notificationManager;
+    protected NotificationManager notificationManager;
     @Inject
-    BootstrapService bootstrapService;
+    protected BootstrapService bootstrapService;
     private boolean started;
     private int wifis;
     private HashMap<BigInteger, Long> shown = new HashMap<BigInteger, Long>();
@@ -69,7 +70,7 @@ public class WiseLoaderService extends Service {
         eventBus.unregister(this);
 
         Ln.d("Service has been destroyed");
-
+        notificationManager.cancel(INFO_NOTIFICATION_ID);
         super.onDestroy();
     }
 
