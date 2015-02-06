@@ -38,11 +38,11 @@ dependencies {
 
 android {
     compileSdkVersion 17
-    buildToolsVersion '20.0.0'
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 19
+        minSdkVersion 17
+        targetSdkVersion 17
         versionCode 102
         versionName '1.0'
     }
@@ -69,7 +69,7 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
-            runProguard false
+//            runProguard false
             // zipAlign false // this is default for debug
         }
         release {
