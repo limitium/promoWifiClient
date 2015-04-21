@@ -24,6 +24,6 @@
               android:layout_width="@dimen/navigation_drawer_width"
               android:layout_height="match_parent"
               android:layout_gravity="start"
-              android:name="im.wise.wiseim.ui.NavigationDrawerFragment" />
+              android:name="me.loc2.loc2me.ui.NavigationDrawerFragment" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,12 +1,12 @@
 
 
-package im.wise.wiseim.core.core;
+package me.loc2.loc2me.core.core;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-import im.wise.wiseim.core.BootstrapService;
-import im.wise.wiseim.core.models.User;
+import me.loc2.loc2me.core.BootstrapService;
+import me.loc2.loc2me.core.models.User;
 
 import java.util.List;
 

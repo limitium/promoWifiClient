@@ -77,7 +77,7 @@ android {
             // proguardFile '..\proguard.cfg'
             // signingConfig signingConfigs.release
             // zipAlign true // this is default for release
-            // testPackageName 'im.wise.wiseim.tests'
+            // testPackageName 'me.loc2.loc2me.tests'
             // testInstrumentationRunner 'android.test.InstrumentationTestRunner' // this is the default
         }
     }

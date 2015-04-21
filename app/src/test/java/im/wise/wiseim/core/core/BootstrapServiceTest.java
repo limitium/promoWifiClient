@@ -1,16 +1,16 @@
 
 
-package im.wise.wiseim.core.core;
+package me.loc2.loc2me.core.core;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 
-import im.wise.wiseim.core.BootstrapService;
-import im.wise.wiseim.core.models.CheckIn;
-import im.wise.wiseim.core.models.News;
-import im.wise.wiseim.core.models.User;
-import im.wise.wiseim.core.UserAgentProvider;
+import me.loc2.loc2me.core.BootstrapService;
+import me.loc2.loc2me.core.models.CheckIn;
+import me.loc2.loc2me.core.models.News;
+import me.loc2.loc2me.core.models.User;
+import me.loc2.loc2me.core.UserAgentProvider;
 import com.github.kevinsawicki.http.HttpRequest;
 
 import java.io.BufferedReader;
@@ -26,7 +26,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
- * Unit tests of {@link im.wise.wiseim.core.BootstrapService}
+ * Unit tests of {@link me.loc2.loc2me.core.BootstrapService}
  */
 @RunWith(MockitoJUnitRunner.class)
 public class BootstrapServiceTest {
@@ -84,7 +84,6 @@ public class BootstrapServiceTest {
     @Test
     public void getContentEmptyResponse() throws IOException {
         doReturn(createReader("")).when(request).bufferedReader();
-        List<News> content = service.getNews();
         assertNotNull(content);
         assertTrue(content.isEmpty());
     }
