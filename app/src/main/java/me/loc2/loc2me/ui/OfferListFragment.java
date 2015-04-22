@@ -10,7 +10,6 @@ import android.widget.ListView;
 import me.loc2.loc2me.BootstrapServiceProvider;
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
-import me.loc2.loc2me.authenticator.LogoutService;
 import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
 
@@ -25,7 +24,6 @@ import javax.inject.Inject;
 public class OfferListFragment extends ItemListFragment<Offer> {
 
     @Inject protected BootstrapServiceProvider serviceProvider;
-    @Inject protected LogoutService logoutService;
     @Inject Bus eventBus;
 
     @Override
@@ -59,11 +57,6 @@ public class OfferListFragment extends ItemListFragment<Offer> {
 //        getListAdapter()
 //                .addHeader(activity.getLayoutInflater()
 //                        .inflate(R.layout.wise_list_item_labels, null));
-    }
-
-    @Override
-    protected LogoutService getLogoutService() {
-        return logoutService;
     }
 
     @Override

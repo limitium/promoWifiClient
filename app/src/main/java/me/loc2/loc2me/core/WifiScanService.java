@@ -61,6 +61,8 @@ public class WifiScanService extends Service {
         eventBus.register(this);
 
         registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+
+        wifiManager.startScan();
     }
 
     @Override
@@ -91,12 +93,6 @@ public class WifiScanService extends Service {
         return START_NOT_STICKY;
     }
 
-
-    @Subscribe
-    public void onTickEvent(TimerTickEvent tickEvent) {
-        wifiManager.startScan();
-        updateNotification(tickEvent.toString());
-    }
 
     @Subscribe
     public void onWifiScannedEvent(WifiScannedEvent wifiEvent) {

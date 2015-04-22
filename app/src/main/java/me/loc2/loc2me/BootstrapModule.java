@@ -3,9 +3,6 @@ package me.loc2.loc2me;
 import android.accounts.AccountManager;
 import android.content.Context;
 
-import me.loc2.loc2me.authenticator.ApiKeyProvider;
-import me.loc2.loc2me.authenticator.BootstrapAuthenticatorActivity;
-import me.loc2.loc2me.authenticator.LogoutService;
 import me.loc2.loc2me.core.BootstrapService;
 import me.loc2.loc2me.core.OfferLoaderService;
 import me.loc2.loc2me.core.OfferStorageService;
@@ -15,14 +12,12 @@ import me.loc2.loc2me.core.RestErrorHandler;
 import me.loc2.loc2me.core.WifiScanService;
 import me.loc2.loc2me.core.TimerService;
 import me.loc2.loc2me.core.UserAgentProvider;
-import me.loc2.loc2me.ui.BootstrapTimerActivity;
 import me.loc2.loc2me.ui.FilterFragment;
 import me.loc2.loc2me.ui.MainActivity;
 import me.loc2.loc2me.ui.NavigationDrawerFragment;
 import me.loc2.loc2me.ui.OfferActivity;
 import me.loc2.loc2me.ui.OfferListFragment;
-import me.loc2.loc2me.ui.UserActivity;
-import me.loc2.loc2me.ui.UserListFragment;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Bus;
@@ -43,14 +38,10 @@ import retrofit.converter.GsonConverter;
 
         injects = {
                 BootstrapApplication.class,
-                BootstrapAuthenticatorActivity.class,
                 MainActivity.class,
-                BootstrapTimerActivity.class,
                 NavigationDrawerFragment.class,
                 OfferActivity.class,
                 OfferListFragment.class,
-                UserActivity.class,
-                UserListFragment.class,
                 FilterFragment.class,
                 TimerService.class,
                 WifiScanService.class,
@@ -66,11 +57,6 @@ public class BootstrapModule {
         return new PostFromAnyThreadBus();
     }
 
-    @Provides
-    @Singleton
-    LogoutService provideLogoutService(final Context context, final AccountManager accountManager) {
-        return new LogoutService(context, accountManager);
-    }
 
     @Provides
     BootstrapService provideBootstrapService(RestAdapter restAdapter) {
@@ -78,13 +64,8 @@ public class BootstrapModule {
     }
 
     @Provides
-    BootstrapServiceProvider provideBootstrapServiceProvider(RestAdapter restAdapter, ApiKeyProvider apiKeyProvider) {
-        return new BootstrapServiceProvider(restAdapter, apiKeyProvider);
-    }
-
-    @Provides
-    ApiKeyProvider provideApiKeyProvider(AccountManager accountManager) {
-        return new ApiKeyProvider(accountManager);
+    BootstrapServiceProvider provideBootstrapServiceProvider(RestAdapter restAdapter) {
+        return new BootstrapServiceProvider(restAdapter);
     }
 
     @Provides
@@ -126,8 +107,4 @@ public class BootstrapModule {
                 .build();
     }
 
-//    @Provides
-//    WifiReceiver provideWifiReceiver(){
-//        return new WifiReceiver();
-//    }
 }

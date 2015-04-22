@@ -18,7 +18,6 @@ import me.loc2.loc2me.core.events.ResumeTimerEvent;
 import me.loc2.loc2me.core.events.StopTimerEvent;
 import me.loc2.loc2me.core.events.TimerPausedEvent;
 import me.loc2.loc2me.core.events.TimerTickEvent;
-import me.loc2.loc2me.ui.BootstrapTimerActivity;
 import me.loc2.loc2me.util.Ln;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
@@ -189,7 +188,7 @@ public class TimerService extends Service {
 
 
     private void updateNotification(String message) {
-        notificationManager.notify(TIMER_NOTIFICATION_ID, getNotification(message));
+//        notificationManager.notify(TIMER_NOTIFICATION_ID, getNotification(message));
 
     }
 
@@ -200,7 +199,7 @@ public class TimerService extends Service {
      * @return a new {@link Notification}
      */
     private Notification getNotification(String message) {
-        final Intent i = new Intent(this, BootstrapTimerActivity.class);
+        final Intent i = new Intent(this, TimerService.class);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, 0);
 

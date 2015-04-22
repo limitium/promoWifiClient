@@ -34,8 +34,6 @@ import butterknife.Views;
 /**
  * Initial activity for the application.
  *
- * If you need to remove the authentication from the application please see
- * {@link me.loc2.loc2me.authenticator.ApiKeyProvider#getAuthKey(android.app.Activity)}
  */
 public class MainActivity extends BootstrapFragmentActivity {
 
@@ -191,17 +189,9 @@ public class MainActivity extends BootstrapFragmentActivity {
             case android.R.id.home:
                 //menuDrawer.toggleMenu();
                 return true;
-            case R.id.timer:
-                navigateToTimer();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void navigateToTimer() {
-        final Intent i = new Intent(this, BootstrapTimerActivity.class);
-        startActivity(i);
     }
 
     @Subscribe
@@ -213,10 +203,6 @@ public class MainActivity extends BootstrapFragmentActivity {
             case 0:
                 // Home
                 // do nothing as we're already on the home screen.
-                break;
-            case 1:
-                // Timer
-                navigateToTimer();
                 break;
         }
     }

@@ -24,7 +24,6 @@ import android.widget.TextView;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.R.id;
 import me.loc2.loc2me.R.layout;
-import me.loc2.loc2me.authenticator.LogoutService;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 import com.github.kevinsawicki.wishlist.Toaster;
 import com.github.kevinsawicki.wishlist.ViewUtils;
@@ -159,26 +158,12 @@ public abstract class ItemListFragment<E> extends Fragment
             case id.refresh:
                 forceRefresh();
                 return true;
-            case R.id.logout:
-                logout();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    protected abstract LogoutService getLogoutService();
 
-    private void logout() {
-        getLogoutService().logout(new Runnable() {
-            @Override
-            public void run() {
-                // Calling a refresh will force the service to look for a logged in user
-                // and when it finds none the user will be requested to log in again.
-                forceRefresh();
-            }
-        });
-    }
 
     /**
      * Force a refresh of the items displayed ignoring any cached items
