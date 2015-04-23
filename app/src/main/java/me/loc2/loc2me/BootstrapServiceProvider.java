@@ -4,14 +4,14 @@ package me.loc2.loc2me;
 import android.accounts.AccountsException;
 import android.app.Activity;
 
-import me.loc2.loc2me.core.BootstrapService;
+import me.loc2.loc2me.core.ApiService;
 
 import java.io.IOException;
 
 import retrofit.RestAdapter;
 
 /**
- * Provider for a {@link me.loc2.loc2me.core.BootstrapService} instance
+ * Provider for a {@link me.loc2.loc2me.core.ApiService} instance
  */
 public class BootstrapServiceProvider {
 
@@ -30,10 +30,10 @@ public class BootstrapServiceProvider {
      * @throws IOException
      * @throws AccountsException
      */
-    public BootstrapService getService(final Activity activity)
+    public ApiService getService(final Activity activity)
             throws IOException, AccountsException {
 
         // TODO: See how that affects the bootstrap service.
-        return new BootstrapService(restAdapter);
+        return new ApiService(restAdapter);
     }
 }

@@ -22,7 +22,6 @@ import javax.inject.Inject;
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.events.NewWifiNetworkEvent;
-import me.loc2.loc2me.core.events.TimerTickEvent;
 import me.loc2.loc2me.core.events.WifiScannedEvent;
 import me.loc2.loc2me.core.models.WifiInfo;
 import me.loc2.loc2me.core.receivers.WifiReceiver;

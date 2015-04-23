@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 
-import me.loc2.loc2me.core.BootstrapService;
+import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.core.models.CheckIn;
 import me.loc2.loc2me.core.models.News;
 import me.loc2.loc2me.core.models.User;
@@ -26,7 +26,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
- * Unit tests of {@link me.loc2.loc2me.core.BootstrapService}
+ * Unit tests of {@link me.loc2.loc2me.core.ApiService}
  */
 @RunWith(MockitoJUnitRunner.class)
 public class BootstrapServiceTest {
@@ -46,7 +46,7 @@ public class BootstrapServiceTest {
     @Mock
     private HttpRequest request;
 
-    private BootstrapService service;
+    private ApiService service;
 
     /**
      * Set up default mocks
@@ -55,7 +55,7 @@ public class BootstrapServiceTest {
      */
     @Before
     public void before() throws IOException {
-        service = new BootstrapService("foo", new UserAgentProvider()) {
+        service = new ApiService("foo", new UserAgentProvider()) {
             protected HttpRequest execute(HttpRequest request) throws IOException {
                 return BootstrapServiceTest.this.request;
             }

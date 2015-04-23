@@ -15,7 +15,7 @@ import android.view.Window;
 
 import me.loc2.loc2me.BootstrapServiceProvider;
 import me.loc2.loc2me.R;
-import me.loc2.loc2me.core.BootstrapService;
+import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.core.OfferLoaderService;
 import me.loc2.loc2me.core.OfferStorageService;
 import me.loc2.loc2me.core.WifiScanService;
@@ -155,7 +155,7 @@ public class MainActivity extends BootstrapFragmentActivity {
 
             @Override
             public Boolean call() throws Exception {
-                final BootstrapService svc = serviceProvider.getService(MainActivity.this);
+                final ApiService svc = serviceProvider.getService(MainActivity.this);
                 return svc != null;
             }
 

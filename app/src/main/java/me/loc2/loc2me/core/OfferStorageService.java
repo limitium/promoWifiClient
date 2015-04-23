@@ -33,53 +33,23 @@ import me.loc2.loc2me.util.Ln;
 
 import static me.loc2.loc2me.core.Constants.Notification.STORAGE_NOTIFICATION_ID;
 
-public class OfferStorageService extends Service {
+public class OfferStorageService{
 
     @Inject
     protected Bus eventBus;
-    @Inject
-    NotificationManager notificationManager;
-    private boolean started;
     private HashMap<BigInteger, Offer> saved = new HashMap<BigInteger, Offer>();
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Injector.inject(this);
-
-        // Register the bus so we can send notifications.
-        eventBus.register(this);
-        loadOffers();
-    }
-
-    @Override
-    public void onDestroy() {
-
-        // Unregister bus, since its not longer needed as the service is shutting down
-        eventBus.unregister(this);
-
-        Ln.d("Service has been destroyed");
-        saveOffers();
-        notificationManager.cancel(STORAGE_NOTIFICATION_ID);
-        super.onDestroy();
-    }
-
-    private void saveOffers() {
-        Gson gson = new Gson();
-        String s = gson.toJson(saved);
-        try {
-            FileOutputStream fos = openFileOutput(Constants.Storage.FILE_NAME, Context.MODE_PRIVATE);
-            fos.write(s.getBytes());
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void saveOffers() {
+//        Gson gson = new Gson();
+//        String s = gson.toJson(saved);
+//        try {
+//            FileOutputStream fos = openFileOutput(Constants.Storage.FILE_NAME, Context.MODE_PRIVATE);
+//            fos.write(s.getBytes());
+//            fos.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private void loadOffers() {
         BufferedReader br = null;
@@ -111,52 +81,16 @@ public class OfferStorageService extends Service {
         }
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-        if (!started) {
-            started = true;
-            // Run as foreground service: http://stackoverflow.com/a/3856940/5210
-            // Another example: https://github.com/commonsguy/cw-android/blob/master/Notifications/FakePlayer/src/com/commonsware/android/fakeplayerfg/PlayerService.java
-            startForeground(STORAGE_NOTIFICATION_ID, getNotification("Stora"));
-        }
-
-        return START_NOT_STICKY;
-
-    }
-
     @Subscribe
     public void onNewOfferEvent(NewOfferEvent newOfferEvent) {
-        if (!saved.containsKey(newOfferEvent.getOffer().getId())) {
-            saved.put(newOfferEvent.getOffer().getId(), newOfferEvent.getOffer());
+        Offer offer = newOfferEvent.getOffer();
+        if (!saved.containsKey(offer.getId())) {
+            saved.put(offer.getId(), offer);
         }
     }
 
     @Subscribe
     public void onGetOffersEvent(GetOffersEvent getOffersEvent) {
         eventBus.post(new LoadedOffersEvent(saved.values()));
-    }
-
-    /**
-     * Creates a notification to show in the notification bar
-     *
-     * @param message the message to display in the notification bar
-     * @return a new {@link android.app.Notification}
-     */
-    private Notification getNotification(String message) {
-        final Intent i = new Intent(this, OfferStorageService.class);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, 0);
-
-        return new NotificationCompat.Builder(this)
-                .setContentTitle(getString(R.string.app_name))
-                .setSmallIcon(R.drawable.ic_stat_ab_notification)
-                .setContentText(message)
-                .setAutoCancel(false)
-                .setOnlyAlertOnce(true)
-                .setOngoing(true)
-                .setWhen(System.currentTimeMillis())
-                .setContentIntent(pendingIntent)
-                .getNotification();
     }
 }

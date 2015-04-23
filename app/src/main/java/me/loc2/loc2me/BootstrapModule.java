@@ -1,9 +1,7 @@
 package me.loc2.loc2me;
 
-import android.accounts.AccountManager;
-import android.content.Context;
-
-import me.loc2.loc2me.core.BootstrapService;
+import me.loc2.loc2me.core.ApiService;
+import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.OfferLoaderService;
 import me.loc2.loc2me.core.OfferStorageService;
 import me.loc2.loc2me.core.PostFromAnyThreadBus;
@@ -59,8 +57,8 @@ public class BootstrapModule {
 
 
     @Provides
-    BootstrapService provideBootstrapService(RestAdapter restAdapter) {
-        return new BootstrapService(restAdapter);
+    ApiService provideBootstrapService(RestAdapter restAdapter) {
+        return new ApiService(restAdapter);
     }
 
     @Provides
@@ -98,8 +96,7 @@ public class BootstrapModule {
     @Provides
     RestAdapter provideRestAdapter(RestErrorHandler restErrorHandler, RestAdapterRequestInterceptor restRequestInterceptor, Gson gson) {
         return new RestAdapter.Builder()
-//                .setEndpoint(Constants.Http.URL_BASE)
-                .setEndpoint("http://promowifi.herokuapp.com")
+                .setEndpoint(Constants.Http.URL_BASE)
                 .setErrorHandler(restErrorHandler)
                 .setRequestInterceptor(restRequestInterceptor)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
