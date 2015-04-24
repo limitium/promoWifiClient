@@ -7,7 +7,7 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
 
-import me.loc2.loc2me.BootstrapServiceProvider;
+import me.loc2.loc2me.Loc2meServiceProvider;
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.Constants;
@@ -23,7 +23,7 @@ import javax.inject.Inject;
 
 public class OfferListFragment extends ItemListFragment<Offer> {
 
-    @Inject protected BootstrapServiceProvider serviceProvider;
+    @Inject protected Loc2meServiceProvider serviceProvider;
     @Inject Bus eventBus;
 
     @Override

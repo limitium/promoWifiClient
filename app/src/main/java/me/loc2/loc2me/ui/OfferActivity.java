@@ -10,7 +10,7 @@ import me.loc2.loc2me.core.models.Offer;
 
 import static me.loc2.loc2me.core.Constants.Extra.WISE_ITEM;
 
-public class OfferActivity extends BootstrapActivity {
+public class OfferActivity extends Loc2meActivity {
 
     private Offer offer;
 

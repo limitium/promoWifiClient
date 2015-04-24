@@ -35,7 +35,7 @@ import retrofit.converter.GsonConverter;
         complete = false,
 
         injects = {
-                BootstrapApplication.class,
+                Loc2meApplication.class,
                 MainActivity.class,
                 NavigationDrawerFragment.class,
                 OfferActivity.class,
@@ -47,7 +47,7 @@ import retrofit.converter.GsonConverter;
                 OfferLoaderService.class
         }
 )
-public class BootstrapModule {
+public class Loc2meModule {
 
     @Singleton
     @Provides
@@ -62,8 +62,8 @@ public class BootstrapModule {
     }
 
     @Provides
-    BootstrapServiceProvider provideBootstrapServiceProvider(RestAdapter restAdapter) {
-        return new BootstrapServiceProvider(restAdapter);
+    Loc2meServiceProvider provideBootstrapServiceProvider(RestAdapter restAdapter) {
+        return new Loc2meServiceProvider(restAdapter);
     }
 
     @Provides

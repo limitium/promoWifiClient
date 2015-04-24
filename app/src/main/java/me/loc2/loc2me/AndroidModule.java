@@ -26,7 +26,7 @@ public class AndroidModule {
     @Provides
     @Singleton
     Context provideAppContext() {
-        return BootstrapApplication.getInstance().getApplicationContext();
+        return Loc2meApplication.getInstance().getApplicationContext();
     }
 
     @Provides

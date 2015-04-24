@@ -35,7 +35,7 @@ public class CarouselFragment extends Fragment {
 
         Views.inject(this, getView());
 
-        pager.setAdapter(new BootstrapPagerAdapter(getResources(), getChildFragmentManager()));
+        pager.setAdapter(new Loc2mePagerAdapter(getResources(), getChildFragmentManager()));
         indicator.setViewPager(pager);
         pager.setCurrentItem(0);
 

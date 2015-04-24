@@ -9,14 +9,14 @@ import android.content.Context;
 /**
  * Loc2me application
  */
-public class BootstrapApplication extends Application {
+public class Loc2meApplication extends Application {
 
-    private static BootstrapApplication instance;
+    private static Loc2meApplication instance;
 
     /**
      * Create main application
      */
-    public BootstrapApplication() {
+    public Loc2meApplication() {
     }
 
     /**
@@ -24,7 +24,7 @@ public class BootstrapApplication extends Application {
      *
      * @param context
      */
-    public BootstrapApplication(final Context context) {
+    public Loc2meApplication(final Context context) {
         this();
         attachBaseContext(context);
     }
@@ -50,12 +50,12 @@ public class BootstrapApplication extends Application {
      *
      * @param instrumentation
      */
-    public BootstrapApplication(final Instrumentation instrumentation) {
+    public Loc2meApplication(final Instrumentation instrumentation) {
         this();
         attachBaseContext(instrumentation.getTargetContext());
     }
 
-    public static BootstrapApplication getInstance() {
+    public static Loc2meApplication getInstance() {
         return instance;
     }
 }

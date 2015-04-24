@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
-import me.loc2.loc2me.BootstrapServiceProvider;
+import me.loc2.loc2me.Loc2meServiceProvider;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.core.OfferLoaderService;
@@ -35,9 +35,9 @@ import butterknife.Views;
  * Initial activity for the application.
  *
  */
-public class MainActivity extends BootstrapFragmentActivity {
+public class MainActivity extends Loc2meFragmentActivity {
 
-    @Inject protected BootstrapServiceProvider serviceProvider;
+    @Inject protected Loc2meServiceProvider serviceProvider;
 
     private boolean userHasAuthenticated = false;
 

@@ -13,7 +13,7 @@ import me.loc2.loc2me.R;
 /**
  * Pager adapter
  */
-public class BootstrapPagerAdapter extends FragmentPagerAdapter {
+public class Loc2mePagerAdapter extends FragmentPagerAdapter {
 
     private final Resources resources;
 
@@ -23,7 +23,7 @@ public class BootstrapPagerAdapter extends FragmentPagerAdapter {
      * @param resources
      * @param fragmentManager
      */
-    public BootstrapPagerAdapter(final Resources resources, final FragmentManager fragmentManager) {
+    public Loc2mePagerAdapter(final Resources resources, final FragmentManager fragmentManager) {
         super(fragmentManager);
         this.resources = resources;
     }

@@ -13,11 +13,11 @@ import retrofit.RestAdapter;
 /**
  * Provider for a {@link me.loc2.loc2me.core.ApiService} instance
  */
-public class BootstrapServiceProvider {
+public class Loc2meServiceProvider {
 
     private RestAdapter restAdapter;
 
-    public BootstrapServiceProvider(RestAdapter restAdapter) {
+    public Loc2meServiceProvider(RestAdapter restAdapter) {
         this.restAdapter = restAdapter;
     }
 
