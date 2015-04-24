@@ -20,7 +20,7 @@
         android:name=".Loc2meApplication"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Bootstrap.Dark">
+        android:theme="@style/MainTheme">
 
         <activity
             android:name="me.loc2.loc2me.ui.MainActivity"

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <style name="MainTheme" parent="@style/Theme.Bootstrap.Dark">
+    <!--<style name="MainTheme" parent="android:style/Theme.Material.Light">-->
+
+    </style>
 
     <style name="Theme.Bootstrap.Dark" parent="@style/Theme.AppCompat">
         <item name="android:windowBackground">@color/pager_background</item>
