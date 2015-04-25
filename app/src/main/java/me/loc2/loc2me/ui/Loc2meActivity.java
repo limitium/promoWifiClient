@@ -2,7 +2,7 @@ package me.loc2.loc2me.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 
 import me.loc2.loc2me.Injector;
@@ -15,7 +15,7 @@ import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 /**
  * Base activity for a Bootstrap activity which does not use fragments.
  */
-public abstract class Loc2meActivity extends ActionBarActivity {
+public abstract class Loc2meActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
