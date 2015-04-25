@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.ui.md.*;
 
 /**
  * Pager adapter
@@ -38,7 +39,7 @@ public class Loc2mePagerAdapter extends FragmentPagerAdapter {
         final Fragment result;
         switch (position) {
             case 0:
-                result = new OfferListFragment();
+                result = new me.loc2.loc2me.ui.md.OfferListFragment();
                 break;
             case 1:
                 result = new FilterFragment();
