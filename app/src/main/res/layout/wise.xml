@@ -23,15 +23,13 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/table_text_selector" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/table_text_light_selector" />
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
     </LinearLayout>
 
     <Button
@@ -39,7 +37,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/wise_delete"
         android:text="@string/delete"
-        style="@style/BootstrapButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 

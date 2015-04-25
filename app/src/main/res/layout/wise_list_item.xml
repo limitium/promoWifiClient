@@ -20,8 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/table_text_selector" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
                 android:id="@+id/tv_summary"
@@ -29,8 +28,7 @@
                 android:layout_height="match_parent"
                 android:singleLine="true"
                 android:ellipsize="end"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/table_text_light_selector" />
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
     </LinearLayout>
 
     <TextView
@@ -40,6 +38,6 @@
             android:gravity="right"
             android:paddingLeft="15dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/table_text_selector" />
+/>
 
 </LinearLayout>
