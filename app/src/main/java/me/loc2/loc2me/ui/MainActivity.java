@@ -32,9 +32,9 @@ import butterknife.Views;
 
 
 /**
- * Initial activity for the application.
- *
- */
+* Initial activity for the application.
+*
+*/
 public class MainActivity extends Loc2meFragmentActivity {
 
     @Inject protected Loc2meServiceProvider serviceProvider;

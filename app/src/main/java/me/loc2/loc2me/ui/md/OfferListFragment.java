@@ -43,6 +43,7 @@ public class OfferListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
 
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
         mAdapter = new OfferListAdapter(mDataset);
         // Set CustomAdapter as the adapter for RecyclerView.
