@@ -49,7 +49,6 @@
     <string name="title_home">Home</string>
 
     <string-array name="array_names">
-        <item>"Anastasia Druzhinina"</item>
         <item>"Andriy Hristyan"</item>
         <item>"Dmitriy Dovbnya"</item>
     </string-array>

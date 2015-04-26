@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.ui.list.EuclidListAdapter;
 
@@ -17,7 +19,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
     private static final String TAG = "OfferListAdapter";
 
-    private OfferStub[] mDataSet;
+    private List<OfferStub> mDataSet;
 
     // BEGIN_INCLUDE(recyclerViewSampleViewHolder)
     /**
@@ -60,7 +62,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
      *
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public OfferListAdapter(OfferStub[] dataSet) {
+    public OfferListAdapter(List<OfferStub> dataSet) {
         mDataSet = dataSet;
     }
 
@@ -82,15 +84,28 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        viewHolder.loadData(mDataSet[position]);
+        viewHolder.loadData(mDataSet.get(position));
     }
     // END_INCLUDE(recyclerViewOnBindViewHolder)
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataSet.length;
+        return mDataSet.size();
     }
+
+    public void add(OfferStub item, int position) {
+        mDataSet.add(position, item);
+        notifyItemInserted(position);
+    }
+
+    public void remove(OfferStub item) {
+        int position = mDataSet.indexOf(item);
+        mDataSet.remove(position);
+        notifyItemRemoved(position);
+    }
+
+
 
 
 }

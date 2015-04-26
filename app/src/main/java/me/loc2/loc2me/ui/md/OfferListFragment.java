@@ -1,10 +1,12 @@
 package me.loc2.loc2me.ui.md;
 
+import android.accounts.OperationCanceledException;
 import android.graphics.RectF;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,7 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.ui.list.EuclidListAdapter;
+import me.loc2.loc2me.util.SafeAsyncTask;
 
 public class OfferListFragment extends Fragment {
     private static final String TAG = "RecyclerViewFragment";
@@ -34,7 +38,8 @@ public class OfferListFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected OfferListAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected OfferStub[] mDataSet;
+    protected List<OfferStub> mDataSet;
+    private OfferStub testItem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,10 +69,30 @@ public class OfferListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new OfferListAdapter(mDataSet);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // END_INCLUDE(initializeRecyclerView)
+
+        testItem = new OfferStub();
+        testItem.setAvatar(R.drawable.anastasia);
+        testItem.setName("Anastasia");
+        testItem.setDescriptionShort("TEST ITEM");
+        testItem.setAvatarShape(sOverlayShape);
+        testItem.setsScreenWidth(sScreenWidth);
+        testItem.setsProfileImageHeight(sProfileImageHeight);
+
+        new SafeAsyncTask<Boolean>() {
+
+            @Override
+            public Boolean call() throws Exception {
+                Thread.sleep(3000);
+                mAdapter.add(testItem, 1);
+                return true;
+            }
+        }.execute();
+
 
         return rootView;
     }
@@ -77,13 +102,13 @@ public class OfferListFragment extends Fragment {
      * from a local content provider or remote server.
      */
     private void initDataset() {
-        mDataSet = new OfferStub[DATASET_COUNT];
-
         int[] avatars = {
-                R.drawable.anastasia,
                 R.drawable.andriy,
                 R.drawable.dmitriy};
         String[] names = getResources().getStringArray(R.array.array_names);
+
+        mDataSet = new ArrayList<>(avatars.length);
+
 
 
 
@@ -96,7 +121,7 @@ public class OfferListFragment extends Fragment {
             offerStub.setAvatarShape(sOverlayShape);
             offerStub.setsScreenWidth(sScreenWidth);
             offerStub.setsProfileImageHeight(sProfileImageHeight);
-            mDataSet[i] = offerStub;
+            mDataSet.add(offerStub);
         }
     }
 
