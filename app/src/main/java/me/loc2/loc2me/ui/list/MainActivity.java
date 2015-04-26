@@ -3,7 +3,6 @@ package me.loc2.loc2me.ui.list;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,9 +11,6 @@ import java.util.Map;
 
 import me.loc2.loc2me.R;
 
-/**
- * Created by Oleksii Shliama on 1/27/15.
- */
 public class MainActivity extends EuclidActivity {
 
     @Override

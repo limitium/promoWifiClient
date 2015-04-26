@@ -1,42 +1,56 @@
 package me.loc2.loc2me.ui.md;
 
-import android.support.v7.widget.CardView;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.ui.list.EuclidListAdapter;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.ViewHolder> {
 
     private static final String TAG = "OfferListAdapter";
 
-    private String[] mDataSet;
+    private OfferStub[] mDataSet;
 
     // BEGIN_INCLUDE(recyclerViewSampleViewHolder)
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final CardView cardView;
-        private final WebView webView;
+
+        private final TextView mProfileName;
+        private final TextView mProfileDescription;
+        private final View mAvatarOverlay;
+        private final ImageView mAvatarView;
+        private final Context context;
 
         public ViewHolder(View v) {
             super(v);
             // Define click listener for the ViewHolder's View.
-            cardView = (CardView) v.findViewById(R.id.card_view);
-            webView = (WebView) cardView.findViewById(R.id.web_view);
+            mProfileName = (TextView) v.findViewById(R.id.text_view_name);
+            mProfileDescription = (TextView) v.findViewById(R.id.text_view_description);
+            mAvatarOverlay = v.findViewById(R.id.view_avatar_overlay);
+            mAvatarView = (ImageView) v.findViewById(R.id.image_view_avatar);
+            context = v.getContext();
         }
 
-        public CardView getCardView() {
-            return cardView;
-        }
+        public void loadData(OfferStub offerStub) {
+            mProfileName.setText(offerStub.getName());
+            mProfileDescription.setText(offerStub.getDescriptionShort());
+            mAvatarOverlay.setBackground(offerStub.getAvatarShape());
 
-        public void loadData(String templateName) {
-            String fullPath = "file:///android_asset/" + OfferConstants.ASSETS + "/" + templateName + ".html";
-            webView.loadUrl(fullPath);
+            Picasso.with(context).load(offerStub.getAvatar())
+                    .resize(offerStub.getsScreenWidth(),
+                            offerStub.getsProfileImageHeight()).centerCrop()
+                    .placeholder(R.color.blue)
+                    .into(mAvatarView);
         }
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)
@@ -46,7 +60,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
      *
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public OfferListAdapter(String[] dataSet) {
+    public OfferListAdapter(OfferStub[] dataSet) {
         mDataSet = dataSet;
     }
 
@@ -56,7 +70,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_item, viewGroup, false);
+                .inflate(R.layout.recycler_item, viewGroup, false);
 
         return new ViewHolder(v);
     }
@@ -77,4 +91,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     public int getItemCount() {
         return mDataSet.length;
     }
+
+
 }
