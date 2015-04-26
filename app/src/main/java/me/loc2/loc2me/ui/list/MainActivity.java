@@ -24,7 +24,7 @@ public class MainActivity extends EuclidActivity {
         mButtonProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Oh hi!", Toast.LENGTH_SHORT).show();
+                animateCloseProfileDetails();
             }
         });
     }
