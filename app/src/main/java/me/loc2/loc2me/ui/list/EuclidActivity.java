@@ -10,6 +10,7 @@ import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -34,7 +35,11 @@ import java.util.Map;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.ui.list.EuclidState;
 
+/**
+ * Created by Oleksii Shliama on 1/27/15.
+ */
 public abstract class EuclidActivity extends Activity {
 
     private static final int REVEAL_ANIMATION_DURATION = 1000;
@@ -47,6 +52,8 @@ public abstract class EuclidActivity extends Activity {
 
     protected RelativeLayout mWrapper;
     protected ListView mListView;
+    protected FrameLayout mToolbar;
+    protected RelativeLayout mToolbarProfile;
     protected LinearLayout mProfileDetails;
     protected TextView mTextViewProfileName;
     protected TextView mTextViewProfileDescription;
@@ -75,6 +82,8 @@ public abstract class EuclidActivity extends Activity {
 
         mWrapper = (RelativeLayout) findViewById(R.id.wrapper);
         mListView = (ListView) findViewById(R.id.list_view);
+        mToolbar = (FrameLayout) findViewById(R.id.toolbar_list);
+        mToolbarProfile = (RelativeLayout) findViewById(R.id.toolbar_profile);
         mProfileDetails = (LinearLayout) findViewById(R.id.wrapper_profile_details);
         mTextViewProfileName = (TextView) findViewById(R.id.text_view_profile_name);
         mTextViewProfileDescription = (TextView) findViewById(R.id.text_view_profile_description);
@@ -85,12 +94,12 @@ public abstract class EuclidActivity extends Activity {
                 mInitialProfileButtonX = mButtonProfile.getX();
             }
         });
-//        findViewById(R.id.toolbar_profile_back).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                animateCloseProfileDetails();
-//            }
-//        });
+        findViewById(R.id.toolbar_profile_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animateCloseProfileDetails();
+            }
+        });
 
         sScreenWidth = getResources().getDisplayMetrics().widthPixels;
         sProfileImageHeight = getResources().getDimensionPixelSize(R.dimen.height_profile_image);
@@ -164,9 +173,10 @@ public abstract class EuclidActivity extends Activity {
         setProfileDetailsInfo(item);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.topMargin = view.getTop();
+        params.topMargin = view.getTop() + mToolbar.getHeight();
         params.bottomMargin = -(view.getBottom() - mListView.getHeight());
         mWrapper.addView(mOverlayListItemView, params);
+        mToolbar.bringToFront();
     }
 
     /**
@@ -247,7 +257,7 @@ public abstract class EuclidActivity extends Activity {
      * @return - animator object that starts transition animation.
      */
     private Animator getAvatarShowAnimator(int profileDetailsAnimationDelay) {
-        final Animator mAvatarShowAnimator = ObjectAnimator.ofFloat(mOverlayListItemView, View.Y, mOverlayListItemView.getTop());
+        final Animator mAvatarShowAnimator = ObjectAnimator.ofFloat(mOverlayListItemView, View.Y, mOverlayListItemView.getTop(), mToolbarProfile.getBottom());
         mAvatarShowAnimator.setDuration(profileDetailsAnimationDelay + getAnimationDurationShowProfileDetails());
         mAvatarShowAnimator.setInterpolator(new DecelerateInterpolator());
         return mAvatarShowAnimator;
@@ -276,6 +286,7 @@ public abstract class EuclidActivity extends Activity {
     private AnimatorSet getOpenProfileAnimatorSet(int profileDetailsAnimationDelay) {
         if (mOpenProfileAnimatorSet == null) {
             List<Animator> profileAnimators = new ArrayList<>();
+            profileAnimators.add(getOpenProfileToolbarAnimator());
             profileAnimators.add(getOpenProfileDetailsAnimator());
 
             mOpenProfileAnimatorSet = new AnimatorSet();
@@ -315,6 +326,47 @@ public abstract class EuclidActivity extends Activity {
     }
 
     /**
+     * This method creates and setups animator which shows profile toolbar.
+     *
+     * @return - animator object.
+     */
+    private Animator getOpenProfileToolbarAnimator() {
+        Animator mOpenProfileToolbarAnimator = ObjectAnimator.ofFloat(mToolbarProfile, View.Y, -mToolbarProfile.getHeight(), 0);
+        mOpenProfileToolbarAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                mToolbarProfile.setX(0);
+                mToolbarProfile.bringToFront();
+                mToolbarProfile.setVisibility(View.VISIBLE);
+                mProfileDetails.setX(0);
+                mProfileDetails.bringToFront();
+                mProfileDetails.setVisibility(View.VISIBLE);
+
+                mButtonProfile.setX(mInitialProfileButtonX);
+                mButtonProfile.bringToFront();
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mButtonProfile.startAnimation(mProfileButtonShowAnimation);
+
+                mState = EuclidState.Opened;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        return mOpenProfileToolbarAnimator;
+    }
+
+    /**
      * This method creates animator which shows profile details.
      *
      * @return - animator object.
@@ -344,6 +396,9 @@ public abstract class EuclidActivity extends Activity {
      */
     private AnimatorSet getCloseProfileAnimatorSet() {
         if (mCloseProfileAnimatorSet == null) {
+            Animator profileToolbarAnimator = ObjectAnimator.ofFloat(mToolbarProfile, View.X,
+                    0, mToolbarProfile.getWidth());
+
             Animator profilePhotoAnimator = ObjectAnimator.ofFloat(mOverlayListItemView, View.X,
                     0, mOverlayListItemView.getWidth());
             profilePhotoAnimator.setStartDelay(getStepDelayHideDetailsAnimation());
@@ -352,10 +407,12 @@ public abstract class EuclidActivity extends Activity {
                     mInitialProfileButtonX, mOverlayListItemView.getWidth() + mInitialProfileButtonX);
             profileButtonAnimator.setStartDelay(getStepDelayHideDetailsAnimation() * 2);
 
-            Animator profileDetailsAnimator = ObjectAnimator.ofFloat(mProfileDetails, View.X, 0);
+            Animator profileDetailsAnimator = ObjectAnimator.ofFloat(mProfileDetails, View.X,
+                    0, mToolbarProfile.getWidth());
             profileDetailsAnimator.setStartDelay(getStepDelayHideDetailsAnimation() * 2);
 
             List<Animator> profileAnimators = new ArrayList<>();
+            profileAnimators.add(profileToolbarAnimator);
             profileAnimators.add(profilePhotoAnimator);
             profileAnimators.add(profileButtonAnimator);
             profileAnimators.add(profileDetailsAnimator);
@@ -375,6 +432,7 @@ public abstract class EuclidActivity extends Activity {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
+                    mToolbarProfile.setVisibility(View.INVISIBLE);
                     mButtonProfile.setVisibility(View.INVISIBLE);
                     mProfileDetails.setVisibility(View.INVISIBLE);
 
@@ -431,8 +489,18 @@ public abstract class EuclidActivity extends Activity {
         }
     }
 
+    /**
+     * To use EuclidActivity class, at least this method must be implemented, with your own data.
+     *
+     * @return - adapter with data. Check {@link com.yalantis.euclid.library.EuclidListAdapter}
+     */
     protected abstract BaseAdapter getAdapter();
 
+    /**
+     * Returns current profile details state.
+     *
+     * @return - {@link com.yalantis.euclid.library.EuclidState}
+     */
     public EuclidState getState() {
         return mState;
     }

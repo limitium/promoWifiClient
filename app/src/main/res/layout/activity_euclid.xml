@@ -4,9 +4,27 @@
     android:layout_height="match_parent"
     android:id="@+id/wrapper">
 
+    <FrameLayout
+        android:id="@+id/toolbar_list"
+        android:background="@color/orange"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_toolbar">
+
+        <TextView
+            android:text="@string/title_following"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-bold"
+            android:textSize="@dimen/text_size_toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
     <ListView
         android:id="@+id/list_view"
         android:divider="@drawable/list_divider"
+        android:layout_below="@+id/toolbar_list"
         android:background="@color/gray"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,6 +38,14 @@
         android:layout_height="@dimen/height_toolbar"
         android:clickable="true"
         android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/toolbar_profile_back"
+            android:layout_width="@dimen/height_toolbar"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:padding="15dp"/>
 
         <RelativeLayout
             android:layout_width="200dp"
