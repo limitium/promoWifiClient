@@ -27,6 +27,8 @@ public class OfferListFragment extends Fragment {
     private static int sScreenWidth;
     private static int sProfileImageHeight;
 
+    private static int pos = 0;
+
 
     protected RecyclerView mRecyclerView;
     protected OfferListAdapter mAdapter;
@@ -54,6 +56,21 @@ public class OfferListFragment extends Fragment {
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_list_view);
 
+        View testButton = rootView.findViewById(R.id.toolbar_profile_back);
+
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OfferStub offerStub = new OfferStub();
+                offerStub.setAvatar(R.drawable.anastasia);
+                offerStub.setsProfileImageHeight(sProfileImageHeight);
+                offerStub.setsScreenWidth(sScreenWidth);
+                offerStub.setName("TEST");
+                offerStub.setAvatarShape(sOverlayShape);
+                int position = mAdapter.add(offerStub);
+                mLayoutManager.scrollToPosition(position - 1);
+            }
+        });
 
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
@@ -66,28 +83,6 @@ public class OfferListFragment extends Fragment {
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // END_INCLUDE(initializeRecyclerView)
-
-        new SafeAsyncTask<Boolean>() {
-
-            @Override
-            public Boolean call() throws Exception {
-                Thread.sleep(3000);
-                mAdapter.add(createStub(1), 1);
-                return true;
-            }
-
-            private OfferStub createStub(int i) {
-                OfferStub testItem = new OfferStub();
-                testItem.setAvatar(R.drawable.anastasia);
-                testItem.setName("Anastasia");
-                testItem.setDescriptionShort("TEST ITEM " + i);
-                testItem.setAvatarShape(sOverlayShape);
-                testItem.setsScreenWidth(sScreenWidth);
-                testItem.setsProfileImageHeight(sProfileImageHeight);
-                return testItem;
-            }
-        }.execute();
-
 
         return rootView;
     }

@@ -47,7 +47,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             mProfileName.setText(offerStub.getName());
             mProfileDescription.setText(offerStub.getDescriptionShort());
             mAvatarOverlay.setBackground(offerStub.getAvatarShape());
-
             Picasso.with(context).load(offerStub.getAvatar())
                     .resize(offerStub.getsScreenWidth(),
                             offerStub.getsProfileImageHeight()).centerCrop()
@@ -73,6 +72,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recycler_item, viewGroup, false);
+        View avatar = (ImageView) v.findViewById(R.id.image_view_avatar);
 
         return new ViewHolder(v);
     }
@@ -94,9 +94,10 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         return mDataSet.size();
     }
 
-    public void add(OfferStub item, int position) {
-        mDataSet.add(position, item);
-        notifyItemInserted(position);
+    public int add(OfferStub item) {
+        mDataSet.add(item);
+        notifyItemInserted(mDataSet.size() - 1);
+        return mDataSet.size();
     }
 
     public void remove(OfferStub item) {
@@ -104,8 +105,4 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         mDataSet.remove(position);
         notifyItemRemoved(position);
     }
-
-
-
-
 }
