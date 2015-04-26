@@ -1,28 +1,21 @@
 package me.loc2.loc2me.ui.md;
 
-import android.accounts.OperationCanceledException;
 import android.graphics.RectF;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nhaarman.listviewanimations.appearance.simple.SwingLeftInAnimationAdapter;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import me.loc2.loc2me.R;
-import me.loc2.loc2me.core.ApiService;
-import me.loc2.loc2me.ui.list.EuclidListAdapter;
+import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
 import me.loc2.loc2me.util.SafeAsyncTask;
 
 public class OfferListFragment extends Fragment {
@@ -39,7 +32,6 @@ public class OfferListFragment extends Fragment {
     protected OfferListAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected List<OfferStub> mDataSet;
-    private OfferStub testItem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,27 +61,30 @@ public class OfferListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
         mAdapter = new OfferListAdapter(mDataSet);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // END_INCLUDE(initializeRecyclerView)
-
-        testItem = new OfferStub();
-        testItem.setAvatar(R.drawable.anastasia);
-        testItem.setName("Anastasia");
-        testItem.setDescriptionShort("TEST ITEM");
-        testItem.setAvatarShape(sOverlayShape);
-        testItem.setsScreenWidth(sScreenWidth);
-        testItem.setsProfileImageHeight(sProfileImageHeight);
 
         new SafeAsyncTask<Boolean>() {
 
             @Override
             public Boolean call() throws Exception {
                 Thread.sleep(3000);
-                mAdapter.add(testItem, 1);
+                mAdapter.add(createStub(1), 1);
                 return true;
+            }
+
+            private OfferStub createStub(int i) {
+                OfferStub testItem = new OfferStub();
+                testItem.setAvatar(R.drawable.anastasia);
+                testItem.setName("Anastasia");
+                testItem.setDescriptionShort("TEST ITEM " + i);
+                testItem.setAvatarShape(sOverlayShape);
+                testItem.setsScreenWidth(sScreenWidth);
+                testItem.setsProfileImageHeight(sProfileImageHeight);
+                return testItem;
             }
         }.execute();
 
