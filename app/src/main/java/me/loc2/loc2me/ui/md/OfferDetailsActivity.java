@@ -22,7 +22,7 @@ import me.loc2.loc2me.R;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class OfferDetailsActivity extends ActionBarActivity {
 
-    private static final long ANIM_DURATION = 1000;
+    private static final long ANIM_DURATION = 300;
     private View bgViewGroup;
 
     public static final String OFFER = "OFFER";
@@ -31,24 +31,23 @@ public class OfferDetailsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         OfferStub offer = (OfferStub)getIntent().getParcelableExtra(OFFER);
-//        OfferDetailedFragment offerDetailedFragment;
-//        if (savedInstanceState == null) {
-//            offerDetailedFragment = new OfferDetailedFragment();
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.container, offerDetailedFragment)
-//                    .commit();
-//        }
-//        else {
-//            offerDetailedFragment = (OfferDetailedFragment)getSupportFragmentManager().findFragmentById(R.id.container);
-//        }
-//        offerDetailedFragment.setOffer(offer);
         setContentView(R.layout.offer_details);
-        setUpLayout();
+        setUpLayout(offer);
         setUpWindowAnimations();
     }
 
-    private void setUpLayout() {
+    private void setUpLayout(OfferStub offer) {
         bgViewGroup = findViewById(R.id.backgroundViewGroup);
+        TextView mNameView = (TextView)findViewById(R.id.text_view_name);
+        mNameView.setText(offer.getName());
+        TextView mFullDescriptionView = (TextView)findViewById(R.id.text_view_full_description);
+        mFullDescriptionView.setText(offer.getDescriptionFull());
+        ImageView mAvatarView = (ImageView)findViewById(R.id.image_view_details_avatar);
+        Picasso.with(OfferDetailsActivity.this).load(offer.getAvatar())
+                .resize(offer.getsScreenWidth(),
+                        offer.getsProfileImageHeight()).centerCrop()
+                .placeholder(R.color.blue)
+                .into(mAvatarView);
     }
 
     private void setUpWindowAnimations() {
@@ -135,49 +134,5 @@ public class OfferDetailsActivity extends ActionBarActivity {
         });
         anim.setDuration(ANIM_DURATION);
         anim.start();
-    }
-
-    /**
-     * A fragment containing spell information
-     */
-    public static class OfferDetailedFragment extends Fragment {
-
-        private OfferStub offer;
-        private TextView mTextViewName;
-        private TextView mTextViewDescription;
-        private ImageView mAvatarView;
-
-
-        public OfferDetailedFragment() {
-        }
-
-        private void loadData() {
-//            mTextViewName.setText(offer.getName());
-//            mTextViewDescription.setText(offer.getDescriptionFull());
-            Picasso.with(getActivity()).load(offer.getAvatar())
-                    .resize(offer.getsScreenWidth(), offer.getsProfileImageHeight()).centerCrop()
-                    .placeholder(R.color.blue)
-                    .into(mAvatarView);
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.offer_details_fragment, container, false);
-//            mTextViewName = (TextView) rootView.findViewById(R.id.text_view_name);
-//            mTextViewDescription = (TextView) rootView.findViewById(R.id.text_view_full_description);
-            mAvatarView = (ImageView)rootView.findViewById(R.id.image_view_avatar);
-            if (offer != null)
-                loadData();
-            return rootView;
-        }
-
-        public OfferStub getOffer() {
-            return offer;
-        }
-
-        public void setOffer(OfferStub offer) {
-            this.offer = offer;
-        }
     }
 }

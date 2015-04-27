@@ -1,46 +1,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/gray"
+    android:layout_height="match_parent">
 
 
+    <ImageView
+        android:id="@+id/image_view_details_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_profile_image"
+        android:layout_gravity="center_horizontal"
+        android:transitionName="transitionname"/>
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/backgroundViewGroup"
         android:visibility="invisible"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:background="@android:color/holo_orange_dark"
-        android:layout_height="match_parent">
+        android:background="@color/gray"
+        android:layout_below="@+id/image_view_details_avatar">
 
         <TextView
+            android:id="@+id/text_view_name"
+            android:textColor="#ffffff"
+            android:textSize="30sp"
+            android:textAllCaps="true"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:fontFamily="sans-serif-thin"
             android:layout_width="wrap_content"
-            android:text="Activity Detail 3"
-            style="@style/Base.TextAppearance.AppCompat.Large"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content" />
+            android:layout_margin="10dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:text="This is the content body text of the activity"
-            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:id="@+id/text_view_full_description"
+            android:textColor="#ff8c6a"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_height="wrap_content" />
-
+            android:gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_name"/>
     </RelativeLayout>
-
-
-    <View
-        android:layout_width="150dp"
-        android:id="@+id/big_square_blue"
-        android:layout_margin="10dp"
-        android:transitionName="transitionname"
-        android:layout_centerInParent="true"
-        android:background="@android:color/holo_orange_light"
-        android:layout_height="150dp" />
-
 </RelativeLayout>
