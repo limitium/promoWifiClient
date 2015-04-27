@@ -1,10 +1,21 @@
 package me.loc2.loc2me.ui.md;
 
 import android.graphics.drawable.ShapeDrawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class OfferStub {
+public class OfferStub implements Parcelable {
 
-    private static final int CIRCLE_RADIUS_DP = 50;
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<OfferStub> CREATOR = new Parcelable.Creator<OfferStub>() {
+        public OfferStub createFromParcel(Parcel in) {
+            return new OfferStub(in);
+        }
+
+        public OfferStub[] newArray(int size) {
+            return new OfferStub[size];
+        }
+    };
 
     int avatar;
     String name;
@@ -12,6 +23,36 @@ public class OfferStub {
     String descriptionFull;
     int sScreenWidth;
     int sProfileImageHeight;
+
+    // example constructor that takes a Parcel and gives you an object populated with it's values
+    private OfferStub(Parcel in) {
+        avatar = in.readInt();
+        name = in.readString();
+        descriptionShort = in.readString();
+        descriptionFull = in.readString();
+        sScreenWidth = in.readInt();
+        sProfileImageHeight = in.readInt();
+    }
+
+    public OfferStub() {
+
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(avatar);
+        dest.writeString(name);
+        dest.writeString(descriptionShort);
+        dest.writeString(descriptionFull);
+        dest.writeInt(sScreenWidth);
+        dest.writeInt(sProfileImageHeight);
+    }
 
     private ShapeDrawable avatarShape;
 
@@ -46,11 +87,6 @@ public class OfferStub {
     public void setDescriptionFull(String descriptionFull) {
         this.descriptionFull = descriptionFull;
     }
-
-    protected int getCircleRadiusDp() {
-        return CIRCLE_RADIUS_DP;
-    }
-
 
     public void setAvatarShape(ShapeDrawable avatarShape) {
         this.avatarShape = avatarShape;

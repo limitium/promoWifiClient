@@ -49,7 +49,6 @@ public class MainActivity extends Loc2meFragmentActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         super.onCreate(savedInstanceState);

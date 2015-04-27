@@ -29,7 +29,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
         private final TextView mProfileName;
         private final TextView mProfileDescription;
-        private final View mAvatarOverlay;
         private final ImageView mAvatarView;
         private final Context context;
 
@@ -38,7 +37,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             // Define click listener for the ViewHolder's View.
             mProfileName = (TextView) v.findViewById(R.id.text_view_name);
             mProfileDescription = (TextView) v.findViewById(R.id.text_view_description);
-            mAvatarOverlay = v.findViewById(R.id.view_avatar_overlay);
             mAvatarView = (ImageView) v.findViewById(R.id.image_view_avatar);
             context = v.getContext();
         }
@@ -46,7 +44,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         public void loadData(OfferStub offerStub) {
             mProfileName.setText(offerStub.getName());
             mProfileDescription.setText(offerStub.getDescriptionShort());
-            mAvatarOverlay.setBackground(offerStub.getAvatarShape());
             Picasso.with(context).load(offerStub.getAvatar())
                     .resize(offerStub.getsScreenWidth(),
                             offerStub.getsProfileImageHeight()).centerCrop()
@@ -72,7 +69,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recycler_item, viewGroup, false);
-        View avatar = (ImageView) v.findViewById(R.id.image_view_avatar);
 
         return new ViewHolder(v);
     }

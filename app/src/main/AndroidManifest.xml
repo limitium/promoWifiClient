@@ -35,6 +35,7 @@
             </intent-filter>
         </activity>
         <activity android:name="me.loc2.loc2me.ui.OfferActivity" />
+        <activity android:name="me.loc2.loc2me.ui.md.OfferDetailsActivity" />
 
 
         <service android:name="me.loc2.loc2me.core.TimerService" android:enabled="true" android:exported="false" />

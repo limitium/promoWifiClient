@@ -16,12 +16,6 @@
         android:layout_marginBottom="10dp"
         android:paddingBottom="1dp"
         tools:src="@drawable/nicolas_cage" />
-    <!--Add 1dp bottom padding to remove weird flickering while animating-->
-
-    <View
-        android:id="@+id/view_avatar_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_profile_image"/>
 
     <TextView
         android:id="@+id/text_view_name"
