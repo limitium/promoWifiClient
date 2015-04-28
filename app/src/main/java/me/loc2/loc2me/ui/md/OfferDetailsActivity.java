@@ -3,15 +3,12 @@ package me.loc2.loc2me.ui.md;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.transition.Transition;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +17,7 @@ import com.squareup.picasso.Picasso;
 import me.loc2.loc2me.R;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-public class OfferDetailsActivity extends ActionBarActivity {
+public class OfferDetailsActivity extends Activity {
 
     private static final long ANIM_DURATION = 300;
     private View bgViewGroup;

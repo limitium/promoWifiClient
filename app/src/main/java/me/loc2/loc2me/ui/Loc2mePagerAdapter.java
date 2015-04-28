@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import me.loc2.loc2me.R;
-import me.loc2.loc2me.ui.md.*;
 
 /**
  * Pager adapter

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.loc2.loc2me"
-    android:versionCode="102"
-    android:versionName="1.1" >
+    package="me.loc2.loc2me">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -30,7 +28,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="me.loc2.loc2me.ui.OfferActivity" />
         <activity android:name="me.loc2.loc2me.ui.md.OfferDetailsActivity" />
 
 
