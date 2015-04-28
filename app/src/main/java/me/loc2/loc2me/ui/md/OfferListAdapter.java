@@ -1,6 +1,7 @@
 package me.loc2.loc2me.ui.md;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,28 +27,26 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView mProfileName;
-        private final TextView mProfileDescription;
-        private final ImageView mAvatarView;
+        private final CardView mCardView;
+        private final ImageView mLogoView;
+        private final TextView mTitleView;
         private final Context context;
 
         public ViewHolder(View v) {
             super(v);
             // Define click listener for the ViewHolder's View.
-            mProfileName = (TextView) v.findViewById(R.id.text_view_name);
-            mProfileDescription = (TextView) v.findViewById(R.id.text_view_description);
-            mAvatarView = (ImageView) v.findViewById(R.id.image_view_avatar);
+            mCardView = (CardView) v.findViewById(R.id.offer_list_item_card);
+            mLogoView = (ImageView) mCardView.findViewById(R.id.image_view_avatar);
+            mTitleView = (TextView) mCardView.findViewById(R.id.text_view_name);
             context = v.getContext();
         }
 
         public void loadData(OfferStub offerStub) {
-            mProfileName.setText(offerStub.getName());
-            mProfileDescription.setText(offerStub.getDescriptionShort());
-            Picasso.with(context).load(offerStub.getAvatar())
-                    .resize(offerStub.getsScreenWidth(),
-                            offerStub.getsProfileImageHeight()).centerCrop()
+            mTitleView.setText(offerStub.getDescriptionShort());
+            mTitleView.setText(offerStub.getDescriptionShort());
+            Picasso.with(context).load(offerStub.getLogo())
                     .placeholder(R.color.blue)
-                    .into(mAvatarView);
+                    .into(mLogoView);
         }
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)

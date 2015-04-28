@@ -2,9 +2,6 @@ package me.loc2.loc2me.ui.md;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.graphics.RectF;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,38 +18,15 @@ import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
 
 public class OfferListFragment extends Fragment {
     private static final String TAG = "RecyclerViewFragment";
-    private static final int DATASET_COUNT = 3;
-
-    private static final int REVEAL_ANIMATION_DURATION = 1000;
-    private static final int MAX_DELAY_SHOW_DETAILS_ANIMATION = 500;
-    private static final int ANIMATION_DURATION_SHOW_PROFILE_DETAILS = 500;
-    private static final int STEP_DELAY_HIDE_DETAILS_ANIMATION = 80;
-    private static final int ANIMATION_DURATION_CLOSE_PROFILE_DETAILS = 500;
-    private static final int ANIMATION_DURATION_SHOW_PROFILE_BUTTON = 300;
-    private static final int CIRCLE_RADIUS_DP = 50;
-
-    private static ShapeDrawable sOverlayShape;
-    private static int sScreenWidth;
-    private static int sProfileImageHeight;
-
-    private static int pos = 0;
-
 
     protected RecyclerView mRecyclerView;
     protected OfferListAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected List<OfferStub> mDataSet;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        sScreenWidth = getResources().getDisplayMetrics().widthPixels;
-        sProfileImageHeight = getResources().getDimensionPixelSize(R.dimen.height_profile_image);
-        sOverlayShape = buildAvatarCircleOverlay();
-        // Initialize dataset, this data would usually come from a local content provider or
-        // remote server.
         initDataset();
     }
 
@@ -70,7 +44,7 @@ public class OfferListFragment extends Fragment {
 //            @Override
 //            public void onClick(View v) {
 //                OfferStub offerStub = new OfferStub();
-//                offerStub.setAvatar(R.drawable.anastasia);
+//                offerStub.setLogo(R.drawable.anastasia);
 //                offerStub.setsProfileImageHeight(sProfileImageHeight);
 //                offerStub.setsScreenWidth(sScreenWidth);
 //                offerStub.setName("TEST");
@@ -101,8 +75,7 @@ public class OfferListFragment extends Fragment {
         View sharedView = view.findViewById(R.id.image_view_avatar);
         Intent intent = new Intent(getActivity(), OfferDetailsActivity.class);
         intent.putExtra(OfferDetailsActivity.OFFER, offer);
-        String transitionName = "transitionname";
-
+        String transitionName = getString(R.string.transition_to_details);
         ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
         Bundle bundle = transitionActivityOptions.toBundle();
         getActivity().startActivity(intent, bundle);
@@ -116,49 +89,13 @@ public class OfferListFragment extends Fragment {
         int[] avatars = {
                 R.drawable.andriy,
                 R.drawable.dmitriy};
-        String[] names = getResources().getStringArray(R.array.array_names);
         mDataSet = new ArrayList<>(avatars.length);
-        for (int i = 0; i < avatars.length; i++) {
+        for (int avatar : avatars) {
             OfferStub offerStub = new OfferStub();
-            offerStub.setAvatar(avatars[i]);
-            offerStub.setName(names[i]);
+            offerStub.setLogo(avatar);
             offerStub.setDescriptionFull(getString(R.string.lorem_ipsum_long));
             offerStub.setDescriptionShort(getString(R.string.lorem_ipsum_short));
-            offerStub.setAvatarShape(sOverlayShape);
-            offerStub.setsScreenWidth(sScreenWidth);
-            offerStub.setsProfileImageHeight(sProfileImageHeight);
             mDataSet.add(offerStub);
         }
-    }
-
-    /**
-     * This method creates a view with empty/transparent circle in it's center. This view is used
-     * to cover the profile avatar.
-     *
-     * @return - ShapeDrawable object.
-     */
-    private ShapeDrawable buildAvatarCircleOverlay() {
-        int radius = 666;
-        ShapeDrawable overlay = new ShapeDrawable(new RoundRectShape(null,
-                new RectF(
-                        sScreenWidth / 2 - dpToPx(getCircleRadiusDp() * 2),
-                        sProfileImageHeight / 2 - dpToPx(getCircleRadiusDp() * 2),
-                        sScreenWidth / 2 - dpToPx(getCircleRadiusDp() * 2),
-                        sProfileImageHeight / 2 - dpToPx(getCircleRadiusDp() * 2)),
-                new float[]{radius, radius, radius, radius, radius, radius, radius, radius}));
-        overlay.getPaint().setColor(getResources().getColor(R.color.gray));
-        return overlay;
-    }
-
-    private int dpToPx(int dp) {
-        return Math.round((float) dp * getResources().getDisplayMetrics().density);
-    }
-
-    private int getCircleRadiusDp() {
-        return CIRCLE_RADIUS_DP;
-    }
-
-    protected int getMaxDelayShowDetailsAnimation() {
-        return MAX_DELAY_SHOW_DETAILS_ANIMATION;
     }
 }

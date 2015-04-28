@@ -17,27 +17,22 @@ public class OfferStub implements Parcelable {
         }
     };
 
-    int avatar;
-    String name;
-    String descriptionShort;
-    String descriptionFull;
-    int sScreenWidth;
-    int sProfileImageHeight;
+    private int logo;
+    private String descriptionShort;
+    private String descriptionFull;
+    private String bannerHtml;
 
     // example constructor that takes a Parcel and gives you an object populated with it's values
     private OfferStub(Parcel in) {
-        avatar = in.readInt();
-        name = in.readString();
+        logo = in.readInt();
         descriptionShort = in.readString();
         descriptionFull = in.readString();
-        sScreenWidth = in.readInt();
-        sProfileImageHeight = in.readInt();
+        bannerHtml = in.readString();
     }
 
     public OfferStub() {
 
     }
-
 
     @Override
     public int describeContents() {
@@ -46,30 +41,18 @@ public class OfferStub implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(avatar);
-        dest.writeString(name);
+        dest.writeInt(logo);
         dest.writeString(descriptionShort);
         dest.writeString(descriptionFull);
-        dest.writeInt(sScreenWidth);
-        dest.writeInt(sProfileImageHeight);
+        dest.writeString(bannerHtml);
     }
 
-    private ShapeDrawable avatarShape;
-
-    public int getAvatar() {
-        return avatar;
+    public int getLogo() {
+        return logo;
     }
 
-    public void setAvatar(int avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setLogo(int logo) {
+        this.logo = logo;
     }
 
     public String getDescriptionShort() {
@@ -88,27 +71,11 @@ public class OfferStub implements Parcelable {
         this.descriptionFull = descriptionFull;
     }
 
-    public void setAvatarShape(ShapeDrawable avatarShape) {
-        this.avatarShape = avatarShape;
+    public String getBannerHtml() {
+        return bannerHtml;
     }
 
-    public ShapeDrawable getAvatarShape() {
-        return avatarShape;
-    }
-
-    public int getsScreenWidth() {
-        return sScreenWidth;
-    }
-
-    public void setsScreenWidth(int sScreenWidth) {
-        this.sScreenWidth = sScreenWidth;
-    }
-
-    public int getsProfileImageHeight() {
-        return sProfileImageHeight;
-    }
-
-    public void setsProfileImageHeight(int sProfileImageHeight) {
-        this.sProfileImageHeight = sProfileImageHeight;
+    public void setBannerHtml(String bannerHtml) {
+        this.bannerHtml = bannerHtml;
     }
 }

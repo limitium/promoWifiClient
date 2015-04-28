@@ -40,7 +40,7 @@ public class OfferDetailsActivity extends Activity {
         TextView mFullDescriptionView = (TextView)findViewById(R.id.text_view_full_description);
         mFullDescriptionView.setText(offer.getDescriptionFull());
         ImageView mAvatarView = (ImageView)findViewById(R.id.image_view_details_avatar);
-        Picasso.with(OfferDetailsActivity.this).load(offer.getAvatar())
+        Picasso.with(OfferDetailsActivity.this).load(offer.getLogo())
                 .resize(offer.getsScreenWidth(),
                         offer.getsProfileImageHeight()).centerCrop()
                 .placeholder(R.color.blue)

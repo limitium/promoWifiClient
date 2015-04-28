@@ -20,46 +20,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/image_view_avatar"
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/offer_list_item_card"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:paddingBottom="1dp"
-        tools:src="@drawable/nicolas_cage" />
+        android:layout_height="match_parent"
+        card_view:cardCornerRadius="4dp"
+        android:background="@color/gray">
 
-    <View
-        android:id="@+id/view_avatar_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"/>
+        <ImageView
+            android:id="@+id/image_view_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            tools:src="@drawable/nicolas_cage"
+            android:background="@color/gray"
+            android:scaleType="fitXY" />
+
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/text_view_name"
-        android:textColor="#ffffff"
+        android:textColor="@color/orange"
         android:textSize="30sp"
         android:textAllCaps="true"
-        android:gravity="center_horizontal"
+        android:gravity="end"
+        android:textAlignment="gravity"
         android:singleLine="true"
         android:fontFamily="sans-serif-thin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/image_view_avatar"
         tools:text="RICHARD"
-        android:layout_margin="10dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
 
-    <TextView
-        android:id="@+id/text_view_description"
-        android:textColor="#ff8c6a"
-        android:textSize="18sp"
-        android:padding="10dp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal"
-        android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_view_name"
-        tools:text="@string/lorem_ipsum_short" />
+
 </RelativeLayout>

@@ -21,7 +21,7 @@
     <string name="error_loading_checkins">Loading check-ins failed</string>
     <string name="no_users">No Users</string>
     <string name="no_wises">No Wises</string>
-    <string name="avatar">Avatar</string>
+    <string name="logo">Avatar</string>
     <string name="choose">Choose</string>
 
     <!-- AuthenticatorActivity -->
@@ -62,4 +62,6 @@
     <string name="title_following">Following</string>
     <string name="toolbar_bio">Bio</string>
     <string name="toolbar_details">Details</string>
+
+    <string name="transition_to_details">transition_to_details</string>
 </resources>
