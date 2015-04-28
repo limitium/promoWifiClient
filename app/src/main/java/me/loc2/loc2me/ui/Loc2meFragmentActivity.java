@@ -2,6 +2,7 @@ package me.loc2.loc2me.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.squareup.otto.Bus;
 
@@ -13,7 +14,7 @@ import me.loc2.loc2me.Injector;
 /**
  * Base class for all Bootstrap Activities that need fragments.
  */
-public class Loc2meFragmentActivity extends Activity {
+public class Loc2meFragmentActivity extends FragmentActivity {
 
     @Inject
     protected Bus eventBus;
