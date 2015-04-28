@@ -13,7 +13,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import me.loc2.loc2me.R;
-import me.loc2.loc2me.ui.list.EuclidListAdapter;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.ViewHolder> {
 
@@ -68,7 +67,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.recycler_item, viewGroup, false);
+                .inflate(R.layout.offer_list_item, viewGroup, false);
 
         return new ViewHolder(v);
     }

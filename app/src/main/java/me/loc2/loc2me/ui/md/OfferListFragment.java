@@ -59,11 +59,11 @@ public class OfferListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View mRootView = inflater.inflate(R.layout.wise_recycler_list, container, false);
+        View mRootView = inflater.inflate(R.layout.offer_list, container, false);
         mRootView.setTag(TAG);
 
         // BEGIN_INCLUDE(initializeRecyclerView)
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_list_view);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.list_view);
 
 //        View testButton = mRootView.findViewById(R.id.toolbar_profile_back);
 //        testButton.setOnClickListener(new View.OnClickListener() {
