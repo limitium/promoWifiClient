@@ -66,10 +66,29 @@ public class MainActivity extends Loc2meFragmentActivity {
 
         if(!isTablet()) {
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawerToggle = new ActionBarDrawerToggle(
+                    this,                    /* Host activity */
+                    drawerLayout,           /* DrawerLayout object */
+                    R.drawable.ic_drawer,    /* nav drawer icon to replace 'Up' caret */
+                    R.string.navigation_drawer_open,    /* "open drawer" description */
+                    R.string.navigation_drawer_close) { /* "close drawer" description */
+
+                /** Called when a drawer has settled in a completely closed state. */
+                public void onDrawerClosed(View view) {
+                    supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                }
+
+                /** Called when a drawer has settled in a completely open state. */
+                public void onDrawerOpened(View drawerView) {
+                    supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                }
+            };
+
             // Set the drawer toggle as the DrawerListener
             drawerLayout.setDrawerListener(drawerToggle);
         }
         checkAuth();
+
 
     }
 
@@ -106,7 +125,7 @@ public class MainActivity extends Loc2meFragmentActivity {
             startService(new Intent(this, OfferStorageService.class));
 
             Ln.d("Foo");
-            final android.app.FragmentManager fragmentManager = getFragmentManager();
+            final FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.container, new CarouselFragment())
                     .commit();
