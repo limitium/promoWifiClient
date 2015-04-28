@@ -2,20 +2,15 @@
     android:layout_width="match_parent"
     android:background="@color/gray"
     android:layout_height="match_parent">
-
-
-    <ImageView
-        android:id="@+id/image_view_details_avatar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_profile_image"
-        android:layout_gravity="center_horizontal"
-        android:transitionName="@string/transition_to_details"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/gray"
+        android:transitionName="@string/transition_to_details">
         <WebView
-            android:id="@+id/web_view"
+            android:id="@+id/details_view"
             android:layout_width="fill_parent"
+            android:background="@color/gray"
             android:layout_height="fill_parent">
         </WebView>
     </RelativeLayout>

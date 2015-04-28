@@ -43,7 +43,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
         public void loadData(OfferStub offerStub) {
             mTitleView.setText(offerStub.getDescriptionShort());
-            mTitleView.setText(offerStub.getDescriptionShort());
             Picasso.with(context).load(offerStub.getLogo())
                     .placeholder(R.color.blue)
                     .into(mLogoView);
@@ -67,6 +66,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.offer_list_item, viewGroup, false);
+
 
         return new ViewHolder(v);
     }

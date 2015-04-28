@@ -4,14 +4,17 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
@@ -54,10 +57,10 @@ public class OfferListFragment extends Fragment {
 //            }
 //        });
 
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new OfferListAdapter(mDataSet);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -71,8 +74,7 @@ public class OfferListFragment extends Fragment {
         return mRootView;
     }
 
-    private void goToProfileDetails(View view, OfferStub offer) {
-        View sharedView = view.findViewById(R.id.image_view_avatar);
+    private void goToProfileDetails(View sharedView, OfferStub offer) {
         Intent intent = new Intent(getActivity(), OfferDetailsActivity.class);
         intent.putExtra(OfferDetailsActivity.OFFER, offer);
         String transitionName = getString(R.string.transition_to_details);
@@ -87,12 +89,24 @@ public class OfferListFragment extends Fragment {
      */
     private void initDataset() {
         int[] avatars = {
-                R.drawable.andriy,
-                R.drawable.dmitriy};
+                R.drawable.yellow,
+                R.drawable.red,
+                R.drawable.blue,
+                R.drawable.lime,
+        };
+        String[] templates = {
+            "yellow",
+            "red",
+            "blue",
+            "lime"
+        };
         mDataSet = new ArrayList<>(avatars.length);
-        for (int avatar : avatars) {
+        Random random = new Random();
+        for (int i = 0; i < avatars.length*10; i++) {
             OfferStub offerStub = new OfferStub();
-            offerStub.setLogo(avatar);
+            int item = random.nextInt(avatars.length);
+            offerStub.setLogo(avatars[item]);
+            offerStub.setBannerHtml(templates[item]);
             offerStub.setDescriptionFull(getString(R.string.lorem_ipsum_long));
             offerStub.setDescriptionShort(getString(R.string.lorem_ipsum_short));
             mDataSet.add(offerStub);
