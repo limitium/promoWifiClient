@@ -1,21 +1,5 @@
 package me.loc2.loc2me;
 
-import me.loc2.loc2me.core.ApiService;
-import me.loc2.loc2me.core.Constants;
-import me.loc2.loc2me.core.OfferLoaderService;
-import me.loc2.loc2me.core.OfferStorageService;
-import me.loc2.loc2me.core.PostFromAnyThreadBus;
-import me.loc2.loc2me.core.RestAdapterRequestInterceptor;
-import me.loc2.loc2me.core.RestErrorHandler;
-import me.loc2.loc2me.core.WifiScanService;
-import me.loc2.loc2me.core.TimerService;
-import me.loc2.loc2me.core.UserAgentProvider;
-import me.loc2.loc2me.ui.FilterFragment;
-import me.loc2.loc2me.ui.MainActivity;
-import me.loc2.loc2me.ui.NavigationDrawerFragment;
-import me.loc2.loc2me.ui.OfferActivity;
-import me.loc2.loc2me.ui.OfferListFragment;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Bus;
@@ -24,6 +8,20 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.loc2.loc2me.core.ApiService;
+import me.loc2.loc2me.core.Constants;
+import me.loc2.loc2me.core.OfferLoaderService;
+import me.loc2.loc2me.core.OfferStorageService;
+import me.loc2.loc2me.core.PostFromAnyThreadBus;
+import me.loc2.loc2me.core.RestAdapterRequestInterceptor;
+import me.loc2.loc2me.core.RestErrorHandler;
+import me.loc2.loc2me.core.TimerService;
+import me.loc2.loc2me.core.UserAgentProvider;
+import me.loc2.loc2me.core.WifiScanService;
+import me.loc2.loc2me.ui.FilterFragment;
+import me.loc2.loc2me.ui.MainActivity;
+import me.loc2.loc2me.ui.OfferActivity;
+import me.loc2.loc2me.ui.md.OfferListFragment;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -37,7 +35,6 @@ import retrofit.converter.GsonConverter;
         injects = {
                 Loc2meApplication.class,
                 MainActivity.class,
-                NavigationDrawerFragment.class,
                 OfferActivity.class,
                 OfferListFragment.class,
                 FilterFragment.class,

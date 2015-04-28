@@ -45,7 +45,6 @@ public class MainActivity extends Loc2meFragmentActivity {
     private ActionBarDrawerToggle drawerToggle;
     private CharSequence drawerTitle;
     private CharSequence title;
-    private NavigationDrawerFragment navigationDrawerFragment;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -76,34 +75,18 @@ public class MainActivity extends Loc2meFragmentActivity {
 
                 /** Called when a drawer has settled in a completely closed state. */
                 public void onDrawerClosed(View view) {
-                    getSupportActionBar().setTitle(title);
                     supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
                 }
 
                 /** Called when a drawer has settled in a completely open state. */
                 public void onDrawerOpened(View drawerView) {
-                    getSupportActionBar().setTitle(drawerTitle);
                     supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
                 }
             };
 
             // Set the drawer toggle as the DrawerListener
             drawerLayout.setDrawerListener(drawerToggle);
-
-            navigationDrawerFragment = (NavigationDrawerFragment)
-                    getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-
-            // Set up the drawer.
-            navigationDrawerFragment.setUp(
-                    R.id.navigation_drawer,
-                    (DrawerLayout) findViewById(R.id.drawer_layout));
         }
-
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-
         checkAuth();
 
     }

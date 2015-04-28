@@ -15,7 +15,6 @@
             android:gravity="left"
             android:text="@string/title_column"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/table_text_header"
             android:textStyle="bold" />
 
     <TextView
@@ -24,7 +23,6 @@
             android:gravity="right"
             android:text="@string/date_column"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/table_text_header"
             android:textStyle="bold" />
 
 </LinearLayout>

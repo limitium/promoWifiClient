@@ -4,12 +4,6 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-
-    <fragment
-            android:layout_width="@dimen/navigation_drawer_width"
-            android:layout_height="match_parent"
-            android:name="me.loc2.loc2me.ui.NavigationDrawerFragment" />
-
     <LinearLayout
             android:id="@+id/container"
             android:layout_width="0dp"
