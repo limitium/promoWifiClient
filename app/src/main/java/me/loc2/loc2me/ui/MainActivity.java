@@ -21,6 +21,7 @@ import me.loc2.loc2me.core.OfferStorageService;
 import me.loc2.loc2me.core.WifiScanService;
 import me.loc2.loc2me.core.TimerService;
 import me.loc2.loc2me.events.NavItemSelectedEvent;
+import me.loc2.loc2me.ui.md.OfferListFragment;
 import me.loc2.loc2me.util.Ln;
 import me.loc2.loc2me.util.SafeAsyncTask;
 import me.loc2.loc2me.util.UIUtils;
@@ -127,7 +128,7 @@ public class MainActivity extends Loc2meFragmentActivity {
             Ln.d("Foo");
             final FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, new CarouselFragment())
+                    .replace(R.id.container, new OfferListFragment())
                     .commit();
         }
 

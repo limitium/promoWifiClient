@@ -8,9 +8,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.nhaarman.listviewanimations.appearance.simple.SwingLeftInAnimationAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,12 +60,18 @@ public class OfferListFragment extends Fragment {
 //            }
 //        });
 
-        mLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
         mAdapter = new OfferListAdapter(mDataSet);
         mRecyclerView.setAdapter(mAdapter);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        mAdapter.setMetrics(displaymetrics);
+
+
+
 
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(mRootView.getContext(), new RecyclerItemClickListener.OnItemClickListener() {
@@ -88,24 +97,18 @@ public class OfferListFragment extends Fragment {
      * from a local content provider or remote server.
      */
     private void initDataset() {
-        int[] avatars = {
-                R.drawable.yellow,
-                R.drawable.red,
-                R.drawable.blue,
-                R.drawable.lime,
-        };
         String[] templates = {
             "yellow",
             "red",
             "blue",
             "lime"
         };
-        mDataSet = new ArrayList<>(avatars.length);
+        mDataSet = new ArrayList<>(templates.length);
         Random random = new Random();
-        for (int i = 0; i < avatars.length*10; i++) {
+        for (int i = 0; i < 10; i++) {
             OfferStub offerStub = new OfferStub();
-            int item = random.nextInt(avatars.length);
-            offerStub.setLogo(avatars[item]);
+            int item = random.nextInt(templates.length);
+            offerStub.setImageUrl("http://lorempixel.com");
             offerStub.setBannerHtml(templates[item]);
             offerStub.setDescriptionFull(getString(R.string.lorem_ipsum_long));
             offerStub.setDescriptionShort(getString(R.string.lorem_ipsum_short));

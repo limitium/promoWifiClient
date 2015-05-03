@@ -1,6 +1,5 @@
 package me.loc2.loc2me.ui.md;
 
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -17,14 +16,14 @@ public class OfferStub implements Parcelable {
         }
     };
 
-    private int logo;
+    private String imageUrl;
     private String descriptionShort;
     private String descriptionFull;
     private String bannerHtml;
 
     // example constructor that takes a Parcel and gives you an object populated with it's values
     private OfferStub(Parcel in) {
-        logo = in.readInt();
+        imageUrl = in.readString();
         descriptionShort = in.readString();
         descriptionFull = in.readString();
         bannerHtml = in.readString();
@@ -41,18 +40,18 @@ public class OfferStub implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(logo);
+        dest.writeString(imageUrl);
         dest.writeString(descriptionShort);
         dest.writeString(descriptionFull);
         dest.writeString(bannerHtml);
     }
 
-    public int getLogo() {
-        return logo;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setLogo(int logo) {
-        this.logo = logo;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getDescriptionShort() {

@@ -1,14 +1,14 @@
 package me.loc2.loc2me.ui.md;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -20,6 +20,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     private static final String TAG = "OfferListAdapter";
 
     private List<OfferStub> mDataSet;
+    private DisplayMetrics metrics;
+
 
     // BEGIN_INCLUDE(recyclerViewSampleViewHolder)
     /**
@@ -27,25 +29,30 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final CardView mCardView;
-        private final ImageView mLogoView;
-        private final TextView mTitleView;
+        private final ImageView mOfferItemImage;
         private final Context context;
+        private final DisplayMetrics metrics;
 
-        public ViewHolder(View v) {
+        public ViewHolder(View v, int viewGroupWidh, DisplayMetrics metrics) {
             super(v);
+            this.metrics = metrics;
             // Define click listener for the ViewHolder's View.
-            mCardView = (CardView) v.findViewById(R.id.offer_list_item_card);
-            mLogoView = (ImageView) mCardView.findViewById(R.id.image_view_avatar);
-            mTitleView = (TextView) mCardView.findViewById(R.id.text_view_name);
+            mOfferItemImage = (ImageView) v.findViewById(R.id.offer_list_image);
             context = v.getContext();
         }
 
         public void loadData(OfferStub offerStub) {
-            mTitleView.setText(offerStub.getDescriptionShort());
-            Picasso.with(context).load(offerStub.getLogo())
+            String url = buildUrl(offerStub.getImageUrl());
+            Picasso.with(context).load(url)
                     .placeholder(R.color.blue)
-                    .into(mLogoView);
+                    .into(mOfferItemImage);
+        }
+
+        private String buildUrl(String imageUrl) {
+            int height = metrics.heightPixels;
+            int width = metrics.widthPixels;
+            return imageUrl + "/" + String.valueOf(width) + "/"
+                    + String.valueOf(height) + "/fashion/";
         }
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)
@@ -66,9 +73,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.offer_list_item, viewGroup, false);
+        final int viewGroupWidh = viewGroup.getWidth();
 
-
-        return new ViewHolder(v);
+        return new ViewHolder(v, viewGroupWidh, getMetrics());
     }
     // END_INCLUDE(recyclerViewOnCreateViewHolder)
 
@@ -99,4 +106,14 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         mDataSet.remove(position);
         notifyItemRemoved(position);
     }
+
+    public void setMetrics(DisplayMetrics metrics) {
+        this.metrics = metrics;
+    }
+
+    public DisplayMetrics getMetrics() {
+        return metrics;
+    }
+
+
 }
