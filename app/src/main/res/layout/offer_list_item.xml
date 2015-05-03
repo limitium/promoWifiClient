@@ -28,6 +28,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/relaGrid"
         android:orientation="vertical"
+        android:background="?android:colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -35,11 +36,14 @@
             android:id="@+id/offer_list_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/nicolas_cage" />
+            android:minHeight="61dp"
+            android:scaleType="center"
+            android:src="@drawable/progress_animation"
+            tools:src="@drawable/progress_image" />
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_below="@id/offer_list_image"
+            android:id="@+id/offer_list_buttons"
             android:padding="@dimen/actions_padding"
             android:paddingLeft="@dimen/actions_padding_left"
             android:paddingRight="@dimen/actions_padding_left"

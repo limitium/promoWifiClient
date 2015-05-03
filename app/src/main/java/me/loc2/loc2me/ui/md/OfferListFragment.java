@@ -105,6 +105,7 @@ public class OfferListFragment extends Fragment {
             OfferStub offerStub = new OfferStub();
             int item = random.nextInt(templates.length);
             offerStub.setImageUrl("http://lorempixel.com");
+            offerStub.setHeight(Math.max(i * 100, 300));
             offerStub.setBannerHtml(templates[item]);
             offerStub.setDescriptionFull(getString(R.string.lorem_ipsum_long));
             offerStub.setDescriptionShort(getString(R.string.lorem_ipsum_short));

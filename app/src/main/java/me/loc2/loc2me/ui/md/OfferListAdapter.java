@@ -29,6 +29,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView mOfferItemImage;
+        private View mOfferListButtons;
         private final Context context;
         private final DisplayMetrics metrics;
 
@@ -37,18 +38,17 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             this.metrics = metrics;
             // Define click listener for the ViewHolder's View.
             mOfferItemImage = (ImageView) v.findViewById(R.id.offer_list_image);
+            mOfferListButtons = v.findViewById(R.id.offer_list_buttons);
             context = v.getContext();
         }
 
         public void loadData(OfferStub offerStub) {
-            String url = buildUrl(offerStub.getImageUrl());
+            String url = buildUrl(offerStub.getImageUrl(), offerStub.getHeight());
             Picasso.with(context).load(url)
-                    .placeholder(R.color.blue)
                     .into(mOfferItemImage);
         }
 
-        private String buildUrl(String imageUrl) {
-            int height = metrics.heightPixels;
+        private String buildUrl(String imageUrl, int height) {
             int width = metrics.widthPixels;
             return imageUrl + "/" + String.valueOf(width) + "/"
                     + String.valueOf(height) + "/fashion/";
