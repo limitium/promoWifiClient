@@ -1,17 +1,24 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/gray"
-    android:layout_height="match_parent">
-    <RelativeLayout
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/offer_list_image_details"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/gray"
-        android:transitionName="@string/transition_to_details">
-        <WebView
-            android:id="@+id/details_view"
-            android:layout_width="fill_parent"
-            android:background="@color/gray"
-            android:layout_height="fill_parent">
-        </WebView>
-    </RelativeLayout>
-</RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_weight=".8"
+        android:layout_gravity="center_horizontal"
+        android:transitionName="@string/transition_to_details"
+        tools:src="@drawable/nicolas_cage"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Content here"
+        android:layout_weight="0.2" />
+
+</LinearLayout>

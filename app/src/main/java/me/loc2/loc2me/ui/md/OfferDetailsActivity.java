@@ -4,16 +4,21 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.webkit.WebView;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import me.loc2.loc2me.R;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class OfferDetailsActivity extends Activity {
 
-    private WebView mDetailsView;
+    private ImageView mOfferDetailsImage;
 
     public static final String OFFER = "OFFER";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +29,21 @@ public class OfferDetailsActivity extends Activity {
     }
 
     private void setUpLayout(OfferStub offer) {
-        mDetailsView = (WebView)findViewById(R.id.details_view);
-        String fullPath = "file:///android_asset/" + OfferConstants.ASSETS + "/" +
-                offer.getBannerHtml() + ".html";
-        mDetailsView.loadUrl(fullPath);
+        mOfferDetailsImage = (ImageView)findViewById(R.id.offer_list_image_details);
+        String url = buildUrl(offer.getImageUrl());
+        Picasso.with(this).load(url)
+                .fit().centerCrop()
+                .placeholder(R.color.blue)
+                .into(mOfferDetailsImage);
     }
+
+    private String buildUrl(String imageUrl) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+        return imageUrl + "/" + String.valueOf(width) + "/"
+                + String.valueOf(height) + "/fashion/";
+    }
+
 }
