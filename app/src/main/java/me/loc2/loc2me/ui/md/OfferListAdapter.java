@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -29,7 +28,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView mOfferItemImage;
+        private ImageView mOfferItemImage;
         private final Context context;
         private final DisplayMetrics metrics;
 

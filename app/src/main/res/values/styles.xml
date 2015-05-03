@@ -10,4 +10,9 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_height">match_parent</item>
     </style>
+
+    <style name="CardButtons">
+        <item name="android:layout_height">@dimen/cardview_buttons_icon_size</item>
+        <item name="android:layout_width">@dimen/cardview_buttons_icon_size</item>
+    </style>
 </resources>

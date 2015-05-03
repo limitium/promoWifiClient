@@ -19,12 +19,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/wrapper"
-    android:background="@color/gray"
+    android:background="?android:colorPrimaryDark"
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:background="@color/gray"
+        android:background="?android:colorPrimaryDark"
         android:layout_height="match_parent"/>
 </RelativeLayout>

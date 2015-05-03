@@ -16,5 +16,8 @@
 
     <!-- *height_profile_image* - half of *size_button_message* -->
     <dimen name="margin_top_button_message">220dp</dimen>
-
+    <dimen name="margin_large">8dp</dimen>
+    <dimen name="cardview_buttons_icon_size">16dp</dimen>
+    <dimen name="actions_padding">16dp</dimen>
+    <dimen name="actions_padding_left">16dp</dimen>
 </resources>

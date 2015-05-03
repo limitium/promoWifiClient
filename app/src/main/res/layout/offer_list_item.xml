@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  Copyright 2014 The Android Open Source Project
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,16 +14,67 @@
  limitations under the License.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight=".50">
+    android:id="@+id/cardview"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:elevation="100dp"
+    android:background="?android:colorPrimary"
+    android:layout_margin="@dimen/margin_large"
+    card_view:cardCornerRadius="2dp">
 
-    <ImageView
-        android:id="@+id/offer_list_image"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/relaGrid"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        tools:src="@drawable/nicolas_cage"/>
-</RelativeLayout>
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/offer_list_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/nicolas_cage" />
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_below="@id/offer_list_image"
+            android:padding="@dimen/actions_padding"
+            android:paddingLeft="@dimen/actions_padding_left"
+            android:paddingRight="@dimen/actions_padding_left"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/ic1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_drawer"
+                android:background="?android:selectableItemBackground"
+                android:layout_alignParentRight="true"
+                style="@style/CardButtons"/>
+
+
+            <ImageButton
+                android:scaleType="fitCenter"
+                android:id="@+id/ic2"
+                android:layout_toLeftOf="@+id/ic1"
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/ic_action_timer"
+                style="@style/CardButtons"
+                android:layout_marginRight="@dimen/actions_padding_left"
+                />
+
+            <ImageButton
+                android:scaleType="fitCenter"
+                android:id="@+id/ic3"
+                android:layout_toLeftOf="@+id/ic2"
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/ic_action_refresh"
+                style="@style/CardButtons"
+                android:layout_marginRight="@dimen/actions_padding_left"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
+
