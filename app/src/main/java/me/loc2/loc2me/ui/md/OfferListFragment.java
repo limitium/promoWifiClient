@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Fade;
+import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,9 +87,15 @@ public class OfferListFragment extends Fragment {
         Intent intent = new Intent(getActivity(), OfferDetailsActivity.class);
         intent.putExtra(OfferDetailsActivity.OFFER, offer);
 
+        View statusBar = getActivity().findViewById(android.R.id.statusBarBackground);
+        View sharedElement = sharedView.findViewById(R.id.offer_list_image);
+
+        List<Pair<View, String>> pairs = new ArrayList<>();
+        pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
+        pairs.add(Pair.create(sharedElement, getString(R.string.card_to_details)));
+
         ActivityOptions transitionActivityOptions;
-        transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(),
-                sharedView.findViewById(R.id.offer_list_image), getString(R.string.card_to_details));
+        transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(), pairs.toArray(new Pair[pairs.size()]));
         Bundle bundle = transitionActivityOptions.toBundle();
         getActivity().startActivity(intent, bundle);
     }

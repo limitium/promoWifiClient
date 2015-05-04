@@ -13,6 +13,7 @@ import android.transition.TransitionInflater;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewTreeObserver;
 import android.webkit.WebView;
 import android.widget.ImageView;
 
@@ -43,6 +44,21 @@ public class OfferDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
         offer = (OfferStub)getIntent().getParcelableExtra(OFFER);
         setContentView(R.layout.offer_details);
+
+        // Postpone the transition until the window's decor view has
+        // finished its layout.
+        postponeEnterTransition();
+
+        final View decor = getWindow().getDecorView();
+        decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                decor.getViewTreeObserver().removeOnPreDrawListener(this);
+                startPostponedEnterTransition();
+                return true;
+            }
+        });
+
         setUpLayout();
         setupWindowAnimations();
     }
