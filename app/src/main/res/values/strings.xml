@@ -63,5 +63,5 @@
     <string name="toolbar_bio">Bio</string>
     <string name="toolbar_details">Details</string>
 
-    <string name="transition_to_details">transition_to_details</string>
+    <string name="card_to_details">card_to_details</string>
 </resources>

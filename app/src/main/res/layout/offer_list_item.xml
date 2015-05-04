@@ -35,7 +35,6 @@
             android:id="@+id/offer_list_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:transitionName="@string/transition_to_details"
             android:scaleType="center"/>
 
         <ProgressBar

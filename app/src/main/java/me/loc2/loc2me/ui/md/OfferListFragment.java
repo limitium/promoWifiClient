@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.TransitionInflater;
 import android.util.DisplayMetrics;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +59,7 @@ public class OfferListFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
         mAdapter = new OfferListAdapter(mDataSet);
         mRecyclerView.setAdapter(mAdapter);
@@ -73,19 +73,20 @@ public class OfferListFragment extends Fragment {
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(mRootView.getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        goToProfileDetails(view, mDataSet.get(position));
+                        goToDetails(view, mDataSet.get(position));
                     }
                 })
         );
         return mRootView;
     }
 
-    private void goToProfileDetails(View sharedView, OfferStub offer) {
+    private void goToDetails(View sharedView, OfferStub offer) {
         Intent intent = new Intent(getActivity(), OfferDetailsActivity.class);
         intent.putExtra(OfferDetailsActivity.OFFER, offer);
-        String transitionName = getString(R.string.transition_to_details);
 
-        ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
+        ActivityOptions transitionActivityOptions;
+        transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(),
+                sharedView, getString(R.string.card_to_details));
         Bundle bundle = transitionActivityOptions.toBundle();
         getActivity().startActivity(intent, bundle);
     }

@@ -41,7 +41,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         private ImageView mOfferItemImage;
         private View mOfferListButtons;
         private ProgressBar mSpinner;
-        private final Context context;
         private final DisplayMetrics metrics;
         private final DisplayImageOptions imageLoadingOptions;
         private boolean imageLoaded = false;
@@ -54,7 +53,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             mOfferItemImage = (ImageView) v.findViewById(R.id.offer_list_image);
             mOfferListButtons = v.findViewById(R.id.offer_action_buttons);
             mSpinner = (ProgressBar)v.findViewById(R.id.loading);
-            context = v.getContext();
         }
 
         public void loadData(OfferStub offerStub) {

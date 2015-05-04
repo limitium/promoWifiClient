@@ -3,7 +3,7 @@
     android:padding="@dimen/actions_padding"
     android:paddingLeft="@dimen/actions_padding_left"
     android:paddingRight="@dimen/actions_padding_left"
-    android:background="@color/gray"
+    android:background="?android:colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
