@@ -88,4 +88,8 @@ public class OfferStub implements Parcelable {
     public void setHeight(int height) {
         this.height = height;
     }
+
+    public String getThumbnailUrl() {
+        return getImageUrl();
+    }
 }

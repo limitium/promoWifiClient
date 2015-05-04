@@ -134,12 +134,23 @@ public class OfferDetailsActivity extends Activity {
 
     private void setUpLayout() {
         mOfferDetailsImage = (ImageView)findViewById(R.id.offer_details_image);
+        loadThumbnail();
+    }
+
+    private void loadThumbnail() {
+        String url = buildUrl(offer.getThumbnailUrl());
+        DisplayImageOptions imageLoadingOptions = new DisplayImageOptions.Builder()
+                .cacheOnDisk(true)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .considerExifParams(true)
+                .build();
+        ImageLoader.getInstance().displayImage(url, mOfferDetailsImage, imageLoadingOptions);
     }
 
     private void loadImage() {
         String url = buildUrl(offer.getImageUrl());
         DisplayImageOptions imageLoadingOptions = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true)
                 .cacheOnDisk(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .bitmapConfig(Bitmap.Config.RGB_565)

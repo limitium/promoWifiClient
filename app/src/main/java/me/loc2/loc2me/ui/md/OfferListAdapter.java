@@ -98,7 +98,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 //                .showImageForEmptyUri(R.drawable.ic_empty)
 //                .showImageOnFail(R.drawable.ic_error)
         imageLoadingOptions = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true)
                 .cacheOnDisk(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .bitmapConfig(Bitmap.Config.RGB_565)

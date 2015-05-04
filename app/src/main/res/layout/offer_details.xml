@@ -3,7 +3,6 @@
     android:orientation="vertical"
     android:background="?android:colorPrimary"
     android:layout_width="match_parent"
-    android:transitionName="@string/card_to_details"
     android:layout_height="match_parent">
 
     <ImageView
@@ -12,6 +11,7 @@
         android:layout_height="300dp"
         android:scaleType="center"
         android:layout_above="@+id/offer_action_buttons_layout"
+        android:transitionName="@string/card_to_details"
         android:layout_alignParentTop="true" />
 
     <include android:id="@+id/offer_action_buttons_layout"

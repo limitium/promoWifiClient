@@ -86,7 +86,7 @@ public class OfferListFragment extends Fragment {
 
         ActivityOptions transitionActivityOptions;
         transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(),
-                sharedView, getString(R.string.card_to_details));
+                sharedView.findViewById(R.id.offer_list_image), getString(R.string.card_to_details));
         Bundle bundle = transitionActivityOptions.toBundle();
         getActivity().startActivity(intent, bundle);
     }
