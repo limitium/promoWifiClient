@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.TransitionInflater;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,6 +84,7 @@ public class OfferListFragment extends Fragment {
         Intent intent = new Intent(getActivity(), OfferDetailsActivity.class);
         intent.putExtra(OfferDetailsActivity.OFFER, offer);
         String transitionName = getString(R.string.transition_to_details);
+
         ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
         Bundle bundle = transitionActivityOptions.toBundle();
         getActivity().startActivity(intent, bundle);

@@ -52,7 +52,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             this.imageLoadingOptions = imageLoadingOptions;
             // Define click listener for the ViewHolder's View.
             mOfferItemImage = (ImageView) v.findViewById(R.id.offer_list_image);
-            mOfferListButtons = v.findViewById(R.id.offer_list_buttons);
+            mOfferListButtons = v.findViewById(R.id.offer_action_buttons);
             mSpinner = (ProgressBar)v.findViewById(R.id.loading);
             context = v.getContext();
         }
