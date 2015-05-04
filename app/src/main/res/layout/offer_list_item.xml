@@ -36,13 +36,20 @@
             android:id="@+id/offer_list_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="61dp"
-            android:scaleType="center"
-            android:src="@drawable/progress_animation"
-            tools:src="@drawable/progress_image" />
+            android:scaleType="center"/>
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/margin_large"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true" />
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_below="@id/offer_list_image"
+            android:layout_below="@id/loading"
             android:id="@+id/offer_list_buttons"
             android:padding="@dimen/actions_padding"
             android:paddingLeft="@dimen/actions_padding_left"

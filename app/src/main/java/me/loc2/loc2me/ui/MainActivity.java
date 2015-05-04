@@ -25,6 +25,9 @@ import me.loc2.loc2me.ui.md.OfferListFragment;
 import me.loc2.loc2me.util.Ln;
 import me.loc2.loc2me.util.SafeAsyncTask;
 import me.loc2.loc2me.util.UIUtils;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
@@ -158,8 +161,14 @@ public class MainActivity extends Loc2meFragmentActivity {
                 super.onSuccess(hasAuthenticated);
                 userHasAuthenticated = true;
                 initScreen();
+                initImageLoader();
             }
         }.execute();
+    }
+
+    private void initImageLoader() {
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
     }
 
     @Override
