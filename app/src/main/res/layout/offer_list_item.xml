@@ -48,7 +48,7 @@
             android:visibility="gone"
             android:layout_centerHorizontal="true" />
 
-        <include android:id="@+id/news_title"
+        <include android:id="@+id/offer_action_buttons_layout"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:layout_below="@+id/offer_list_image"

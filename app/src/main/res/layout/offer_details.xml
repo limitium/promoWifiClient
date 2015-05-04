@@ -1,25 +1,23 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relaGrid"
+    android:orientation="vertical"
+    android:background="?android:colorPrimary"
     android:layout_width="match_parent"
-    android:background="@color/gray"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/offer_list_image_details"
+        android:id="@+id/offer_details_image"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".8"
-        android:layout_gravity="center_horizontal"
+        android:layout_height="300dp"
         android:transitionName="@string/transition_to_details"
-        tools:src="@drawable/nicolas_cage"/>
+        android:scaleType="center"
+        android:layout_above="@+id/offer_action_buttons_layout"
+        android:layout_alignParentTop="true" />
 
-    <TextView
-        android:layout_width="fill_parent"
+    <include android:id="@+id/offer_action_buttons_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Content here"
-        android:layout_weight="0.2" />
-
-</LinearLayout>
-
+        layout="@layout/offer_action_buttons"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>

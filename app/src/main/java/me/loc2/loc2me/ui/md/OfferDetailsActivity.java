@@ -39,7 +39,7 @@ public class OfferDetailsActivity extends Activity {
     }
 
     private void setUpLayout(OfferStub offer) {
-        mOfferDetailsImage = (ImageView)findViewById(R.id.offer_list_image_details);
+        mOfferDetailsImage = (ImageView)findViewById(R.id.offer_details_image);
         String url = buildUrl(offer.getImageUrl());
         DisplayImageOptions imageLoadingOptions = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(true)
