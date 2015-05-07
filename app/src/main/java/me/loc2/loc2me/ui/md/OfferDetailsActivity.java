@@ -195,7 +195,7 @@ public class OfferDetailsActivity extends Activity {
         int height = metrics.heightPixels;
         int width = metrics.widthPixels;
         return imageUrl + "/" + String.valueOf(width) + "/"
-                + String.valueOf(height) + "/fashion/";
+                + String.valueOf(height) + "/animals/";
     }
 
 }

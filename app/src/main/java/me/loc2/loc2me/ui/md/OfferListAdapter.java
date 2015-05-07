@@ -83,7 +83,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         private String buildUrl(String imageUrl, int height) {
             int width = metrics.widthPixels;
             return imageUrl + "/" + String.valueOf(width) + "/"
-                    + String.valueOf(height) + "/fashion/";
+                    + String.valueOf(height) + "/animals/";
         }
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)
