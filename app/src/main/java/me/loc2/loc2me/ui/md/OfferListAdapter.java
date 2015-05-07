@@ -98,6 +98,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 //                .showImageForEmptyUri(R.drawable.ic_empty)
 //                .showImageOnFail(R.drawable.ic_error)
         imageLoadingOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .bitmapConfig(Bitmap.Config.RGB_565)
@@ -113,9 +114,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.offer_list_item, viewGroup, false);
-        final int viewGroupWidh = viewGroup.getWidth();
+        final int viewGroupWidth = viewGroup.getWidth();
 
-        return new ViewHolder(v, viewGroupWidh, getMetrics(), imageLoadingOptions);
+        return new ViewHolder(v, viewGroupWidth, getMetrics(), imageLoadingOptions);
     }
     // END_INCLUDE(recyclerViewOnCreateViewHolder)
 

@@ -155,23 +155,13 @@ public class OfferDetailsActivity extends Activity {
 
     private void loadThumbnail() {
         String url = buildUrl(offer.getThumbnailUrl());
-        DisplayImageOptions imageLoadingOptions = new DisplayImageOptions.Builder()
-                .cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .considerExifParams(true)
-                .build();
+        DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
         ImageLoader.getInstance().displayImage(url, mOfferDetailsImage, imageLoadingOptions);
     }
 
     private void loadImage() {
         String url = buildUrl(offer.getImageUrl());
-        DisplayImageOptions imageLoadingOptions = new DisplayImageOptions.Builder()
-                .cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .considerExifParams(true)
-                .build();
+        DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
         ImageLoader.getInstance().displayImage(url, mOfferDetailsImage, imageLoadingOptions, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
@@ -189,13 +179,25 @@ public class OfferDetailsActivity extends Activity {
 
     }
 
+    private DisplayImageOptions getDisplayImageOptions() {
+        return new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .imageScaleType(ImageScaleType.EXACTLY)
+                    .bitmapConfig(Bitmap.Config.RGB_565)
+                    .considerExifParams(true)
+                    .build();
+    }
+
     private String buildUrl(String imageUrl) {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int height = metrics.heightPixels;
+        int height = offer.getHeight();
         int width = metrics.widthPixels;
-        return imageUrl + "/" + String.valueOf(width) + "/"
+        String url = imageUrl + "/" + String.valueOf(width) + "/"
                 + String.valueOf(height) + "/animals/";
+        Ln.d("Loading url: " + url);
+        return url;
     }
 
 }
