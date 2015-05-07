@@ -3,14 +3,13 @@
     android:orientation="vertical"
     android:layout_width="@dimen/size_button_message"
     android:layout_height="@dimen/size_button_message"
-    android:background="@drawable/bg_orange_circle">
+    android:elevation="@dimen/elevation_low"
+    android:stateListAnimator="@anim/button_elevation"
+    android:background="@drawable/oval_ripple">
 
     <ImageView
-        android:layout_marginTop="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_arrow_back_black_36dp"
-        android:elevation="@dimen/elevation_high"
-        android:stateListAnimator="@anim/button_elevation"
         android:layout_gravity="center" />
 </FrameLayout>

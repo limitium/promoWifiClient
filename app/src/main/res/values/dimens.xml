@@ -23,5 +23,5 @@
     <dimen name="round_button_diameter">24dp</dimen>
     <dimen name="back_button_margin">16dp</dimen>
     <dimen name="elevation_low">1dp</dimen>
-    <dimen name="elevation_high">8dp</dimen>
+    <dimen name="elevation_high">4dp</dimen>
 </resources>
