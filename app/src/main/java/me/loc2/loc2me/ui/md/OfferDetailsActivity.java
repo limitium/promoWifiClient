@@ -2,28 +2,27 @@ package me.loc2.loc2me.ui.md;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
 import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewTreeObserver;
-import android.webkit.WebView;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.squareup.picasso.Picasso;
 
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.util.Ln;
@@ -34,9 +33,14 @@ public class OfferDetailsActivity extends Activity {
     private static final long ANIM_DURATION = 300;
 
     private ImageView mOfferDetailsImage;
+    private View imageFrame;
     private OfferStub offer;
 
     public static final String OFFER = "OFFER";
+
+    private Animation mBackButtonShowAnimation;
+    private View mBackButton;
+    private float mInitialBackButtonX;
 
 
     @Override
@@ -72,11 +76,14 @@ public class OfferDetailsActivity extends Activity {
         final Transition enterTransition = getWindow().getSharedElementEnterTransition();
         enterTransition.addListener(new Transition.TransitionListener() {
             @Override
-            public void onTransitionStart(Transition transition) {}
+            public void onTransitionStart(Transition transition) {
+                createBackButtonAnimation();
+            }
 
             @Override
             public void onTransitionEnd(Transition transition) {
                 loadImage();
+
                 enterTransition.removeListener(this);
             }
 
@@ -150,6 +157,14 @@ public class OfferDetailsActivity extends Activity {
 
     private void setUpLayout() {
         mOfferDetailsImage = (ImageView)findViewById(R.id.offer_details_image);
+        imageFrame = findViewById(R.id.squared_details_image);
+        mBackButton = findViewById(R.id.back_button);
+        mBackButton.post(new Runnable() {
+            @Override
+            public void run() {
+                mInitialBackButtonX = mBackButton.getX();
+            }
+        });
         loadThumbnail();
     }
 
@@ -174,9 +189,18 @@ public class OfferDetailsActivity extends Activity {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 Ln.i("On loading complete");
+                mBackButton.startAnimation(mBackButtonShowAnimation);
+                Animator backButtonPositionAnimator = ObjectAnimator.ofFloat(mBackButton, View.Y,
+                        mBackButton.getY(), loadedImage.getHeight());
+                backButtonPositionAnimator.setDuration(1000);
+                backButtonPositionAnimator.start();
             }
         });
 
+    }
+
+    private int dpToPx(int dp) {
+        return Math.round((float) dp * getResources().getDisplayMetrics().density);
     }
 
     private DisplayImageOptions getDisplayImageOptions() {
@@ -198,6 +222,30 @@ public class OfferDetailsActivity extends Activity {
                 + String.valueOf(height) + "/animals/";
         Ln.d("Loading url: " + url);
         return url;
+    }
+
+    private void createBackButtonAnimation() {
+        if (mBackButtonShowAnimation == null) {
+            mBackButtonShowAnimation = AnimationUtils.loadAnimation(this, R.anim.profile_button_scale);
+            mBackButtonShowAnimation.setDuration(300);
+            mBackButtonShowAnimation.setInterpolator(new AccelerateInterpolator());
+            mBackButtonShowAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    mBackButton.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+        }
     }
 
 }
