@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -12,13 +13,18 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.util.Ln;
@@ -29,13 +35,14 @@ public class OfferDetailsActivity extends Activity {
     private static final long ANIM_DURATION = 300;
 
     private ImageView mOfferDetailsImage;
+    private TextView mOfferDescription;
     private View imageFrame;
     private OfferStub offer;
 
     public static final String OFFER = "OFFER";
 
-    private Animation mBackButtonShowAnimation;
-    private Animation mBackButtonHideAnimation;
+    private Map<View, Animation> showAnimations;
+    private Map<View, Animation> backAnimations;
     private View mBackButton;
 
     private enum State {
@@ -46,11 +53,10 @@ public class OfferDetailsActivity extends Activity {
     private State state;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        offer = (OfferStub)getIntent().getParcelableExtra(OFFER);
+        offer = (OfferStub) getIntent().getParcelableExtra(OFFER);
         state = State.CLOSED;
         setContentView(R.layout.offer_details);
 
@@ -96,10 +102,12 @@ public class OfferDetailsActivity extends Activity {
             }
 
             @Override
-            public void onTransitionPause(Transition transition) {}
+            public void onTransitionPause(Transition transition) {
+            }
 
             @Override
-            public void onTransitionResume(Transition transition) {}
+            public void onTransitionResume(Transition transition) {
+            }
         });
     }
 
@@ -126,21 +134,27 @@ public class OfferDetailsActivity extends Activity {
             }
 
             @Override
-            public void onTransitionEnd(Transition transition) {}
+            public void onTransitionEnd(Transition transition) {
+            }
 
             @Override
-            public void onTransitionCancel(Transition transition) {}
+            public void onTransitionCancel(Transition transition) {
+            }
 
             @Override
-            public void onTransitionPause(Transition transition) {}
+            public void onTransitionPause(Transition transition) {
+            }
 
             @Override
-            public void onTransitionResume(Transition transition) {}
+            public void onTransitionResume(Transition transition) {
+            }
         });
     }
 
     private void setUpLayout() {
-        mOfferDetailsImage = (ImageView)findViewById(R.id.offer_details_image);
+        mOfferDetailsImage = (ImageView) findViewById(R.id.offer_details_image);
+        mOfferDescription = (TextView) findViewById(R.id.offer_description);
+        mOfferDescription.setMovementMethod(new ScrollingMovementMethod());
         imageFrame = findViewById(R.id.squared_details_image);
 
         mBackButton = findViewById(R.id.back_button);
@@ -151,8 +165,8 @@ public class OfferDetailsActivity extends Activity {
             }
         });
 
-        createBackButtonShowAnimation();
-        createBackButtonHideAnimation();
+        createShowAnimations();
+        createBackAnimations();
 
         loadThumbnail();
     }
@@ -171,10 +185,12 @@ public class OfferDetailsActivity extends Activity {
             public void onLoadingStarted(String imageUri, View view) {
                 Ln.i("On loading started");
             }
+
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 Ln.i("On loading failed");
             }
+
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 Ln.i("On loading complete");
@@ -186,12 +202,16 @@ public class OfferDetailsActivity extends Activity {
     }
 
     private void animateOpenDetails() {
-        mBackButton.setY(imageFrame.getHeight() - mBackButton.getHeight()/2);
-        mBackButton.startAnimation(mBackButtonShowAnimation);
+        mBackButton.setY(imageFrame.getHeight() - mBackButton.getHeight() / 2);
+        for (Map.Entry<View, Animation> entry: showAnimations.entrySet()) {
+            entry.getKey().startAnimation(entry.getValue());
+        }
     }
 
     private void closeDetails() {
-        mBackButton.startAnimation(mBackButtonHideAnimation);
+        for (Map.Entry<View, Animation> entry: backAnimations.entrySet()) {
+            entry.getKey().startAnimation(entry.getValue());
+        }
     }
 
     private int dpToPx(int dp) {
@@ -200,12 +220,12 @@ public class OfferDetailsActivity extends Activity {
 
     private DisplayImageOptions getDisplayImageOptions() {
         return new DisplayImageOptions.Builder()
-                    .cacheInMemory(true)
-                    .cacheOnDisk(true)
-                    .imageScaleType(ImageScaleType.EXACTLY)
-                    .bitmapConfig(Bitmap.Config.RGB_565)
-                    .considerExifParams(true)
-                    .build();
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .considerExifParams(true)
+                .build();
     }
 
     private String buildUrl(String imageUrl) {
@@ -219,53 +239,113 @@ public class OfferDetailsActivity extends Activity {
         return url;
     }
 
-    private void createBackButtonShowAnimation() {
-        if (mBackButtonShowAnimation == null) {
-            mBackButtonShowAnimation = AnimationUtils.loadAnimation(this, R.anim.profile_button_scale);
-            mBackButtonShowAnimation.setDuration(ANIM_DURATION);
-            mBackButtonShowAnimation.setInterpolator(new AccelerateInterpolator());
-            mBackButtonShowAnimation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    mBackButton.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
+    private void createShowAnimations() {
+        if (null == showAnimations) {
+            showAnimations = new HashMap<>();
+            showAnimations.put(mBackButton, createBackButtonShowAnimation());
+            showAnimations.put(mOfferDescription, createTextDescriptionShowAnimation());
         }
     }
 
-    private void createBackButtonHideAnimation() {
-        if (mBackButtonHideAnimation == null) {
-            mBackButtonHideAnimation = AnimationUtils.loadAnimation(this, R.anim.profile_button_hide_scale);
-            mBackButtonHideAnimation.setDuration(ANIM_DURATION);
-            mBackButtonHideAnimation.setInterpolator(new AccelerateInterpolator());
-            mBackButtonHideAnimation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    state = State.CLOSED;
-                    mBackButton.setVisibility(View.INVISIBLE);
-                    onBackPressed();
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
+    private void createBackAnimations() {
+        if (null == backAnimations) {
+            backAnimations = new HashMap<>();
+            backAnimations.put(mBackButton, createBackButtonHideAnimation());
+            backAnimations.put(mOfferDescription, createTextDescriptionHideAnimation());
         }
     }
 
+    private Animation createBackButtonShowAnimation() {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_button_scale);
+        animation.setDuration(ANIM_DURATION);
+        animation.setInterpolator(new AccelerateInterpolator());
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                mBackButton.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        return animation;
+    }
+
+    private Animation createBackButtonHideAnimation() {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_button_hide_scale);
+        animation.setDuration(ANIM_DURATION);
+        animation.setInterpolator(new AccelerateInterpolator());
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                state = State.CLOSED;
+                mBackButton.setVisibility(View.INVISIBLE);
+                onBackPressed();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        return animation;
+    }
+
+    private Animation createTextDescriptionShowAnimation() {
+        float x = mOfferDescription.getX();
+        float y = getResources().getDisplayMetrics().heightPixels;
+        float newY = imageFrame.getHeight();
+        TranslateAnimation animation = new TranslateAnimation(x, x,
+                y, newY);          //  new TranslateAnimation(xFrom,xTo, yFrom,yTo)
+        animation.setDuration(ANIM_DURATION);
+        animation.setInterpolator(new AccelerateInterpolator());
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                mOfferDescription.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        return animation;
+    }
+
+    private Animation createTextDescriptionHideAnimation() {
+        float x = mOfferDescription.getX();
+        float y = getResources().getDisplayMetrics().heightPixels;
+        float newY = imageFrame.getHeight();
+        TranslateAnimation animation = new TranslateAnimation(x, x,
+                newY, y);          //  new TranslateAnimation(xFrom,xTo, yFrom,yTo)
+        animation.setDuration(ANIM_DURATION);
+        animation.setInterpolator(new AccelerateInterpolator());
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mOfferDescription.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        return animation;
+    }
 }
