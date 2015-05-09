@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -16,6 +17,10 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import org.ocpsoft.pretty.time.PrettyTime;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import me.loc2.loc2me.R;
@@ -35,8 +40,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView mOfferItemImage;
-        private View mOfferListButtons;
+        private TextView mOfferDateCreated;
         private ProgressBar mSpinner;
+
         private final DisplayMetrics metrics;
         private final DisplayImageOptions imageLoadingOptions;
         private boolean imageLoaded = false;
@@ -47,11 +53,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             this.imageLoadingOptions = imageLoadingOptions;
             // Define click listener for the ViewHolder's View.
             mOfferItemImage = (ImageView) v.findViewById(R.id.offer_list_image);
-            mOfferListButtons = v.findViewById(R.id.offer_action_buttons);
+            mOfferDateCreated = (TextView)v.findViewById(R.id.offer_date_created);
             mSpinner = (ProgressBar)v.findViewById(R.id.loading);
         }
 
-        public void loadData(OfferStub offerStub) {
+        public void loadData(final OfferStub offerStub) {
             if (!imageLoaded) {
                 mSpinner.setVisibility(View.VISIBLE);
                 String url = buildUrl(offerStub.getImageUrl(), offerStub.getHeight());
@@ -71,6 +77,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                         Ln.i("On loading complete");
                         mSpinner.setVisibility(View.GONE);
                         imageLoaded = true;
+                        PrettyTime prettyTime = new PrettyTime(new Date());
+                        mOfferDateCreated.setText("Added " + prettyTime.format(offerStub.getAdded()));
                     }
                 });
             }

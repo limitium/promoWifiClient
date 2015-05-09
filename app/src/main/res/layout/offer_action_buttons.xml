@@ -9,31 +9,17 @@
     android:layout_alignParentBottom="true"
     android:layout_alignParentStart="true">
 
-    <ImageButton
-        android:id="@+id/ic1"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_drawer"
-        android:background="?android:selectableItemBackground"
-        android:layout_alignParentRight="true"
-        style="@style/CardButtons"/>
+    <TextView
+        android:id="@+id/offer_date_created"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:background="?android:colorPrimary"
+        android:textAppearance="@android:style/TextAppearance.Material.Body1"
+        android:paddingLeft="@dimen/padding_small"
+        android:paddingRight="16dp"
+        android:textStyle="italic"
+        android:textSize="12sp"
+        android:text="My text"/>
 
-
-    <ImageButton
-        android:scaleType="fitCenter"
-        android:id="@+id/ic2"
-        android:layout_toLeftOf="@+id/ic1"
-        android:background="?android:selectableItemBackground"
-        android:src="@drawable/ic_action_timer"
-        style="@style/CardButtons"
-        android:layout_marginRight="@dimen/actions_padding_left"
-        />
-
-    <ImageButton
-        android:scaleType="fitCenter"
-        android:id="@+id/ic3"
-        android:layout_toLeftOf="@+id/ic2"
-        android:background="?android:selectableItemBackground"
-        android:src="@drawable/ic_action_refresh"
-        style="@style/CardButtons"
-        android:layout_marginRight="@dimen/actions_padding_left"/>
 </RelativeLayout>

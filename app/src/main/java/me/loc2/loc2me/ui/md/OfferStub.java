@@ -3,6 +3,8 @@ package me.loc2.loc2me.ui.md;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Date;
+
 public class OfferStub implements Parcelable {
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
@@ -21,6 +23,7 @@ public class OfferStub implements Parcelable {
     private String descriptionFull;
     private String bannerHtml;
     private int height;
+    private Date added;
 
     // example constructor that takes a Parcel and gives you an object populated with it's values
     private OfferStub(Parcel in) {
@@ -29,10 +32,11 @@ public class OfferStub implements Parcelable {
         descriptionFull = in.readString();
         bannerHtml = in.readString();
         height = in.readInt();
+        added = new Date(in.readLong());
     }
 
     public OfferStub() {
-
+        added = new Date();
     }
 
     @Override
@@ -47,6 +51,7 @@ public class OfferStub implements Parcelable {
         dest.writeString(descriptionFull);
         dest.writeString(bannerHtml);
         dest.writeInt(height);
+        dest.writeLong(added.getTime());
     }
 
     public String getImageUrl() {
@@ -91,5 +96,13 @@ public class OfferStub implements Parcelable {
 
     public String getThumbnailUrl() {
         return getImageUrl();
+    }
+
+    public Date getAdded() {
+        return added;
+    }
+
+    public void setAdded(Date added) {
+        this.added = added;
     }
 }

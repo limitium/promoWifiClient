@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -134,6 +135,9 @@ public class OfferListFragment extends Fragment {
             offerStub.setBannerHtml(templates[item]);
             offerStub.setDescriptionFull(getString(R.string.lorem_ipsum_long));
             offerStub.setDescriptionShort(getString(R.string.lorem_ipsum_short));
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, -1 * (i + 1));
+            offerStub.setAdded(cal.getTime());
             mDataSet.add(offerStub);
         }
     }
