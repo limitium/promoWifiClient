@@ -59,6 +59,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
         public void loadData(final OfferStub offerStub) {
             if (!imageLoaded) {
+                mOfferDateCreated.setVisibility(View.INVISIBLE);
                 mSpinner.setVisibility(View.VISIBLE);
                 String url = buildUrl(offerStub.getImageUrl(), offerStub.getHeight());
                 ImageLoader.getInstance().displayImage(url, mOfferItemImage, imageLoadingOptions, new SimpleImageLoadingListener() {
@@ -76,6 +77,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         Ln.i("On loading complete");
                         mSpinner.setVisibility(View.GONE);
+                        mOfferDateCreated.setVisibility(View.VISIBLE);
                         imageLoaded = true;
                     }
                 });

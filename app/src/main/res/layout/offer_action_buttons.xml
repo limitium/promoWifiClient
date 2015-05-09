@@ -17,9 +17,7 @@
         android:background="?android:colorPrimary"
         android:textAppearance="@android:style/TextAppearance.Material.Body1"
         android:paddingLeft="@dimen/padding_small"
-        android:paddingRight="16dp"
-        android:textStyle="italic"
-        android:textSize="12sp"
-        android:text="My text"/>
+        android:paddingRight="@dimen/padding_small"
+        android:textStyle="italic"/>
 
 </RelativeLayout>
