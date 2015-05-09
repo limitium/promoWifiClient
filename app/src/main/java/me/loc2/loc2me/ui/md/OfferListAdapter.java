@@ -1,6 +1,5 @@
 package me.loc2.loc2me.ui.md;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -16,7 +15,6 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -31,8 +29,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     private DisplayMetrics metrics;
     private final DisplayImageOptions imageLoadingOptions;
 
-
-    // BEGIN_INCLUDE(recyclerViewSampleViewHolder)
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
@@ -107,8 +103,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 .build();
     }
 
-    // BEGIN_INCLUDE(recyclerViewOnCreateViewHolder)
-    // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
@@ -118,19 +112,14 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
         return new ViewHolder(v, viewGroupWidth, getMetrics(), imageLoadingOptions);
     }
-    // END_INCLUDE(recyclerViewOnCreateViewHolder)
 
-    // BEGIN_INCLUDE(recyclerViewOnBindViewHolder)
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
         viewHolder.loadData(mDataSet.get(position));
     }
-    // END_INCLUDE(recyclerViewOnBindViewHolder)
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mDataSet.size();
@@ -143,9 +132,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     }
 
     public void remove(OfferStub item) {
-        int position = mDataSet.indexOf(item);
+        remove(mDataSet.indexOf(item));
+    }
+
+    public void remove(int position) {
         mDataSet.remove(position);
-        notifyItemRemoved(position);
     }
 
     public void setMetrics(DisplayMetrics metrics) {

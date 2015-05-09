@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Fade;
-import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -21,6 +19,7 @@ import java.util.Random;
 
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
+import me.loc2.loc2me.util.Ln;
 
 public class OfferListFragment extends Fragment {
     private static final String TAG = "RecyclerViewFragment";
@@ -62,24 +61,38 @@ public class OfferListFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
-        mAdapter = new OfferListAdapter(mDataSet);
-        mRecyclerView.setAdapter(mAdapter);
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        mAdapter.setMetrics(displaymetrics);
+        SwipeDismissRecyclerViewTouchListener listener = new SwipeDismissRecyclerViewTouchListener.Builder(
+                mRecyclerView,
+                new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
+                    @Override
+                    public boolean canDismiss(int position) {
+                        return true;
+                    }
 
-
-
-
+                    @Override
+                    public void onDismiss(View view, int position) {
+                        mAdapter.remove(position);
+                    }
+                })
+                .setIsVertical(false)
+                .create();
+        mRecyclerView.setOnTouchListener(listener);
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(mRootView.getContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
+                    @Override
+                    public void onItemClick(View view, int position) {
                         goToDetails(view, mDataSet.get(position));
                     }
                 })
         );
+
+        mAdapter = new OfferListAdapter(mDataSet);
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        mAdapter.setMetrics(displaymetrics);
+        mRecyclerView.setAdapter(mAdapter);
         return mRootView;
     }
 
