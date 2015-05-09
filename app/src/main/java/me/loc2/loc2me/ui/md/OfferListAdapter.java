@@ -83,7 +83,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 });
             }
             PrettyTime prettyTime = new PrettyTime(new Date());
-            mOfferDateCreated.setText("Added[ " + offerStub.getIndex() + " ] " + prettyTime.format(offerStub.getAdded()));
+            mOfferDateCreated.setText("Added " + prettyTime.format(offerStub.getAdded()));
         }
 
         private String buildUrl(String imageUrl, int height) {
