@@ -27,6 +27,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/relaGrid"
         android:orientation="vertical"
+        android:minHeight="400dp"
         android:background="?android:colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

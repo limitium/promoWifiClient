@@ -138,6 +138,7 @@ public class OfferListFragment extends Fragment {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.DATE, -1 * (i + 1));
             offerStub.setAdded(cal.getTime());
+            offerStub.setIndex(i);
             mDataSet.add(offerStub);
         }
     }

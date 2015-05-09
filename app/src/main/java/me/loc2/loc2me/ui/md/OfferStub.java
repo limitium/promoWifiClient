@@ -24,6 +24,7 @@ public class OfferStub implements Parcelable {
     private String bannerHtml;
     private int height;
     private Date added;
+    private int index;
 
     // example constructor that takes a Parcel and gives you an object populated with it's values
     private OfferStub(Parcel in) {
@@ -33,6 +34,7 @@ public class OfferStub implements Parcelable {
         bannerHtml = in.readString();
         height = in.readInt();
         added = new Date(in.readLong());
+        index = in.readInt();
     }
 
     public OfferStub() {
@@ -52,6 +54,7 @@ public class OfferStub implements Parcelable {
         dest.writeString(bannerHtml);
         dest.writeInt(height);
         dest.writeLong(added.getTime());
+        dest.writeInt(index);
     }
 
     public String getImageUrl() {
@@ -104,5 +107,13 @@ public class OfferStub implements Parcelable {
 
     public void setAdded(Date added) {
         this.added = added;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }

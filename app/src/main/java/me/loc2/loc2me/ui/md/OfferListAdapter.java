@@ -77,11 +77,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                         Ln.i("On loading complete");
                         mSpinner.setVisibility(View.GONE);
                         imageLoaded = true;
-                        PrettyTime prettyTime = new PrettyTime(new Date());
-                        mOfferDateCreated.setText("Added " + prettyTime.format(offerStub.getAdded()));
                     }
                 });
             }
+            PrettyTime prettyTime = new PrettyTime(new Date());
+            mOfferDateCreated.setText("Added[ " + offerStub.getIndex() + " ] " + prettyTime.format(offerStub.getAdded()));
         }
 
         private String buildUrl(String imageUrl, int height) {
@@ -125,6 +125,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
+        Ln.i("Position: " + position + " Index: " + mDataSet.get(position).getIndex());
         viewHolder.loadData(mDataSet.get(position));
     }
 
@@ -144,7 +145,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     }
 
     public void remove(int position) {
+        Ln.i("Removing element on position: " + position + " with index: " + mDataSet.get(position).getIndex());
         mDataSet.remove(position);
+        notifyDataSetChanged();
     }
 
     public void setMetrics(DisplayMetrics metrics) {
