@@ -52,20 +52,29 @@ public class OfferListFragment extends Fragment {
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.list_view);
         mNoDataTextView = (TextView) mRootView.findViewById(R.id.no_data);
 
-//        View testButton = mRootView.findViewById(R.id.toolbar_profile_back);
-//        testButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                OfferStub offerStub = new OfferStub();
-//                offerStub.setLogo(R.drawable.anastasia);
-//                offerStub.setsProfileImageHeight(sProfileImageHeight);
-//                offerStub.setsScreenWidth(sScreenWidth);
-//                offerStub.setName("TEST");
-//                offerStub.setAvatarShape(sOverlayShape);
-//                int position = mAdapter.add(offerStub);
-//                mLayoutManager.scrollToPosition(position - 1);
-//            }
-//        });
+        View testButton = mRootView.findViewById(R.id.test_button);
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OfferStub offerStub = new OfferStub();
+                Random random = new Random();
+                int index = random.nextInt(10);
+                offerStub.setImageUrl("http://lorempixel.com");
+                offerStub.setHeight(index * 100 + 900);
+                offerStub.setBannerHtml("yellow");
+                offerStub.setDescriptionFull(getString(R.string.lorem_ipsum_long));
+                offerStub.setDescriptionShort(getString(R.string.lorem_ipsum_short));
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DATE, -1 * (index + 1));
+                offerStub.setAdded(cal.getTime());
+                offerStub.setIndex(index);
+                int position = mAdapter.add(offerStub);
+                mLayoutManager.scrollToPosition(position - 1);
+                if (mRecyclerView.getVisibility() == View.INVISIBLE || mRecyclerView.getVisibility() == View.GONE) {
+                    crossFade(mRecyclerView, mNoDataTextView);
+                }
+            }
+        });
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);

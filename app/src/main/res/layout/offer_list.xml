@@ -21,8 +21,19 @@
     android:id="@+id/wrapper"
     android:orientation="vertical">
 
+    <ImageButton
+        android:id="@+id/test_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:background="?android:selectableItemBackground"
+        android:src="@drawable/ic_action_refresh"
+        style="@style/CardButtons"/>
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_view"
+        android:layout_below="@id/test_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -30,6 +41,7 @@
         android:id="@+id/no_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/test_button"
         android:background="?android:colorPrimary"
         android:fontFamily="sans-serif-thin"
         android:textStyle="normal"
