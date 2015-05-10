@@ -1,5 +1,7 @@
 package me.loc2.loc2me.ui.md;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,12 +26,16 @@ import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
 import me.loc2.loc2me.util.Ln;
 
 public class OfferListFragment extends Fragment {
+
     private static final String TAG = "RecyclerViewFragment";
+
+    private static final Integer CROSS_FADE_ANIMATION = 1000;
 
     protected RecyclerView mRecyclerView;
     protected OfferListAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected List<OfferStub> mDataSet;
+    protected TextView mNoDataTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,8 +49,8 @@ public class OfferListFragment extends Fragment {
         View mRootView = inflater.inflate(R.layout.offer_list, container, false);
         mRootView.setTag(TAG);
 
-        // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.list_view);
+        mNoDataTextView = (TextView) mRootView.findViewById(R.id.no_data);
 
 //        View testButton = mRootView.findViewById(R.id.toolbar_profile_back);
 //        testButton.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +69,8 @@ public class OfferListFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
+        SlideInOutLeftItemAnimator animator = new SlideInOutLeftItemAnimator(mRecyclerView);
+        mRecyclerView.setItemAnimator(animator);
         SwipeDismissRecyclerViewTouchListener listener = new SwipeDismissRecyclerViewTouchListener.Builder(
                 mRecyclerView,
                 new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
@@ -74,6 +82,9 @@ public class OfferListFragment extends Fragment {
                     @Override
                     public void onDismiss(View view, int position) {
                         mAdapter.remove(position);
+                        if (mAdapter.hasNoOffers()) {
+                            crossFade(mNoDataTextView, mRecyclerView);
+                        }
                     }
                 })
                 .setIsVertical(false)
@@ -141,5 +152,33 @@ public class OfferListFragment extends Fragment {
             offerStub.setIndex(i);
             mDataSet.add(offerStub);
         }
+    }
+
+    private void crossFade(final View viewToShow, final View viewToHide) {
+
+        // Set the content view to 0% opacity but visible, so that it is visible
+        // (but fully transparent) during the animation.
+        viewToShow.setAlpha(0f);
+        viewToShow.setVisibility(View.VISIBLE);
+
+        // Animate the content view to 100% opacity, and clear any animation
+        // listener set on the view.
+        viewToShow.animate()
+                .alpha(1f)
+                .setDuration(CROSS_FADE_ANIMATION)
+                .setListener(null);
+
+        // Animate the loading view to 0% opacity. After the animation ends,
+        // set its visibility to GONE as an optimization step (it won't
+        // participate in layout passes, etc.)
+        viewToHide.animate()
+                .alpha(0f)
+                .setDuration(CROSS_FADE_ANIMATION)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        viewToHide.setVisibility(View.GONE);
+                    }
+                });
     }
 }

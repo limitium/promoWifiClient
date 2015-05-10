@@ -19,7 +19,6 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 
 import org.ocpsoft.pretty.time.PrettyTime;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -156,9 +155,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         this.metrics = metrics;
     }
 
+    public boolean hasNoOffers() {
+        return mDataSet.isEmpty();
+    }
+
     public DisplayMetrics getMetrics() {
         return metrics;
     }
-
-
 }
