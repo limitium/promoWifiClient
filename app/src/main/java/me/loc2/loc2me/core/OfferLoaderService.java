@@ -11,11 +11,13 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Inject;
 
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.core.events.NewWifiNetworkEvent;
+import me.loc2.loc2me.core.events.OfferRemoveEvent;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.WifiInfo;
 import me.loc2.loc2me.util.Ln;
@@ -31,7 +33,7 @@ public class OfferLoaderService extends Service {
     @Inject
     protected OfferEventService offerService;
     private int wifis;
-    private HashMap<BigInteger, Long> shown = new HashMap<BigInteger, Long>();
+    private ConcurrentHashMap<BigInteger, Long> shown = new ConcurrentHashMap<BigInteger, Long>();
     private int shownTime = 1000 * 60 * 60 * 24 * 7;
 
     @Override
@@ -51,6 +53,12 @@ public class OfferLoaderService extends Service {
     public void onNewWifiNetworkEvent(NewWifiNetworkEvent wifiNetworkEvent) {
         Ln.i("New network: " + wifiNetworkEvent.getWifiInfo().getName());
         loadWifiOffers(wifiNetworkEvent.getWifiInfo());
+    }
+
+    @Subscribe
+    public void removeOfferFromCache(OfferRemoveEvent offerRemoveEvent) {
+        Offer offer = offerRemoveEvent.getOffer();
+        shown.remove(offer.getId());
     }
 
     private void loadWifiOffers(final WifiInfo wifi) {

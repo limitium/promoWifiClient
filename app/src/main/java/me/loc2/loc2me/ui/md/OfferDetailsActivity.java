@@ -5,7 +5,8 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewCompat;
 import android.text.method.ScrollingMovementMethod;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
@@ -32,7 +33,6 @@ import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.util.Ln;
 
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class OfferDetailsActivity extends Activity {
 
     private static final long ANIM_DURATION = 300;
@@ -65,20 +65,25 @@ public class OfferDetailsActivity extends Activity {
 
         // Postpone the transition until the window's decor view has
         // finished its layout.
-        postponeEnterTransition();
-
+        final Activity thisActivity = this;
+        ActivityCompat.postponeEnterTransition(thisActivity);
         final View decor = getWindow().getDecorView();
         decor.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 decor.getViewTreeObserver().removeOnPreDrawListener(this);
-                startPostponedEnterTransition();
+                ActivityCompat.startPostponedEnterTransition(thisActivity);
                 return true;
             }
         });
 
         setUpLayout();
-        setupWindowAnimations();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setupWindowAnimations();
+        } else {
+            loadImage();
+        }
+
     }
 
     private void setupWindowAnimations() {
@@ -86,6 +91,7 @@ public class OfferDetailsActivity extends Activity {
         setupExitAnimations();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupEnterAnimations() {
         final Transition enterTransition = getWindow().getSharedElementEnterTransition();
         enterTransition.addListener(new Transition.TransitionListener() {
@@ -123,6 +129,7 @@ public class OfferDetailsActivity extends Activity {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupExitAnimations() {
         Transition sharedElementReturnTransition = getWindow().getSharedElementReturnTransition();
         sharedElementReturnTransition.setStartDelay(ANIM_DURATION);

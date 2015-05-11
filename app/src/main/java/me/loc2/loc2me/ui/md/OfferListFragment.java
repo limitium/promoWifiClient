@@ -2,23 +2,21 @@ package me.loc2.loc2me.ui.md;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.net.wifi.ScanResult;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Pair;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.google.common.eventbus.EventBus;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -33,10 +31,10 @@ import javax.inject.Inject;
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.OfferEventService;
+import me.loc2.loc2me.core.OfferLoaderService;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.OfferImage;
-import me.loc2.loc2me.core.models.WifiInfo;
 import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
 
 public class OfferListFragment extends Fragment {
@@ -53,6 +51,9 @@ public class OfferListFragment extends Fragment {
 
     @Inject
     OfferEventService offerService;
+
+    @Inject
+    OfferLoaderService offerLoaderService;
 
     @Inject
     protected Bus eventBus;
@@ -167,8 +168,8 @@ public class OfferListFragment extends Fragment {
         pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
         pairs.add(Pair.create(sharedElement, getString(R.string.card_to_details)));
 
-        ActivityOptions transitionActivityOptions;
-        transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(getActivity(), pairs.toArray(new Pair[pairs.size()]));
+        ActivityOptionsCompat transitionActivityOptions;
+        transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), pairs.get(0), pairs.get(1));
         Bundle bundle = transitionActivityOptions.toBundle();
         getActivity().startActivity(intent, bundle);
     }

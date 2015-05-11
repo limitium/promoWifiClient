@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relaGrid"
     android:orientation="vertical"
-    android:background="?attr/colorPrimary"
+    android:background="?android:colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -24,15 +24,14 @@
         android:id="@+id/offer_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+        android:background="?android:colorPrimary"
+        android:textAppearance="@android:style/TextAppearance.Material.Body1"
         android:visibility="invisible"
         android:padding="16dp"
         android:layout_below="@+id/squared_details_image"
         android:text="@string/bacon_ipsum"
         android:scrollbars="vertical"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentStart="true"/>
     <include
         layout="@layout/back_button"
         android:layout_width="@dimen/size_button_message"
@@ -42,6 +41,5 @@
         android:id="@+id/back_button"
         android:layout_marginRight="@dimen/back_button_margin"
         android:layout_alignBottom="@+id/squared_details_image"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

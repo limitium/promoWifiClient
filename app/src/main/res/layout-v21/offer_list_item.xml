@@ -19,9 +19,9 @@
     android:id="@+id/cardview"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    card_view:cardElevation="@dimen/card_elevation"
     android:background="?attr/colorPrimary"
     android:layout_margin="@dimen/margin_large"
-    card_view:cardElevation="5dp"
     card_view:cardCornerRadius="2dp">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

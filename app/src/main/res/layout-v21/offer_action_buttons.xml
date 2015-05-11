@@ -3,11 +3,10 @@
     android:padding="@dimen/actions_padding"
     android:paddingLeft="@dimen/actions_padding_left"
     android:paddingRight="@dimen/actions_padding_left"
-    android:background="?attr/colorPrimary"
+    android:background="?android:colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true">
 
     <TextView
@@ -15,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:background="?attr/colorPrimary"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+        android:background="?android:colorPrimary"
+        android:textAppearance="@android:style/TextAppearance.Material.Body1"
         android:paddingLeft="@dimen/padding_small"
         android:paddingRight="@dimen/padding_small"
         android:textStyle="italic"/>
