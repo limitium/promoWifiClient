@@ -42,7 +42,7 @@ public class ApiService {
     public List<Offer> getWifiOffers(String name) {
         List<Offer> wifiOffers = getWifiOfferService().getWifiOffers(name);
         addImageStubs(wifiOffers);
-        return getWifiOfferService().getWifiOffers(name);
+        return wifiOffers;
     }
 
     private void addImageStubs(List<Offer> offers) {

@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.google.common.eventbus.EventBus;
+import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import java.math.BigInteger;
@@ -52,18 +54,25 @@ public class OfferListFragment extends Fragment {
     @Inject
     OfferEventService offerService;
 
+    @Inject
+    protected Bus eventBus;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initDataset();
         Injector.inject(this);
+        eventBus.register(this);
     }
 
     @Subscribe
     public void addOfferToTheList(NewOfferEvent event) {
-        me.loc2.loc2me.core.models.Offer offer = event.getOffer();
+        Offer offer = event.getOffer();
         if (null != mAdapter) {
             mAdapter.add(offer);
+            if (mRecyclerView.getVisibility() == View.INVISIBLE || mRecyclerView.getVisibility() == View.GONE) {
+                crossFade(mRecyclerView, mNoDataTextView);
+            }
         }
     }
 
