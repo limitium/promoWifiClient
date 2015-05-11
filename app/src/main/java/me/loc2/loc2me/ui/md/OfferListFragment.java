@@ -33,6 +33,7 @@ import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.OfferEventService;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.core.models.WifiInfo;
 import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
 
@@ -89,9 +90,7 @@ public class OfferListFragment extends Fragment {
                 offer.setMessage(getString(R.string.lorem_ipsum_long));
                 offer.setType("Type " + indexStr);
                 offer.setCategory("Category " + indexStr);
-                offer.setImg("http://lorempixel.com");
-                offer.setHeight(index * 100 + 900);
-
+                offer.setImage(new OfferImage("http://lorempixel.com/", 1080, index * 100 + 900));
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, -1 * (index + 1));
                 offer.setAddedAt(cal.getTimeInMillis());

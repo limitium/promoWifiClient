@@ -1,12 +1,12 @@
 package me.loc2.loc2me.core.models;
 
-import android.net.wifi.ScanResult;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.common.base.MoreObjects;
+
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Date;
 
 public class Offer implements Parcelable, Serializable {
 
@@ -27,10 +27,9 @@ public class Offer implements Parcelable, Serializable {
     private String message;
     private String type;
     private String category;
-    private String img;
     private long addedAt;
     private WifiInfo wifiInfo;
-    private int height;
+    private OfferImage image;
 
     private Offer(Parcel in) {
         id = new BigInteger(in.readString());
@@ -38,9 +37,8 @@ public class Offer implements Parcelable, Serializable {
         message = in.readString();
         type = in.readString();
         category = in.readString();
-        img = in.readString();
         addedAt = in.readLong();
-        height = in.readInt();
+        image = in.readParcelable(OfferImage.class.getClassLoader());
     }
 
     @Override
@@ -55,9 +53,8 @@ public class Offer implements Parcelable, Serializable {
         dest.writeString(message);
         dest.writeString(type);
         dest.writeString(category);
-        dest.writeString(img);
         dest.writeLong(addedAt);
-        dest.writeInt(height);
+        dest.writeParcelable(image, flags);
     }
 
 
@@ -121,19 +118,27 @@ public class Offer implements Parcelable, Serializable {
     public void setWifiInfo(WifiInfo wifiInfo) {
         this.wifiInfo = wifiInfo;
     }
-    public String getImg() {
-        return img;
+
+    public OfferImage getImage() {
+        return image;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImage(OfferImage image) {
+        this.image = image;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .omitNullValues()
+                .add("id", id)
+                .add("name", name)
+                .add("type", type)
+                .add("message", message)
+                .add("category", category)
+                .add("addedAt", addedAt)
+                .add("image", image)
+                .toString();
     }
 
-    public int getHeight() {
-        return height;
-    }
 }
