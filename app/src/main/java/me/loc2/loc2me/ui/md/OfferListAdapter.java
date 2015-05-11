@@ -23,13 +23,14 @@ import java.util.Date;
 import java.util.List;
 
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.util.Ln;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.ViewHolder> {
 
     private static final String TAG = "OfferListAdapter";
 
-    private List<OfferStub> mDataSet;
+    private List<Offer> mDataSet;
     private DisplayMetrics metrics;
     private final DisplayImageOptions imageLoadingOptions;
 
@@ -56,11 +57,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             mSpinner = (ProgressBar)v.findViewById(R.id.loading);
         }
 
-        public void loadData(final OfferStub offerStub) {
+        public void loadData(final Offer offer) {
             if (!imageLoaded) {
                 mOfferDateCreated.setVisibility(View.INVISIBLE);
                 mSpinner.setVisibility(View.VISIBLE);
-                String url = buildUrl(offerStub.getImageUrl(), offerStub.getHeight());
+                String url = buildUrl(offer.getImg(), offer.getHeight());
                 ImageLoader.getInstance().displayImage(url, mOfferItemImage, imageLoadingOptions, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
@@ -82,7 +83,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 });
             }
             PrettyTime prettyTime = new PrettyTime(new Date());
-            mOfferDateCreated.setText("Added " + prettyTime.format(offerStub.getAdded()));
+            mOfferDateCreated.setText("Added " + prettyTime.format(new Date(offer.getAddedAt())));
         }
 
         private String buildUrl(String imageUrl, int height) {
@@ -98,7 +99,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
      *
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public OfferListAdapter(List<OfferStub> dataSet) {
+    public OfferListAdapter(List<Offer> dataSet) {
         mDataSet = dataSet;
 //                .showImageForEmptyUri(R.drawable.ic_empty)
 //                .showImageOnFail(R.drawable.ic_error)
@@ -126,7 +127,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        Ln.i("Position: " + position + " Index: " + mDataSet.get(position).getIndex());
+        Ln.i("Position: " + position);
         viewHolder.loadData(mDataSet.get(position));
     }
 
@@ -135,20 +136,21 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         return mDataSet.size();
     }
 
-    public int add(OfferStub item) {
+    public int add(Offer item) {
         mDataSet.add(item);
         notifyItemInserted(mDataSet.size() - 1);
         return mDataSet.size();
     }
 
-    public void remove(OfferStub item) {
-        remove(mDataSet.indexOf(item));
+    public Offer remove(Offer item) {
+        return remove(mDataSet.indexOf(item));
     }
 
-    public void remove(int position) {
-        Ln.i("Removing element on position: " + position + " with index: " + mDataSet.get(position).getIndex());
-        mDataSet.remove(position);
+    public Offer remove(int position) {
+        Ln.i("Removing element on position: ");
+        Offer removed = mDataSet.remove(position);
         notifyDataSetChanged();
+        return removed;
     }
 
     public void setMetrics(DisplayMetrics metrics) {

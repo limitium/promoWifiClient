@@ -10,6 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.core.Constants;
+import me.loc2.loc2me.core.OfferEventService;
 import me.loc2.loc2me.core.OfferLoaderService;
 import me.loc2.loc2me.core.OfferStorageService;
 import me.loc2.loc2me.core.PostFromAnyThreadBus;
@@ -20,6 +21,7 @@ import me.loc2.loc2me.core.UserAgentProvider;
 import me.loc2.loc2me.core.WifiScanService;
 import me.loc2.loc2me.ui.FilterFragment;
 import me.loc2.loc2me.ui.MainActivity;
+import me.loc2.loc2me.ui.md.OfferListFragment;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -34,10 +36,12 @@ import retrofit.converter.GsonConverter;
                 Loc2meApplication.class,
                 MainActivity.class,
                 FilterFragment.class,
+                OfferListFragment.class,
                 TimerService.class,
                 WifiScanService.class,
                 OfferStorageService.class,
-                OfferLoaderService.class
+                OfferLoaderService.class,
+                OfferEventService.class
         }
 )
 public class Loc2meModule {

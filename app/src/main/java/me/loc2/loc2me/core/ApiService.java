@@ -14,6 +14,8 @@ public class ApiService {
 
     private RestAdapter restAdapter;
 
+    private WifiOffersService wifiOffersService;
+
     /**
      * Create bootstrap service
      *
@@ -25,7 +27,10 @@ public class ApiService {
 
 
     private WifiOffersService getWifiOfferService() {
-        return getRestAdapter().create(WifiOffersService.class);
+        if (null == wifiOffersService) {
+            wifiOffersService = getRestAdapter().create(WifiOffersService.class);
+        }
+        return wifiOffersService;
     }
 
     private RestAdapter getRestAdapter() {

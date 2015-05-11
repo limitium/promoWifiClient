@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.net.wifi.ScanResult;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,14 +18,23 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+import javax.inject.Inject;
+
+import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.core.OfferEventService;
+import me.loc2.loc2me.core.events.NewOfferEvent;
+import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.core.models.WifiInfo;
 import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
-import me.loc2.loc2me.util.Ln;
 
 public class OfferListFragment extends Fragment {
 
@@ -34,13 +45,25 @@ public class OfferListFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected OfferListAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected List<OfferStub> mDataSet;
+    protected List<Offer> mDataSet;
     protected TextView mNoDataTextView;
+
+    @Inject
+    OfferEventService offerService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initDataset();
+        Injector.inject(this);
+    }
+
+    @Subscribe
+    public void addOfferToTheList(NewOfferEvent event) {
+        me.loc2.loc2me.core.models.Offer offer = event.getOffer();
+        if (null != mAdapter) {
+            mAdapter.add(offer);
+        }
     }
 
     @Override
@@ -56,19 +79,23 @@ public class OfferListFragment extends Fragment {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OfferStub offerStub = new OfferStub();
+                Offer offer = new Offer();
                 Random random = new Random();
                 int index = random.nextInt(10);
-                offerStub.setImageUrl("http://lorempixel.com");
-                offerStub.setHeight(index * 100 + 900);
-                offerStub.setBannerHtml("yellow");
-                offerStub.setDescriptionFull(getString(R.string.lorem_ipsum_long));
-                offerStub.setDescriptionShort(getString(R.string.lorem_ipsum_short));
+                String indexStr = String.valueOf(index);
+
+                offer.setId(new BigInteger(indexStr));
+                offer.setName("Item " + indexStr);
+                offer.setMessage(getString(R.string.lorem_ipsum_long));
+                offer.setType("Type " + indexStr);
+                offer.setCategory("Category " + indexStr);
+                offer.setImg("http://lorempixel.com");
+                offer.setHeight(index * 100 + 900);
+
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, -1 * (index + 1));
-                offerStub.setAdded(cal.getTime());
-                offerStub.setIndex(index);
-                int position = mAdapter.add(offerStub);
+                offer.setAddedAt(cal.getTimeInMillis());
+                int position = mAdapter.add(offer);
                 mLayoutManager.scrollToPosition(position - 1);
                 if (mRecyclerView.getVisibility() == View.INVISIBLE || mRecyclerView.getVisibility() == View.GONE) {
                     crossFade(mRecyclerView, mNoDataTextView);
@@ -90,10 +117,11 @@ public class OfferListFragment extends Fragment {
 
                     @Override
                     public void onDismiss(View view, int position) {
-                        mAdapter.remove(position);
+                        Offer offer = mAdapter.remove(position);
                         if (mAdapter.hasNoOffers()) {
                             crossFade(mNoDataTextView, mRecyclerView);
                         }
+                        offerService.remove(offer);
                     }
                 })
                 .setIsVertical(false)
@@ -114,12 +142,15 @@ public class OfferListFragment extends Fragment {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         mAdapter.setMetrics(displaymetrics);
         mRecyclerView.setAdapter(mAdapter);
+        if (mAdapter.hasNoOffers()) {
+            crossFade(mNoDataTextView, mRecyclerView);
+        }
         return mRootView;
     }
 
-    private void goToDetails(View sharedView, OfferStub offer) {
+    private void goToDetails(View sharedView, Offer offer) {
         Intent intent = new Intent(getActivity(), OfferDetailsActivity.class);
-        intent.putExtra(OfferDetailsActivity.OFFER, offer);
+        intent.putExtra(OfferDetailsActivity.OFFER, (Parcelable)offer);
 
         View statusBar = getActivity().findViewById(android.R.id.statusBarBackground);
         View sharedElement = sharedView.findViewById(R.id.offer_list_image);
@@ -134,33 +165,8 @@ public class OfferListFragment extends Fragment {
         getActivity().startActivity(intent, bundle);
     }
 
-    /**
-     * Generates Strings for RecyclerView's adapter. This data would usually come
-     * from a local content provider or remote server.
-     */
     private void initDataset() {
-        String[] templates = {
-            "yellow",
-            "red",
-            "blue",
-            "lime"
-        };
-        mDataSet = new ArrayList<>(templates.length);
-        Random random = new Random();
-        for (int i = 0; i < 10; i++) {
-            OfferStub offerStub = new OfferStub();
-            int item = random.nextInt(templates.length);
-            offerStub.setImageUrl("http://lorempixel.com");
-            offerStub.setHeight(i * 100 + 900);
-            offerStub.setBannerHtml(templates[item]);
-            offerStub.setDescriptionFull(getString(R.string.lorem_ipsum_long));
-            offerStub.setDescriptionShort(getString(R.string.lorem_ipsum_short));
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.DATE, -1 * (i + 1));
-            offerStub.setAdded(cal.getTime());
-            offerStub.setIndex(i);
-            mDataSet.add(offerStub);
-        }
+        mDataSet = new ArrayList<>();
     }
 
     private void crossFade(final View viewToShow, final View viewToHide) {

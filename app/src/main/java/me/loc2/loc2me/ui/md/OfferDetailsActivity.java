@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.method.ScrollingMovementMethod;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.util.Ln;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -37,7 +39,7 @@ public class OfferDetailsActivity extends Activity {
     private ImageView mOfferDetailsImage;
     private TextView mOfferDescription;
     private View imageFrame;
-    private OfferStub offer;
+    private Offer offer;
 
     public static final String OFFER = "OFFER";
 
@@ -56,7 +58,7 @@ public class OfferDetailsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        offer = (OfferStub) getIntent().getParcelableExtra(OFFER);
+        offer = (Offer) getIntent().getParcelableExtra(OFFER);
         state = State.CLOSED;
         setContentView(R.layout.offer_details);
 
@@ -172,13 +174,13 @@ public class OfferDetailsActivity extends Activity {
     }
 
     private void loadThumbnail() {
-        String url = buildUrl(offer.getThumbnailUrl());
+        String url = buildUrl(offer.getImg());
         DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
         ImageLoader.getInstance().displayImage(url, mOfferDetailsImage, imageLoadingOptions);
     }
 
     private void loadImage() {
-        String url = buildUrl(offer.getImageUrl());
+        String url = buildUrl(offer.getImg());
         DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
         ImageLoader.getInstance().displayImage(url, mOfferDetailsImage, imageLoadingOptions, new SimpleImageLoadingListener() {
             @Override

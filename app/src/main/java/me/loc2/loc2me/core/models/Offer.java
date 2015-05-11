@@ -1,9 +1,26 @@
 package me.loc2.loc2me.core.models;
 
+import android.net.wifi.ScanResult;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Date;
 
-public class Offer implements Serializable {
+public class Offer implements Parcelable, Serializable {
+
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<Offer> CREATOR = new Parcelable.Creator<Offer>() {
+        public Offer createFromParcel(Parcel in) {
+            return new Offer(in);
+        }
+
+        public Offer[] newArray(int size) {
+            return new Offer[size];
+        }
+    };
+
 
     private BigInteger id;
     private String name;
@@ -13,6 +30,40 @@ public class Offer implements Serializable {
     private String img;
     private long addedAt;
     private WifiInfo wifiInfo;
+    private int height;
+
+    private Offer(Parcel in) {
+        id = new BigInteger(in.readString());
+        name = in.readString();
+        message = in.readString();
+        type = in.readString();
+        category = in.readString();
+        img = in.readString();
+        addedAt = in.readLong();
+        height = in.readInt();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id.toString());
+        dest.writeString(name);
+        dest.writeString(message);
+        dest.writeString(type);
+        dest.writeString(category);
+        dest.writeString(img);
+        dest.writeLong(addedAt);
+        dest.writeInt(height);
+    }
+
+
+    public Offer() {
+
+    }
 
 
     public BigInteger getId() {
@@ -76,5 +127,13 @@ public class Offer implements Serializable {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }
