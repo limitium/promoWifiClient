@@ -15,4 +15,5 @@
         <item name="android:layout_height">@dimen/cardview_buttons_icon_size</item>
         <item name="android:layout_width">@dimen/cardview_buttons_icon_size</item>
     </style>
+
 </resources>

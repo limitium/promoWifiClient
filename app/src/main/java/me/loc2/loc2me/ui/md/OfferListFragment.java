@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -78,18 +79,9 @@ public class OfferListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View mRootView = inflater.inflate(R.layout.offer_list, container, false);
-        mRootView.setTag(TAG);
-
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.list_view);
-        mNoDataTextView = (TextView) mRootView.findViewById(R.id.no_data);
-
-        View testButton = mRootView.findViewById(R.id.test_button);
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add:
                 Offer offer = new Offer();
                 Random random = new Random();
                 int index = random.nextInt(10);
@@ -109,8 +101,21 @@ public class OfferListFragment extends Fragment {
                 if (mRecyclerView.getVisibility() == View.INVISIBLE || mRecyclerView.getVisibility() == View.GONE) {
                     crossFade(mRecyclerView, mNoDataTextView);
                 }
-            }
-        });
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View mRootView = inflater.inflate(R.layout.offer_list, container, false);
+        mRootView.setTag(TAG);
+
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.list_view);
+        mNoDataTextView = (TextView) mRootView.findViewById(R.id.no_data);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);

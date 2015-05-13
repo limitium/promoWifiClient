@@ -6,10 +6,14 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.ViewCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
@@ -33,7 +37,7 @@ import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.util.Ln;
 
-public class OfferDetailsActivity extends Activity {
+public class OfferDetailsActivity extends AppCompatActivity {
 
     private static final long ANIM_DURATION = 300;
 
@@ -83,7 +87,27 @@ public class OfferDetailsActivity extends Activity {
         } else {
             loadImage();
         }
+    }
 
+    /**
+     * Use this method to instantiate your menu, and add your items to it. You
+     * should return true if you have added items to it and want the menu to be displayed.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate our menu from the resources by using the menu inflater.
+        getMenuInflater().inflate(R.menu.global, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_back:
+                goToList();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupWindowAnimations() {
@@ -122,6 +146,10 @@ public class OfferDetailsActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        goToList();
+    }
+
+    private void goToList() {
         if (state == State.OPENED) {
             closeDetails();
         } else {
