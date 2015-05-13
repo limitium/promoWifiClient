@@ -16,10 +16,13 @@ import android.view.Window;
 import me.loc2.loc2me.Loc2meServiceProvider;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.ApiService;
+import me.loc2.loc2me.core.OfferEventService;
 import me.loc2.loc2me.core.OfferLoaderService;
 import me.loc2.loc2me.core.OfferStorageService;
 import me.loc2.loc2me.core.WifiScanService;
 import me.loc2.loc2me.core.TimerService;
+import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.events.NavItemSelectedEvent;
 import me.loc2.loc2me.ui.md.OfferListFragment;
 import me.loc2.loc2me.util.Ln;
@@ -29,6 +32,10 @@ import me.loc2.loc2me.util.UIUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.otto.Subscribe;
+
+import java.math.BigInteger;
+import java.util.Calendar;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -42,6 +49,7 @@ import butterknife.Views;
 public class MainActivity extends Loc2meFragmentActivity {
 
     @Inject protected Loc2meServiceProvider serviceProvider;
+    @Inject protected OfferEventService offerEventService;
 
     private boolean userHasAuthenticated = false;
 
@@ -181,6 +189,23 @@ public class MainActivity extends Loc2meFragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 //menuDrawer.toggleMenu();
+                return true;
+            case R.id.menu_add:
+                Offer offer = new Offer();
+                Random random = new Random();
+                int index = random.nextInt(10);
+                String indexStr = String.valueOf(index);
+
+                offer.setId(new BigInteger(indexStr));
+                offer.setName("Item " + indexStr);
+                offer.setMessage(getString(R.string.lorem_ipsum_long));
+                offer.setType("Type " + indexStr);
+                offer.setCategory("Category " + indexStr);
+                offer.setImage(new OfferImage("http://lorempixel.com/", 1080, index * 100 + 900));
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DATE, -1 * (index + 1));
+                offer.setAddedAt(cal.getTimeInMillis());
+                offerEventService.add(offer);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

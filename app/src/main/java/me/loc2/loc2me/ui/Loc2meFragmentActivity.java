@@ -1,5 +1,6 @@
 package me.loc2.loc2me.ui;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,11 @@ public class Loc2meFragmentActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate our menu from the resources by using the menu inflater.
         getMenuInflater().inflate(R.menu.global, menu);
+        ActionBar actionBar = getActionBar();
+        if (null != actionBar) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
         return true;
     }
 

@@ -103,7 +103,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_back:
+            case R.id.home:
                 goToList();
                 return true;
         }

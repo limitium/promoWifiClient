@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Fade;
+import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
@@ -65,13 +69,15 @@ public class OfferListFragment extends Fragment {
         initDataset();
         Injector.inject(this);
         eventBus.register(this);
+
     }
 
     @Subscribe
     public void addOfferToTheList(NewOfferEvent event) {
         Offer offer = event.getOffer();
         if (null != mAdapter) {
-            mAdapter.add(offer);
+            int position = mAdapter.add(offer);
+            mLayoutManager.scrollToPosition(position - 1);
             if (mRecyclerView.getVisibility() == View.INVISIBLE || mRecyclerView.getVisibility() == View.GONE) {
                 crossFade(mRecyclerView, mNoDataTextView);
             }
@@ -97,10 +103,7 @@ public class OfferListFragment extends Fragment {
                 cal.add(Calendar.DATE, -1 * (index + 1));
                 offer.setAddedAt(cal.getTimeInMillis());
                 int position = mAdapter.add(offer);
-                mLayoutManager.scrollToPosition(position - 1);
-                if (mRecyclerView.getVisibility() == View.INVISIBLE || mRecyclerView.getVisibility() == View.GONE) {
-                    crossFade(mRecyclerView, mNoDataTextView);
-                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -168,6 +171,9 @@ public class OfferListFragment extends Fragment {
 
         View statusBar = getActivity().findViewById(android.R.id.statusBarBackground);
         View sharedElement = sharedView.findViewById(R.id.offer_list_image);
+        View decor = getActivity().getWindow().getDecorView();
+        int actionBarId = R.id.action_bar_container;
+        View actionBar = decor.findViewById(actionBarId);
 
         List<Pair<View, String>> pairs = new ArrayList<>();
         pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));

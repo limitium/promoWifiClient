@@ -8,12 +8,12 @@
         Here we create an item, setting support:showAsAction to display the item as an action if
         there's room on the compatible Action Bar.
     -->
-    <item
-        android:id="@+id/menu_back"
-        android:icon="@drawable/ic_arrow_back_white_18dp"
-        android:orderInCategory="0"
-        android:title="@string/menu_back"
-        support:showAsAction="ifRoom"/>
+    <!--<item-->
+        <!--android:id="@+id/menu_back"-->
+        <!--android:icon="@drawable/ic_arrow_back_white_18dp"-->
+        <!--android:orderInCategory="0"-->
+        <!--android:title="@string/menu_back"-->
+        <!--support:showAsAction="ifRoom"/>-->
 
     <!-- Location item is added in onCreateOptionsMenu() -->
 
