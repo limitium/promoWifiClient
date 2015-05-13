@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitCenter"
-        android:background="?attr/selectableItemBackground"
+        android:background="?android:selectableItemBackground"
         android:src="@drawable/ic_action_refresh"
         style="@style/CardButtons"/>
 
@@ -42,10 +42,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/test_button"
-        android:background="?attr/colorPrimary"
+        android:background="?android:colorPrimary"
         android:fontFamily="sans-serif-thin"
         android:textStyle="normal"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
         android:visibility="invisible"
         android:gravity="center"
         android:textAlignment="gravity"
