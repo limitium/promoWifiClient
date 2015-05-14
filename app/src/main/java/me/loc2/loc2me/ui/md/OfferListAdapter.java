@@ -106,7 +106,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         imageLoadingOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
+                .imageScaleType(ImageScaleType.NONE_SAFE)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .considerExifParams(true)
                 .displayer(new FadeInBitmapDisplayer(1000))

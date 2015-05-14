@@ -263,7 +263,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
         return new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
+                .imageScaleType(ImageScaleType.NONE_SAFE)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .considerExifParams(true)
                 .build();
