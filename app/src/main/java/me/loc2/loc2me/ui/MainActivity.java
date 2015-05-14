@@ -24,6 +24,7 @@ import me.loc2.loc2me.core.TimerService;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.events.NavItemSelectedEvent;
+import me.loc2.loc2me.ui.md.NutraBaseImageDecoder;
 import me.loc2.loc2me.ui.md.OfferListFragment;
 import me.loc2.loc2me.util.Ln;
 import me.loc2.loc2me.util.SafeAsyncTask;
@@ -175,7 +176,7 @@ public class MainActivity extends Loc2meFragmentActivity {
     }
 
     private void initImageLoader() {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).imageDecoder(new NutraBaseImageDecoder(true)).build();
         ImageLoader.getInstance().init(config);
     }
 
