@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.transition.Transition;
@@ -217,13 +215,13 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private void loadThumbnail() {
         String url = buildUrl(offer.getImage());
         DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
-        ImageLoader.getInstance().displayImage(url, mOfferDetailsImage, imageLoadingOptions);
+        ImageLoader.getInstance().displayImage("http://s27.postimg.org/i689ms769/olympus.png", mOfferDetailsImage, imageLoadingOptions);
     }
 
     private void loadImage() {
         String url = buildUrl(offer.getImage());
         DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
-        ImageLoader.getInstance().displayImage(url, mOfferDetailsImage, imageLoadingOptions, new SimpleImageLoadingListener() {
+        ImageLoader.getInstance().displayImage("http://s27.postimg.org/i689ms769/olympus.png", mOfferDetailsImage, imageLoadingOptions, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 Ln.i("On loading started");

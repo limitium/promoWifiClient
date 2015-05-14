@@ -7,14 +7,10 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Fade;
-import android.transition.Transition;
 import android.util.DisplayMetrics;
-import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,7 +94,7 @@ public class OfferListFragment extends Fragment {
                 offer.setMessage(getString(R.string.lorem_ipsum_long));
                 offer.setType("Type " + indexStr);
                 offer.setCategory("Category " + indexStr);
-                offer.setImage(new OfferImage("http://lorempixel.com/", 1080, index * 100 + 900));
+                offer.setImage(new OfferImage("http://lorempixel.com/", 1080, 1920));
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, -1 * (index + 1));
                 offer.setAddedAt(cal.getTimeInMillis());
@@ -167,7 +163,7 @@ public class OfferListFragment extends Fragment {
 
     private void goToDetails(View sharedView, Offer offer) {
         Intent intent = new Intent(getActivity(), OfferDetailsActivity.class);
-        intent.putExtra(OfferDetailsActivity.OFFER, (Parcelable)offer);
+        intent.putExtra(OfferDetailsActivity.OFFER, (Parcelable) offer);
 
         View statusBar = getActivity().findViewById(android.R.id.statusBarBackground);
         View sharedElement = sharedView.findViewById(R.id.offer_list_image);
@@ -184,6 +180,7 @@ public class OfferListFragment extends Fragment {
         Bundle bundle = transitionActivityOptions.toBundle();
         getActivity().startActivity(intent, bundle);
     }
+
 
     private void initDataset() {
         mDataSet = new ArrayList<>();
