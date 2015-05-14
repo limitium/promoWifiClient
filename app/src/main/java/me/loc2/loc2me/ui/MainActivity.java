@@ -13,23 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
-import me.loc2.loc2me.Loc2meServiceProvider;
-import me.loc2.loc2me.R;
-import me.loc2.loc2me.core.ApiService;
-import me.loc2.loc2me.core.OfferEventService;
-import me.loc2.loc2me.core.OfferLoaderService;
-import me.loc2.loc2me.core.OfferStorageService;
-import me.loc2.loc2me.core.WifiScanService;
-import me.loc2.loc2me.core.TimerService;
-import me.loc2.loc2me.core.models.Offer;
-import me.loc2.loc2me.core.models.OfferImage;
-import me.loc2.loc2me.events.NavItemSelectedEvent;
-import me.loc2.loc2me.ui.md.NutraBaseImageDecoder;
-import me.loc2.loc2me.ui.md.OfferListFragment;
-import me.loc2.loc2me.util.Ln;
-import me.loc2.loc2me.util.SafeAsyncTask;
-import me.loc2.loc2me.util.UIUtils;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.otto.Subscribe;
@@ -41,6 +24,21 @@ import java.util.Random;
 import javax.inject.Inject;
 
 import butterknife.Views;
+import me.loc2.loc2me.Loc2meServiceProvider;
+import me.loc2.loc2me.R;
+import me.loc2.loc2me.core.ApiService;
+import me.loc2.loc2me.core.OfferEventService;
+import me.loc2.loc2me.core.OfferLoaderService;
+import me.loc2.loc2me.core.OfferStorageService;
+import me.loc2.loc2me.core.TimerService;
+import me.loc2.loc2me.core.WifiScanService;
+import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.core.models.OfferImage;
+import me.loc2.loc2me.events.NavItemSelectedEvent;
+import me.loc2.loc2me.ui.md.OfferListFragment;
+import me.loc2.loc2me.util.Ln;
+import me.loc2.loc2me.util.SafeAsyncTask;
+import me.loc2.loc2me.util.UIUtils;
 
 
 /**
@@ -176,7 +174,7 @@ public class MainActivity extends Loc2meFragmentActivity {
     }
 
     private void initImageLoader() {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).imageDecoder(new NutraBaseImageDecoder(true)).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
     }
 
