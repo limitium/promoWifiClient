@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.util.Ln;
@@ -213,13 +214,13 @@ public class OfferDetailsActivity extends AppCompatActivity {
     }
 
     private void loadThumbnail() {
-        String url = buildUrl(offer.get_image());
+        String url = buildUrl(offer.getImage());
         DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
         ImageLoader.getInstance().displayImage("http://s27.postimg.org/i689ms769/olympus.png", mOfferDetailsImage, imageLoadingOptions);
     }
 
     private void loadImage() {
-        String url = buildUrl(offer.get_image());
+        String url = buildUrl(offer.getImage());
         DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
         ImageLoader.getInstance().displayImage("http://s27.postimg.org/i689ms769/olympus.png", mOfferDetailsImage, imageLoadingOptions, new SimpleImageLoadingListener() {
             @Override
@@ -269,11 +270,12 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 .build();
     }
 
-    private String buildUrl(OfferImage image) {
+    private String buildUrl(String image) {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        String url = image.getBaseUrl() + "/" + String.valueOf(image.getWidth()) + "/"
-                + String.valueOf(image.getHeight()) + "/animals/";
+//        String url = image.getBaseUrl() + "/" + String.valueOf(image.getWidth()) + "/"
+//                + String.valueOf(image.getHeight()) + "/animals/";
+        String url = Constants.Http.URL_BASE+image;
         Ln.d("Loading url: " + url);
         return url;
     }

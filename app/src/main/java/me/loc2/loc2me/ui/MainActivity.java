@@ -209,10 +209,8 @@ public class MainActivity extends Loc2meFragmentActivity {
                 offer.setDescription(getString(R.string.lorem_ipsum_long));
                 offer.setCreated_at("Type " + indexStr);
                 offer.setUpdated_at("Category " + indexStr);
-                offer.set_image(new OfferImage("http://lorempixel.com/", 1080, index * 100 + 900));
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, -1 * (index + 1));
-                offer.setAddedAt(cal.getTimeInMillis());
                 offerEventService.add(offer);
                 return true;
             default:

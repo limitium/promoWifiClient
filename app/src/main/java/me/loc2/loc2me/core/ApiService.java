@@ -41,15 +41,7 @@ public class ApiService {
 
     public List<Offer> getWifiOffers(String name) {
         List<Offer> wifiOffers = getWifiOfferService().getWifiOffers(name);
-        addImageStubs(wifiOffers);
         return wifiOffers;
     }
 
-    private void addImageStubs(List<Offer> offers) {
-        Random random = new Random();
-        for (Offer offer: offers) {
-            int index = random.nextInt(10);
-            offer.set_image(new OfferImage("http://lorempixel.com/", 1080, index * 100 + 900));
-        }
-    }
 }

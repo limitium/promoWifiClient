@@ -94,10 +94,10 @@ public class OfferListFragment extends Fragment {
                 offer.setDescription(getString(R.string.lorem_ipsum_long));
                 offer.setCreated_at("Type " + indexStr);
                 offer.setUpdated_at("Category " + indexStr);
-                offer.set_image(new OfferImage("http://lorempixel.com/", 1080, 1920));
+                offer.setImage("qwe");
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, -1 * (index + 1));
-                offer.setAddedAt(cal.getTimeInMillis());
+                offer.setCreated_at("2015-05-21T14:24:05+0000");
                 int position = mAdapter.add(offer);
 
                 return true;

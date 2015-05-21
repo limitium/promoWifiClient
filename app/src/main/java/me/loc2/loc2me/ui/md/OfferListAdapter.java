@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.util.Ln;
@@ -62,7 +63,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             if (!imageLoaded) {
                 mOfferDateCreated.setVisibility(View.INVISIBLE);
                 mSpinner.setVisibility(View.VISIBLE);
-                String url = buildUrl(offer.get_image());
+                String url = buildUrl(offer.getImage());
                 ImageLoader.getInstance().displayImage("http://s27.postimg.org/i689ms769/olympus.png", mOfferItemImage, imageLoadingOptions, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
@@ -84,12 +85,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 });
             }
             PrettyTime prettyTime = new PrettyTime(new Date());
-            mOfferDateCreated.setText("Added " + prettyTime.format(new Date(offer.getAddedAt())));
+            mOfferDateCreated.setText("Added " + prettyTime.format(new Date(offer.getCreated_at())));
         }
 
-        private String buildUrl(OfferImage image) {
-            return image.getBaseUrl() + "/" + String.valueOf(image.getWidth()) + "/"
-                    + String.valueOf(image.getHeight()) + "/animals/";
+        private String buildUrl(String image) {
+            return Constants.Http.URL_BASE+image;
         }
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)

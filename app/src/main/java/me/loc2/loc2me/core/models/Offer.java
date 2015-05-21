@@ -27,9 +27,7 @@ public class Offer implements Parcelable, Serializable {
     private String description;
     private String created_at;
     private String updated_at;
-    private long addedAt;
-    private WifiInfo wifiInfo;
-    private OfferImage _image;
+    private String image;
 
     private Offer(Parcel in) {
         id = new BigInteger(in.readString());
@@ -37,8 +35,7 @@ public class Offer implements Parcelable, Serializable {
         description = in.readString();
         created_at = in.readString();
         updated_at = in.readString();
-        addedAt = in.readLong();
-        _image = in.readParcelable(OfferImage.class.getClassLoader());
+        image = in.readString();
     }
 
     @Override
@@ -53,8 +50,7 @@ public class Offer implements Parcelable, Serializable {
         dest.writeString(description);
         dest.writeString(created_at);
         dest.writeString(updated_at);
-        dest.writeLong(addedAt);
-        dest.writeParcelable(_image, flags);
+        dest.writeString(image);
     }
 
 
@@ -103,28 +99,12 @@ public class Offer implements Parcelable, Serializable {
         this.updated_at = updated_at;
     }
 
-    public long getAddedAt() {
-        return addedAt;
+    public String getImage() {
+        return image;
     }
 
-    public void setAddedAt(long addedAt) {
-        this.addedAt = addedAt;
-    }
-
-    public WifiInfo getWifiInfo() {
-        return wifiInfo;
-    }
-
-    public void setWifiInfo(WifiInfo wifiInfo) {
-        this.wifiInfo = wifiInfo;
-    }
-
-    public OfferImage get_image() {
-        return _image;
-    }
-
-    public void set_image(OfferImage _image) {
-        this._image = _image;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
@@ -133,11 +113,10 @@ public class Offer implements Parcelable, Serializable {
                 .omitNullValues()
                 .add("id", id)
                 .add("wifi_name", wifi_name)
-                .add("created_at", created_at)
                 .add("description", description)
+                .add("created_at", created_at)
                 .add("updated_at", updated_at)
-                .add("addedAt", addedAt)
-                .add("image", _image)
+                .add("image", image)
                 .toString();
     }
 
