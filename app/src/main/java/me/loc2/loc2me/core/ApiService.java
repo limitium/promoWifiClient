@@ -49,7 +49,7 @@ public class ApiService {
         Random random = new Random();
         for (Offer offer: offers) {
             int index = random.nextInt(10);
-            offer.setImage(new OfferImage("http://lorempixel.com/", 1080, index * 100 + 900));
+            offer.set_image(new OfferImage("http://lorempixel.com/", 1080, index * 100 + 900));
         }
     }
 }

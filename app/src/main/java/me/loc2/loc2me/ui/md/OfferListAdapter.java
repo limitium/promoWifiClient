@@ -62,7 +62,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             if (!imageLoaded) {
                 mOfferDateCreated.setVisibility(View.INVISIBLE);
                 mSpinner.setVisibility(View.VISIBLE);
-                String url = buildUrl(offer.getImage());
+                String url = buildUrl(offer.get_image());
                 ImageLoader.getInstance().displayImage("http://s27.postimg.org/i689ms769/olympus.png", mOfferItemImage, imageLoadingOptions, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {

@@ -23,22 +23,22 @@ public class Offer implements Parcelable, Serializable {
 
 
     private BigInteger id;
-    private String name;
-    private String message;
-    private String type;
-    private String category;
+    private String wifi_name;
+    private String description;
+    private String created_at;
+    private String updated_at;
     private long addedAt;
     private WifiInfo wifiInfo;
-    private OfferImage image;
+    private OfferImage _image;
 
     private Offer(Parcel in) {
         id = new BigInteger(in.readString());
-        name = in.readString();
-        message = in.readString();
-        type = in.readString();
-        category = in.readString();
+        wifi_name = in.readString();
+        description = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
         addedAt = in.readLong();
-        image = in.readParcelable(OfferImage.class.getClassLoader());
+        _image = in.readParcelable(OfferImage.class.getClassLoader());
     }
 
     @Override
@@ -49,12 +49,12 @@ public class Offer implements Parcelable, Serializable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id.toString());
-        dest.writeString(name);
-        dest.writeString(message);
-        dest.writeString(type);
-        dest.writeString(category);
+        dest.writeString(wifi_name);
+        dest.writeString(description);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
         dest.writeLong(addedAt);
-        dest.writeParcelable(image, flags);
+        dest.writeParcelable(_image, flags);
     }
 
 
@@ -71,36 +71,36 @@ public class Offer implements Parcelable, Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getWifi_name() {
+        return wifi_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setWifi_name(String wifi_name) {
+        this.wifi_name = wifi_name;
     }
 
-    public String getMessage() {
-        return message;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getType() {
-        return type;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public String getCategory() {
-        return category;
+    public String getUpdated_at() {
+        return updated_at;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 
     public long getAddedAt() {
@@ -119,12 +119,12 @@ public class Offer implements Parcelable, Serializable {
         this.wifiInfo = wifiInfo;
     }
 
-    public OfferImage getImage() {
-        return image;
+    public OfferImage get_image() {
+        return _image;
     }
 
-    public void setImage(OfferImage image) {
-        this.image = image;
+    public void set_image(OfferImage _image) {
+        this._image = _image;
     }
 
     @Override
@@ -132,12 +132,12 @@ public class Offer implements Parcelable, Serializable {
         return MoreObjects.toStringHelper(this)
                 .omitNullValues()
                 .add("id", id)
-                .add("name", name)
-                .add("type", type)
-                .add("message", message)
-                .add("category", category)
+                .add("wifi_name", wifi_name)
+                .add("created_at", created_at)
+                .add("description", description)
+                .add("updated_at", updated_at)
                 .add("addedAt", addedAt)
-                .add("image", image)
+                .add("image", _image)
                 .toString();
     }
 

@@ -213,13 +213,13 @@ public class OfferDetailsActivity extends AppCompatActivity {
     }
 
     private void loadThumbnail() {
-        String url = buildUrl(offer.getImage());
+        String url = buildUrl(offer.get_image());
         DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
         ImageLoader.getInstance().displayImage("http://s27.postimg.org/i689ms769/olympus.png", mOfferDetailsImage, imageLoadingOptions);
     }
 
     private void loadImage() {
-        String url = buildUrl(offer.getImage());
+        String url = buildUrl(offer.get_image());
         DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
         ImageLoader.getInstance().displayImage("http://s27.postimg.org/i689ms769/olympus.png", mOfferDetailsImage, imageLoadingOptions, new SimpleImageLoadingListener() {
             @Override

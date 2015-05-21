@@ -4,10 +4,10 @@ import java.util.List;
 
 import me.loc2.loc2me.core.models.Offer;
 import retrofit.http.GET;
-import retrofit.http.Path;
+import retrofit.http.Query;
 
 
 public interface WifiOffersService {
-    @GET("/find/{name}")
-    List<Offer> getWifiOffers(@Path("name") String name);
+    @GET("/api/offers/search")
+    List<Offer> getWifiOffers(@Query("name") String name);
 }

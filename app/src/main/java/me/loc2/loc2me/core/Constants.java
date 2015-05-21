@@ -18,7 +18,7 @@ public final class Constants {
         /**
          * Base URL for all requests
          */
-        public static final String URL_BASE = "http://promowifi.herokuapp.com";
+        public static final String URL_BASE = "http://loc2me.cloudapp.net";
 
     }
 

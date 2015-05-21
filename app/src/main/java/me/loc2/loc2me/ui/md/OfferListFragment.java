@@ -90,11 +90,11 @@ public class OfferListFragment extends Fragment {
                 String indexStr = String.valueOf(index);
 
                 offer.setId(new BigInteger(indexStr));
-                offer.setName("Item " + indexStr);
-                offer.setMessage(getString(R.string.lorem_ipsum_long));
-                offer.setType("Type " + indexStr);
-                offer.setCategory("Category " + indexStr);
-                offer.setImage(new OfferImage("http://lorempixel.com/", 1080, 1920));
+                offer.setWifi_name("Item " + indexStr);
+                offer.setDescription(getString(R.string.lorem_ipsum_long));
+                offer.setCreated_at("Type " + indexStr);
+                offer.setUpdated_at("Category " + indexStr);
+                offer.set_image(new OfferImage("http://lorempixel.com/", 1080, 1920));
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, -1 * (index + 1));
                 offer.setAddedAt(cal.getTimeInMillis());
