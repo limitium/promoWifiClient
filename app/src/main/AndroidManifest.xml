@@ -23,9 +23,9 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <updated_at android:name="android.intent.updated_at.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
 
-                <updated_at android:name="android.intent.updated_at.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name="me.loc2.loc2me.ui.md.OfferDetailsActivity" />

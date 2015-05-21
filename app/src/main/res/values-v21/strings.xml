@@ -36,6 +36,7 @@
     <string name="message_auth_failed_new_account">Please enter a valid email address &amp; password</string>
     <string name="timer_running">Timer is running</string>
     <string name="timer_is_paused">Timer is paused</string>
+    <string name="bg_offer_checker">BG</string>
     <string name="stop">Stop</string>
     <string name="start">Start</string>
     <string name="pause">Pause</string>
