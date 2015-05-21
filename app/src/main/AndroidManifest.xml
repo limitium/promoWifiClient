@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!--<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <uses-feature android:name="android.hardware.wifi" />
 
@@ -29,6 +29,12 @@
             </intent-filter>
         </activity>
         <activity android:name="me.loc2.loc2me.ui.md.OfferDetailsActivity" />
+
+        <receiver android:name="me.loc2.loc2me.core.receivers.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
 
         <service android:name="me.loc2.loc2me.core.TimerService" android:enabled="true" android:exported="false" />
