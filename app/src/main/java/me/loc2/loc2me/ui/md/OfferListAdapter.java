@@ -64,7 +64,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 mOfferDateCreated.setVisibility(View.INVISIBLE);
                 mSpinner.setVisibility(View.VISIBLE);
                 String url = buildUrl(offer.getImage());
-                ImageLoader.getInstance().displayImage("http://s27.postimg.org/i689ms769/olympus.png", mOfferItemImage, imageLoadingOptions, new SimpleImageLoadingListener() {
+                ImageLoader.getInstance().displayImage(url, mOfferItemImage, imageLoadingOptions, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         Ln.i("On loading started");
@@ -85,7 +85,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 });
             }
             PrettyTime prettyTime = new PrettyTime(new Date());
-            mOfferDateCreated.setText("Added " + prettyTime.format(new Date(offer.getCreated_at())));
+            mOfferDateCreated.setText("Added " + "123");
         }
 
         private String buildUrl(String image) {
