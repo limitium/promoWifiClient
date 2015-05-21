@@ -10,6 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.core.Constants;
+import me.loc2.loc2me.core.services.OfferCheckBackgroundService;
 import me.loc2.loc2me.core.services.OfferEventService;
 import me.loc2.loc2me.core.services.OfferLoaderService;
 import me.loc2.loc2me.core.services.OfferStorageService;
@@ -41,6 +42,7 @@ import retrofit.converter.GsonConverter;
                 WifiScanService.class,
                 OfferStorageService.class,
                 OfferLoaderService.class,
+                OfferCheckBackgroundService.class,
                 OfferEventService.class
         }
 )
