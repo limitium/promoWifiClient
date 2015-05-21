@@ -27,6 +27,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.OfferImage;
+import me.loc2.loc2me.dao.OfferDAO;
 import me.loc2.loc2me.util.Ln;
 
 public class OfferDetailsActivity extends AppCompatActivity {
@@ -44,6 +46,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private TextView mOfferDescription;
     private View imageFrame;
     private Offer offer;
+    private OfferDAO offerDAO;
 
     public static final String OFFER = "OFFER";
 
@@ -79,6 +82,9 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        offerDAO = new OfferDAO(this);
+        Ln.e("all offers: " + Arrays.asList(offerDAO.findAllReceived().toArray()));
 
         setUpLayout();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
