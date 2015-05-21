@@ -1,4 +1,4 @@
-package me.loc2.loc2me.core;
+package me.loc2.loc2me.core.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.inject.Inject;
 
 import me.loc2.loc2me.Injector;
+import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.core.events.NewWifiNetworkEvent;
 import me.loc2.loc2me.core.events.OfferRemoveEvent;
 import me.loc2.loc2me.core.models.Offer;

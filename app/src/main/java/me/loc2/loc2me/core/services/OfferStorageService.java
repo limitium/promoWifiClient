@@ -1,4 +1,4 @@
-package me.loc2.loc2me.core;
+package me.loc2.loc2me.core.services;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -25,6 +25,7 @@ import javax.inject.Inject;
 
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.events.GetOffersEvent;
 import me.loc2.loc2me.core.events.LoadedOffersEvent;
 import me.loc2.loc2me.core.events.NewOfferEvent;

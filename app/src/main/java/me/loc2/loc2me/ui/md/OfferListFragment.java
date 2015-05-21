@@ -31,8 +31,8 @@ import javax.inject.Inject;
 
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
-import me.loc2.loc2me.core.OfferEventService;
-import me.loc2.loc2me.core.OfferLoaderService;
+import me.loc2.loc2me.core.services.OfferEventService;
+import me.loc2.loc2me.core.services.OfferLoaderService;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.OfferImage;

@@ -4,10 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import me.loc2.loc2me.core.OfferLoaderService;
-import me.loc2.loc2me.core.OfferStorageService;
-import me.loc2.loc2me.core.TimerService;
-import me.loc2.loc2me.core.WifiScanService;
+import me.loc2.loc2me.core.services.OfferLoaderService;
+import me.loc2.loc2me.core.services.OfferStorageService;
+import me.loc2.loc2me.core.services.TimerService;
+import me.loc2.loc2me.core.services.WifiScanService;
 
 public class BootReceiver extends BroadcastReceiver {
     @Override

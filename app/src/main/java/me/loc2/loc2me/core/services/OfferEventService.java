@@ -1,4 +1,4 @@
-package me.loc2.loc2me.core;
+package me.loc2.loc2me.core.services;
 
 import android.app.Service;
 import android.content.Intent;
