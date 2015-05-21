@@ -216,13 +216,13 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private void loadThumbnail() {
         String url = buildUrl(offer.getImage());
         DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
-        ImageLoader.getInstance().displayImage("http://s27.postimg.org/i689ms769/olympus.png", mOfferDetailsImage, imageLoadingOptions);
+        ImageLoader.getInstance().displayImage(url, mOfferDetailsImage, imageLoadingOptions);
     }
 
     private void loadImage() {
         String url = buildUrl(offer.getImage());
         DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
-        ImageLoader.getInstance().displayImage("http://s27.postimg.org/i689ms769/olympus.png", mOfferDetailsImage, imageLoadingOptions, new SimpleImageLoadingListener() {
+        ImageLoader.getInstance().displayImage(url, mOfferDetailsImage, imageLoadingOptions, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 Ln.i("On loading started");
