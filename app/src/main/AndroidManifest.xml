@@ -37,9 +37,6 @@
         </receiver>
 
 
-        <service android:name=".core.services.TimerService" android:enabled="true" android:exported="false" />
-        <service android:name=".core.services.OfferLoaderService" android:enabled="true" android:exported="false" />
-        <service android:name=".core.services.OfferEventService" android:enabled="true" android:exported="false" />
-        <service android:name=".core.services.WifiScanService" android:enabled="true" android:exported="false" />
+        <service android:name=".core.services.OfferCheckBackgroundService" android:enabled="true" android:exported="false" />
     </application>
 </manifest>

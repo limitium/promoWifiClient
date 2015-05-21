@@ -13,6 +13,7 @@ import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.events.OfferRemoveEvent;
 import me.loc2.loc2me.core.models.Offer;
 
+@Deprecated
 public class OfferEventService extends Service {
 
     @Inject

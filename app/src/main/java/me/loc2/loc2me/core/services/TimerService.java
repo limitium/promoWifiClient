@@ -27,6 +27,7 @@ import javax.inject.Inject;
 
 import static me.loc2.loc2me.core.Constants.Notification.TIMER_NOTIFICATION_ID;
 
+@Deprecated
 public class TimerService extends Service {
 
     @Inject protected Bus eventBus;

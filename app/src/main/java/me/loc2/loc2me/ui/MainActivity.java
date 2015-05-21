@@ -3,6 +3,8 @@
 package me.loc2.loc2me.ui;
 
 import android.accounts.OperationCanceledException;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -27,11 +29,8 @@ import butterknife.Views;
 import me.loc2.loc2me.Loc2meServiceProvider;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.ApiService;
+import me.loc2.loc2me.core.services.OfferCheckBackgroundService;
 import me.loc2.loc2me.core.services.OfferEventService;
-import me.loc2.loc2me.core.services.OfferLoaderService;
-import me.loc2.loc2me.core.services.OfferStorageService;
-import me.loc2.loc2me.core.services.TimerService;
-import me.loc2.loc2me.core.services.WifiScanService;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.events.NavItemSelectedEvent;
@@ -130,10 +129,10 @@ public class MainActivity extends Loc2meFragmentActivity {
     private void initScreen() {
         if (userHasAuthenticated) {
 
-            startService(new Intent(this, OfferLoaderService.class));
-            startService(new Intent(this, TimerService.class));
-            startService(new Intent(this, WifiScanService.class));
-            startService(new Intent(this, OfferStorageService.class));
+
+            if(!isServiceRunning(OfferCheckBackgroundService.class)){
+                startService(new Intent(this, OfferCheckBackgroundService.class));
+            }
 
             Ln.d("Foo");
             final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -142,6 +141,16 @@ public class MainActivity extends Loc2meFragmentActivity {
                     .commit();
         }
 
+    }
+
+    private boolean isServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void checkAuth() {
