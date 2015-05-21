@@ -39,7 +39,7 @@ public class OfferDAO extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO Auto-generated method stub
-        db.execSQL("DROP TABLE IF EXISTS " + OfferContract.ReceivedOffer.TABLE_NAME );
+        db.execSQL("DROP TABLE IF EXISTS " + OfferContract.ReceivedOffer.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + OfferContract.DeletedOffer.TABLE_NAME);
         onCreate(db);
     }
@@ -95,21 +95,13 @@ public class OfferDAO extends SQLiteOpenHelper {
                 new String[]{Long.toString(id.longValue())});
     }
 
-    private OfferSerializer getOfferSerializer() {
-        if (null == offerSerializer) {
-            offerSerializer = new OfferSerializer();
-        }
-        return offerSerializer;
-
-    }
-
     public List<Offer> findAllReceived() {
         ArrayList<Offer> result = new ArrayList<>();
         //hp = new HashMap();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from " + OfferContract.ReceivedOffer.TABLE_NAME, null );
+        Cursor res = db.rawQuery("select * from " + OfferContract.ReceivedOffer.TABLE_NAME, null);
         res.moveToFirst();
-        while(!res.isAfterLast()) {
+        while (!res.isAfterLast()) {
             try {
                 Offer offer = getOfferSerializer().deserialize(res.getString(res.getColumnIndex(OfferContract.ReceivedOffer.COLUMN_JSON)));
                 result.add(offer);
@@ -121,4 +113,42 @@ public class OfferDAO extends SQLiteOpenHelper {
         res.close();
         return result;
     }
+
+    public boolean isDeleted(BigInteger id) {
+        boolean result;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String Query = "Select * from " + OfferContract.DeletedOffer.TABLE_NAME + " where " +
+                OfferContract.DeletedOffer.COLUMN_DELETED_OFFER_ID + " = " + id.longValue();
+        Cursor cursor = db.rawQuery(Query, null);
+        result = cursor.getCount() > 0;
+        cursor.close();
+        return result;
+    }
+
+    public boolean saveDeleted(BigInteger id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(OfferContract.DeletedOffer.COLUMN_ID, id.longValue());
+        long result = db.insert(OfferContract.ReceivedOffer.TABLE_NAME, null, contentValues);
+        return -1 != result;
+    }
+
+    public void removeDeleted(BigInteger id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(OfferContract.DeletedOffer.TABLE_NAME,
+                OfferContract.DeletedOffer.COLUMN_DELETED_OFFER_ID + " = ? ",
+                new String[]{Long.toString(id.longValue())});
+    }
+
+
+    private OfferSerializer getOfferSerializer() {
+        if (null == offerSerializer) {
+            offerSerializer = new OfferSerializer();
+        }
+        return offerSerializer;
+
+    }
+
+
 }
