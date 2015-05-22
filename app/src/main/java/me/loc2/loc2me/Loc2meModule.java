@@ -13,11 +13,9 @@ import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.services.OfferCheckBackgroundService;
 import me.loc2.loc2me.core.services.OfferEventService;
 import me.loc2.loc2me.core.services.OfferLoaderService;
-import me.loc2.loc2me.core.services.OfferStorageService;
 import me.loc2.loc2me.core.PostFromAnyThreadBus;
 import me.loc2.loc2me.core.RestAdapterRequestInterceptor;
 import me.loc2.loc2me.core.RestErrorHandler;
-import me.loc2.loc2me.core.services.TimerService;
 import me.loc2.loc2me.core.UserAgentProvider;
 import me.loc2.loc2me.core.services.WifiScanService;
 import me.loc2.loc2me.dao.OfferPersistService;
@@ -39,9 +37,7 @@ import retrofit.converter.GsonConverter;
                 MainActivity.class,
                 FilterFragment.class,
                 OfferListFragment.class,
-                TimerService.class,
                 WifiScanService.class,
-                OfferStorageService.class,
                 OfferLoaderService.class,
                 OfferCheckBackgroundService.class,
                 OfferPersistService.class,

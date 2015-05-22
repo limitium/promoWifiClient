@@ -27,6 +27,7 @@ public class Offer implements Parcelable, Serializable {
     private String description;
     private String created_at;
     private String updated_at;
+    private Long added_at;
     private String image;
     private int descriptionColor;
 
@@ -36,6 +37,7 @@ public class Offer implements Parcelable, Serializable {
         description = in.readString();
         created_at = in.readString();
         updated_at = in.readString();
+        added_at = in.readLong();
         image = in.readString();
     }
 
@@ -51,6 +53,7 @@ public class Offer implements Parcelable, Serializable {
         dest.writeString(description);
         dest.writeString(created_at);
         dest.writeString(updated_at);
+        dest.writeLong(added_at);
         dest.writeString(image);
     }
 
@@ -108,6 +111,14 @@ public class Offer implements Parcelable, Serializable {
         this.image = image;
     }
 
+    public Long getAdded_at() {
+        return added_at;
+    }
+
+    public void setAdded_at(Long added_at) {
+        this.added_at = added_at;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -117,6 +128,7 @@ public class Offer implements Parcelable, Serializable {
                 .add("description", description)
                 .add("created_at", created_at)
                 .add("updated_at", updated_at)
+                .add("added_at", added_at)
                 .add("image", image)
                 .toString();
     }

@@ -48,14 +48,16 @@ import me.loc2.loc2me.util.UIUtils;
 
 
 /**
-* Initial activity for the application.
-*
-*/
+ * Initial activity for the application.
+ */
 public class MainActivity extends Loc2meFragmentActivity {
 
-    @Inject protected Loc2meServiceProvider serviceProvider;
-    @Inject protected OfferEventService offerEventService;
-    @Inject protected OfferPersistService offerPersistService;
+    @Inject
+    protected Loc2meServiceProvider serviceProvider;
+    @Inject
+    protected OfferEventService offerEventService;
+    @Inject
+    protected OfferPersistService offerPersistService;
 
     private boolean userHasAuthenticated = false;
 
@@ -63,7 +65,6 @@ public class MainActivity extends Loc2meFragmentActivity {
     private ActionBarDrawerToggle drawerToggle;
     private CharSequence drawerTitle;
     private CharSequence title;
-
 
     @Override
     protected int getLayoutResource() {
@@ -77,15 +78,16 @@ public class MainActivity extends Loc2meFragmentActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        super.onCreate(savedInstanceState);
 
+        super.onCreate(savedInstanceState);
+        
         // View injection with Butterknife
         Views.inject(this);
 
         // Set up navigation drawer
         title = drawerTitle = getTitle();
 
-        if(!isTablet()) {
+        if (!isTablet()) {
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawerToggle = new ActionBarDrawerToggle(
                     this,                    /* Host activity */
@@ -109,6 +111,8 @@ public class MainActivity extends Loc2meFragmentActivity {
             drawerLayout.setDrawerListener(drawerToggle);
         }
         checkAuth();
+
+
     }
 
     private boolean isTablet() {
@@ -119,7 +123,7 @@ public class MainActivity extends Loc2meFragmentActivity {
     protected void onPostCreate(final Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        if(!isTablet()) {
+        if (!isTablet()) {
             // Sync the toggle state after onRestoreInstanceState has occurred.
             drawerToggle.syncState();
         }
@@ -129,7 +133,7 @@ public class MainActivity extends Loc2meFragmentActivity {
     @Override
     public void onConfigurationChanged(final Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if(!isTablet()) {
+        if (!isTablet()) {
             drawerToggle.onConfigurationChanged(newConfig);
         }
     }
@@ -139,10 +143,11 @@ public class MainActivity extends Loc2meFragmentActivity {
         if (userHasAuthenticated) {
 
 
-            if(!isServiceRunning(OfferCheckBackgroundService.class)){
+            if (!isServiceRunning(OfferCheckBackgroundService.class)) {
                 startService(new Intent(this, OfferCheckBackgroundService.class));
             }
 
+            Ln.d("Foo");
             final FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.container, new OfferListFragment())
@@ -233,7 +238,7 @@ public class MainActivity extends Loc2meFragmentActivity {
 
         Ln.d("Selected: %1$s", event.getItemPosition());
 
-        switch(event.getItemPosition()) {
+        switch (event.getItemPosition()) {
             case 0:
                 // Home
                 // do nothing as we're already on the home screen.
