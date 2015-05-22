@@ -3,7 +3,7 @@
     android:padding="@dimen/actions_padding"
     android:paddingLeft="@dimen/actions_padding_left"
     android:paddingRight="@dimen/actions_padding_left"
-    android:background="?android:colorPrimary"
+    android:background="@drawable/textlines"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
@@ -14,10 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:background="?android:colorPrimary"
-        android:textAppearance="@android:style/TextAppearance.Material.Body1"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
         android:paddingLeft="@dimen/padding_small"
         android:paddingRight="@dimen/padding_small"
+        android:textSize="12sp"
         android:textStyle="italic"/>
 
 </RelativeLayout>

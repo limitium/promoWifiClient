@@ -283,7 +283,8 @@ public class OfferDetailsActivity extends AppCompatActivity {
 //                + String.valueOf(image.getHeight()) + "/animals/";
         String url = Constants.Http.URL_BASE+image;
         Ln.d("Loading url: " + url);
-        return url;
+        return "http://lorempixel.com/1080/1920/animals/";
+//        return url;
     }
 
     private void createShowAnimations() {

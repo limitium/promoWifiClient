@@ -39,6 +39,7 @@ import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.dao.OfferDAO;
 import me.loc2.loc2me.dao.OfferPersistService;
 import me.loc2.loc2me.events.NavItemSelectedEvent;
+import me.loc2.loc2me.ui.md.ColorGenerator;
 import me.loc2.loc2me.ui.md.OfferListFragment;
 import me.loc2.loc2me.util.Ln;
 import me.loc2.loc2me.util.SafeAsyncTask;
@@ -214,10 +215,12 @@ public class MainActivity extends Loc2meFragmentActivity {
                 offer.setId(new BigInteger(indexStr));
                 offer.setWifi_name("Item " + indexStr);
                 offer.setDescription(getString(R.string.lorem_ipsum_long));
-                offer.setCreated_at("Type " + indexStr);
-                offer.setUpdated_at("Category " + indexStr);
+                offer.setCreated_at("2015-05-21T14:24:05+0000");
+                offer.setUpdated_at("2015-05-21T14:24:05+0000");
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, -1 * (index + 1));
+                int descriptionColor = getResources().getColor(ColorGenerator.getNextCardColor());
+                offer.setDescriptionColor(descriptionColor);
                 offerEventService.add(offer);
                 return true;
             default:

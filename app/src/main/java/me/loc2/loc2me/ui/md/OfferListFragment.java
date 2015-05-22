@@ -81,33 +81,6 @@ public class OfferListFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_add:
-                Offer offer = new Offer();
-                Random random = new Random();
-                int index = random.nextInt(10);
-                String indexStr = String.valueOf(index);
-
-                offer.setId(new BigInteger(indexStr));
-                offer.setWifi_name("Item " + indexStr);
-                offer.setDescription(getString(R.string.lorem_ipsum_long));
-                offer.setCreated_at("Type " + indexStr);
-                offer.setUpdated_at("Category " + indexStr);
-                offer.setImage("qwe");
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, -1 * (index + 1));
-                offer.setCreated_at("2015-05-21T14:24:05+0000");
-                int position = mAdapter.add(offer);
-
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View mRootView = inflater.inflate(R.layout.offer_list, container, false);
@@ -118,6 +91,9 @@ public class OfferListFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        BottomItemDecoration divider = new BottomItemDecoration(16);
+        mRecyclerView.addItemDecoration(divider);
         SlideInOutLeftItemAnimator animator = new SlideInOutLeftItemAnimator(mRecyclerView);
         mRecyclerView.setItemAnimator(animator);
         SwipeDismissRecyclerViewTouchListener listener = new SwipeDismissRecyclerViewTouchListener.Builder(

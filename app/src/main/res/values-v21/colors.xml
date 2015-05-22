@@ -7,4 +7,16 @@
     <color name="black">#000000</color>
     <color name="blue">#ff14445a</color>
 
+    <color name="darkblue">#0d47a1</color>
+    <color name="darkteal">#004d40</color>
+    <color name="darklime">#827717</color>
+    <color name="darkorange">#e65100</color>
+    <color name="darkgrey">#212121</color>
+    <color name="darkbluegrey">#263238</color>
+    <color name="darkdeeporange">#bf360c</color>
+    <color name="darkyellow">#f57f17</color>
+    <color name="darkgreen">#1b5e20</color>
+    <color name="darklightblue">#01579b</color>
+
+
 </resources>

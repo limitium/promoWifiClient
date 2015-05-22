@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/offer_description"
+    android:padding="@dimen/actions_padding"
+    android:paddingLeft="@dimen/actions_padding_left"
+    android:paddingRight="@dimen/actions_padding_left"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentStart="true">
+
+    <TextView
+        android:id="@+id/offer_promo_name"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Promo name"
+        android:textColor="@color/white"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"/>
+
+    <TextView
+        android:id="@+id/offer_company_name"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/offer_promo_name"
+        android:text="Little big company"
+        android:textColor="@color/white"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"/>
+
+
+</RelativeLayout>

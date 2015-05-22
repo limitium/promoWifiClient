@@ -28,6 +28,7 @@ public class Offer implements Parcelable, Serializable {
     private String created_at;
     private String updated_at;
     private String image;
+    private int descriptionColor;
 
     private Offer(Parcel in) {
         id = new BigInteger(in.readString());
@@ -120,4 +121,11 @@ public class Offer implements Parcelable, Serializable {
                 .toString();
     }
 
+    public void setDescriptionColor(int descriptionColor) {
+        this.descriptionColor = descriptionColor;
+    }
+
+    public int getDescriptionColor() {
+        return descriptionColor;
+    }
 }

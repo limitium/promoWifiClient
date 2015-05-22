@@ -1,5 +1,6 @@
 package me.loc2.loc2me.ui.md;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -19,13 +20,15 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 
 import org.ocpsoft.pretty.time.PrettyTime;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import me.loc2.loc2me.R;
-import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
-import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.util.Ln;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.ViewHolder> {
@@ -43,19 +46,21 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
         private ImageView mOfferItemImage;
         private TextView mOfferDateCreated;
+        private View mOfferDescription;
         private ProgressBar mSpinner;
 
         private final DisplayMetrics metrics;
         private final DisplayImageOptions imageLoadingOptions;
         private boolean imageLoaded = false;
 
-        public ViewHolder(View v, int viewGroupWidh, DisplayMetrics metrics, DisplayImageOptions imageLoadingOptions) {
+        public ViewHolder(View v, DisplayMetrics metrics, DisplayImageOptions imageLoadingOptions) {
             super(v);
             this.metrics = metrics;
             this.imageLoadingOptions = imageLoadingOptions;
             // Define click listener for the ViewHolder's View.
             mOfferItemImage = (ImageView) v.findViewById(R.id.offer_list_image);
             mOfferDateCreated = (TextView)v.findViewById(R.id.offer_date_created);
+            mOfferDescription = v.findViewById(R.id.offer_description_layout);
             mSpinner = (ProgressBar)v.findViewById(R.id.loading);
         }
 
@@ -84,12 +89,22 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                     }
                 });
             }
-            PrettyTime prettyTime = new PrettyTime(new Date());
-            mOfferDateCreated.setText("Added " + "123");
+            try {
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
+                Date createdAt =  df.parse(offer.getCreated_at());
+                PrettyTime prettyTime = new PrettyTime(new Date());
+                mOfferDateCreated.setText(prettyTime.format(createdAt));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            Ln.i("Color code: " + offer.getDescriptionColor());
+            mOfferDescription.setBackgroundColor(offer.getDescriptionColor());
         }
 
         private String buildUrl(String image) {
-            return Constants.Http.URL_BASE+image;
+            return "http://lorempixel.com/1080/1920/animals/";
+//            return Constants.Http.URL_BASE+image;
         }
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)
@@ -120,7 +135,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 .inflate(R.layout.offer_list_item, viewGroup, false);
         final int viewGroupWidth = viewGroup.getWidth();
 
-        return new ViewHolder(v, viewGroupWidth, getMetrics(), imageLoadingOptions);
+        return new ViewHolder(v, getMetrics(), imageLoadingOptions);
     }
 
     @Override
