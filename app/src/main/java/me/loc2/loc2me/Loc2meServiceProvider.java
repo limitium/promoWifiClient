@@ -24,7 +24,7 @@ public class Loc2meServiceProvider {
     /**
      * Get service for configured key provider
      * <p/>
-     * This method gets an auth key and so it blocks and shouldn't be called on the main thread.
+     * This method gets an auth key and so it blocks and shouldn't be called on the toolbar_menu thread.
      *
      * @return bootstrap service
      * @throws IOException

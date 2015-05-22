@@ -9,7 +9,7 @@ import com.squareup.otto.ThreadEnforcer;
 
 /**
  * This message bus allows you to post a message from any thread and it will get handled and then
- * posted to the main thread for you.
+ * posted to the toolbar_menu thread for you.
  */
 public class PostFromAnyThreadBus extends Bus
 {
@@ -23,13 +23,13 @@ public class PostFromAnyThreadBus extends Bus
     {
         if (Looper.myLooper() != Looper.getMainLooper())
         {
-            // We're not in the main loop, so we need to get into it.
+            // We're not in the toolbar_menu loop, so we need to get into it.
             (new Handler(Looper.getMainLooper())).post(new Runnable()
             {
                 @Override
                 public void run()
                 {
-                    // We're now in the main loop, we can post now
+                    // We're now in the toolbar_menu loop, we can post now
                     PostFromAnyThreadBus.super.post(event);
                 }
             });

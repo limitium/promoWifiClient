@@ -14,13 +14,13 @@ public class Loc2meApplication extends Application {
     private static Loc2meApplication instance;
 
     /**
-     * Create main application
+     * Create toolbar_menu application
      */
     public Loc2meApplication() {
     }
 
     /**
-     * Create main application
+     * Create toolbar_menu application
      *
      * @param context
      */
@@ -46,7 +46,7 @@ public class Loc2meApplication extends Application {
 
 
     /**
-     * Create main application
+     * Create toolbar_menu application
      *
      * @param instrumentation
      */

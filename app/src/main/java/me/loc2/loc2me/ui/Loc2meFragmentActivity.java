@@ -1,7 +1,6 @@
 package me.loc2.loc2me.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,7 +9,6 @@ import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
 
-import butterknife.Views;
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
 
@@ -40,7 +38,7 @@ public abstract class Loc2meFragmentActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
 

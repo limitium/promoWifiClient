@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
 
-    <!-- The main content view -->
+    <!-- The toolbar_menu content view -->
     <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"

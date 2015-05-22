@@ -143,7 +143,6 @@ public class MainActivity extends Loc2meFragmentActivity {
                 startService(new Intent(this, OfferCheckBackgroundService.class));
             }
 
-            Ln.d("Foo");
             final FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.container, new OfferListFragment())

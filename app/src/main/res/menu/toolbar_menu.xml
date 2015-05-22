@@ -4,7 +4,7 @@
     tools:context=".HomeActivity">
     <item
         android:id="@+id/menu_add"
-        android:icon="@drawable/ic_add_black_18dp"
+        android:icon="@drawable/ic_add_white_18dp"
         android:title="@string/menu_refresh"
         support:showAsAction="ifRoom"/>
 </menu>
