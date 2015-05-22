@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
+import com.google.common.base.Optional;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -19,6 +20,8 @@ import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.events.LoadedOfferEvent;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.events.NewWifiNetworkEvent;
+import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.dao.OfferPersistService;
 import me.loc2.loc2me.util.Ln;
 
 import static me.loc2.loc2me.core.Constants.Notification.SCAN_NOTIFICATION_ID;
@@ -28,12 +31,15 @@ public class OfferCheckBackgroundService extends Service {
     @Inject
     protected Bus eventBus;
     @Inject
-    NotificationManager notificationManager;
+    protected NotificationManager notificationManager;
 
     @Inject
     protected OfferLoaderService offerLoaderService;
     @Inject
     protected WifiScanService wifiScanService;
+    @Inject
+    protected OfferPersistService offerPersistService;
+
     private boolean started;
 
     @Override
@@ -61,7 +67,7 @@ public class OfferCheckBackgroundService extends Service {
 
         offerLoaderService.unregister();
         wifiScanService.unregister(this);
-
+        offerPersistService.onDestroy();
         super.onDestroy();
     }
 
@@ -106,9 +112,22 @@ public class OfferCheckBackgroundService extends Service {
 
     @Subscribe
     public void onLoadedOfferEvent(LoadedOfferEvent loadedOfferEvent) {
-        Ln.i("New offer: " + loadedOfferEvent.getOffer().getId());
-        //@todo: check offer in cache or deleted
-        eventBus.post(new NewOfferEvent(loadedOfferEvent.getOffer()));
+        Offer offer = loadedOfferEvent.getOffer();
+        Ln.i("New offer: " + offer.getId());
+
+        if (!offerPersistService.isDeleted(offer.getId())) {
+            Ln.i("Offer was deleted");
+            Optional<Offer> saved = offerPersistService.findOneReceived(offer.getId());
+            Ln.i("Offer was saved before: " + String.valueOf(saved.isPresent()));
+            if (!saved.isPresent() || !saved.get().getUpdated_at().equals(offer.getUpdated_at())) {
+                if (saved.isPresent()) {
+                    offerPersistService.deleteReceived(offer.getId());
+                }
+                offer.setAdded_at(System.currentTimeMillis());
+                offerPersistService.saveReceived(offer);
+                eventBus.post(new NewOfferEvent(offer));
+            }
+        }
     }
 
     @Subscribe

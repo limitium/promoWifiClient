@@ -23,6 +23,9 @@ public class OfferLoaderService {
 
 
     public void loadWifiOffers(final WifiInfo wifi) {
+        if(wifi.getName().isEmpty()){
+            return;
+        }
         new SafeAsyncTask<List<Offer>>() {
             public List<Offer> call() throws Exception {
                 return apiService.getWifiOffers(wifi.getName());

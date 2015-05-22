@@ -1,41 +1,27 @@
 package me.loc2.loc2me.dao;
 
-import android.app.NotificationManager;
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
+import android.content.Context;
 
 import com.google.common.base.Optional;
-import com.squareup.otto.Bus;
 
 import java.math.BigInteger;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Qualifier;
+import javax.inject.Singleton;
 
+import dagger.Provides;
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.util.Ln;
 
-public class OfferPersistService extends Service {
-
-    @Inject
-    protected Bus eventBus;
+public class OfferPersistService {
 
     private OfferDAO offerDAO;
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        offerDAO = new OfferDAO(this);
-        Injector.inject(this);
-        // Register the bus so we can send notifications.
-        eventBus.register(this);
+    public OfferPersistService(Context context) {
+        offerDAO = new OfferDAO(context);
     }
 
     public boolean saveReceived(Offer offer) {
@@ -70,7 +56,6 @@ public class OfferPersistService extends Service {
         return offerDAO.isDeleted(id);
     }
 
-    @Override
     public void onDestroy() {
         if (offerDAO != null) {
             try {
