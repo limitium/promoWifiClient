@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
+import android.transition.Fade;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -39,7 +41,7 @@ import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.dao.OfferDAO;
 import me.loc2.loc2me.util.Ln;
 
-public class OfferDetailsActivity extends ActionBarActivity {
+public class OfferDetailsActivity extends AppCompatActivity {
 
     private static final long ANIM_DURATION = 300;
 
@@ -75,10 +77,9 @@ public class OfferDetailsActivity extends ActionBarActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            View toolbar = findViewById(R.id.toolbar);
+            ViewCompat.setTransitionName(toolbar, getString(R.string.toolbar_transition));
         }
-
-        View toolbar = findViewById(R.id.toolbar);
-        ViewCompat.setTransitionName(toolbar, getString(R.string.toolbar_transition));
 
         // Postpone the transition until the window's decor view has
         // finished its layout.
@@ -116,10 +117,11 @@ public class OfferDetailsActivity extends ActionBarActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.home:
+            case android.R.id.home:
                 goToList();
                 return true;
         }
@@ -177,33 +179,15 @@ public class OfferDetailsActivity extends ActionBarActivity {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupExitAnimations() {
         Transition sharedElementReturnTransition = getWindow().getSharedElementReturnTransition();
+        View statusBar = findViewById(android.R.id.statusBarBackground);
         sharedElementReturnTransition.setStartDelay(ANIM_DURATION);
+        sharedElementReturnTransition.excludeTarget(toolbar, true);
+        sharedElementReturnTransition.excludeTarget(statusBar, true);
 
         Transition returnTransition = getWindow().getReturnTransition();
+        returnTransition.excludeTarget(toolbar, true);
+        returnTransition.excludeTarget(statusBar, true);
         returnTransition.setDuration(ANIM_DURATION);
-
-        returnTransition.addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(Transition transition) {
-                Ln.d("Exit animation transition start");
-            }
-
-            @Override
-            public void onTransitionEnd(Transition transition) {
-            }
-
-            @Override
-            public void onTransitionCancel(Transition transition) {
-            }
-
-            @Override
-            public void onTransitionPause(Transition transition) {
-            }
-
-            @Override
-            public void onTransitionResume(Transition transition) {
-            }
-        });
     }
 
     private void setUpLayout() {

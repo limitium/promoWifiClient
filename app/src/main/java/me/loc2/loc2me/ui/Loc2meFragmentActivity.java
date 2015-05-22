@@ -31,7 +31,6 @@ public abstract class Loc2meFragmentActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         Injector.inject(this);
     }
