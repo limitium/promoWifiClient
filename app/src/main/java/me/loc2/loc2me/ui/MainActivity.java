@@ -37,6 +37,7 @@ import me.loc2.loc2me.core.services.OfferEventService;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.dao.OfferDAO;
+import me.loc2.loc2me.dao.OfferPersistService;
 import me.loc2.loc2me.events.NavItemSelectedEvent;
 import me.loc2.loc2me.ui.md.OfferListFragment;
 import me.loc2.loc2me.util.Ln;
@@ -52,6 +53,7 @@ public class MainActivity extends Loc2meFragmentActivity {
 
     @Inject protected Loc2meServiceProvider serviceProvider;
     @Inject protected OfferEventService offerEventService;
+    @Inject protected OfferPersistService offerPersistService;
 
     private boolean userHasAuthenticated = false;
 
@@ -59,12 +61,10 @@ public class MainActivity extends Loc2meFragmentActivity {
     private ActionBarDrawerToggle drawerToggle;
     private CharSequence drawerTitle;
     private CharSequence title;
-    private OfferDAO offerDAO;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        offerDAO = new OfferDAO(this);
-
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         super.onCreate(savedInstanceState);
@@ -219,8 +219,6 @@ public class MainActivity extends Loc2meFragmentActivity {
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, -1 * (index + 1));
                 offerEventService.add(offer);
-                List<Offer> allReceived = offerDAO.findAllReceived();
-                Ln.i("All received offers: " + Arrays.toString(allReceived.toArray()));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
