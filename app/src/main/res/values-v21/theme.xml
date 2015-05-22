@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+
     <style name="MainTheme" parent="@style/Theme.AppCompat.Light">
         <item name="android:windowContentTransitions">true</item>
+
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
         <item name="android:windowSharedElementEnterTransition">
             @transition/offer_detail_transition
         </item>
         <item name="android:windowSharedElementExitTransition">
             @transition/offer_detail_transition
         </item>
-        <item name="android:windowNoTitle">true</item>
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
 
     <style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
         <item name="titleTextStyle">@style/MyTitleTextStyle</item>
     </style>
+
     <style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/orange</item>
         <item name="android:fontFamily">sans-serif-thin</item>

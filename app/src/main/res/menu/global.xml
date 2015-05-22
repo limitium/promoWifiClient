@@ -2,6 +2,7 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="@color/orange"
+    android:id="@+id/toolbar_menu"
     xmlns:support="http://schemas.android.com/apk/res-auto" >
 
     <!--

@@ -62,6 +62,7 @@ public class OfferListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         initDataset();
         Injector.inject(this);
         eventBus.register(this);
@@ -143,16 +144,15 @@ public class OfferListFragment extends Fragment {
 
         View statusBar = getActivity().findViewById(android.R.id.statusBarBackground);
         View sharedElement = sharedView.findViewById(R.id.offer_list_image);
-        View decor = getActivity().getWindow().getDecorView();
-        int actionBarId = R.id.action_bar_container;
-        View actionBar = decor.findViewById(actionBarId);
+        View toolbar = getActivity().findViewById(R.id.toolbar);
 
         List<Pair<View, String>> pairs = new ArrayList<>();
         pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
         pairs.add(Pair.create(sharedElement, getString(R.string.card_to_details)));
-
+        pairs.add(Pair.create(toolbar, getString(R.string.toolbar_transition)));
         ActivityOptionsCompat transitionActivityOptions;
-        transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), pairs.get(0), pairs.get(1));
+        transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                pairs.get(0), pairs.get(1), pairs.get(2));
         Bundle bundle = transitionActivityOptions.toBundle();
         getActivity().startActivity(intent, bundle);
     }

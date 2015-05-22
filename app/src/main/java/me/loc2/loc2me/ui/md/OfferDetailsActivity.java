@@ -1,12 +1,15 @@
 package me.loc2.loc2me.ui.md;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
@@ -34,11 +37,10 @@ import java.util.Map;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
-import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.dao.OfferDAO;
 import me.loc2.loc2me.util.Ln;
 
-public class OfferDetailsActivity extends AppCompatActivity {
+public class OfferDetailsActivity extends ActionBarActivity {
 
     private static final long ANIM_DURATION = 300;
 
@@ -53,6 +55,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private Map<View, Animation> showAnimations;
     private Map<View, Animation> backAnimations;
     private View mBackButton;
+    private Toolbar toolbar;
 
     private enum State {
         CLOSED,
@@ -65,9 +68,18 @@ public class OfferDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.offer_details);
+
         offer = (Offer) getIntent().getParcelableExtra(OFFER);
         state = State.CLOSED;
-        setContentView(R.layout.offer_details);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        View toolbar = findViewById(R.id.toolbar);
+        ViewCompat.setTransitionName(toolbar, getString(R.string.toolbar_transition));
 
         // Postpone the transition until the window's decor view has
         // finished its layout.
@@ -101,7 +113,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate our menu from the resources by using the menu inflater.
-        getMenuInflater().inflate(R.menu.global, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -158,6 +170,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
         if (state == State.OPENED) {
             closeDetails();
         } else {
+            supportFinishAfterTransition();
             super.onBackPressed();
         }
     }

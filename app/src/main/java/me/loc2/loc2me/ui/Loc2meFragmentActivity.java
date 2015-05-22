@@ -1,9 +1,9 @@
 package me.loc2.loc2me.ui;
 
-import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import com.squareup.otto.Bus;
@@ -17,35 +17,31 @@ import me.loc2.loc2me.R;
 /**
  * Base class for all Bootstrap Activities that need fragments.
  */
-public class Loc2meFragmentActivity extends AppCompatActivity {
+public abstract class Loc2meFragmentActivity extends AppCompatActivity {
 
     @Inject
     protected Bus eventBus;
 
+    protected Toolbar toolbar;
+
+    protected abstract int getLayoutResource();
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(getLayoutResource());
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         Injector.inject(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate our menu from the resources by using the menu inflater.
-        getMenuInflater().inflate(R.menu.global, menu);
-        ActionBar actionBar = getActionBar();
-        if (null != actionBar) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
-
-    @Override
-    public void setContentView(final int layoutResId) {
-        super.setContentView(layoutResId);
-
-        Views.inject(this);
     }
 
     @Override
@@ -59,4 +55,4 @@ public class Loc2meFragmentActivity extends AppCompatActivity {
         super.onPause();
         eventBus.unregister(this);
     }
-}
+ }
