@@ -1,6 +1,9 @@
 package me.loc2.loc2me.dao;
 
+import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
+import android.os.IBinder;
 
 import com.google.common.base.Optional;
 
@@ -16,12 +19,20 @@ import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.util.Ln;
 
-public class OfferPersistService {
+public class OfferPersistService extends Service {
 
     private OfferDAO offerDAO;
 
-    public OfferPersistService(Context context) {
-        offerDAO = new OfferDAO(context);
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        offerDAO = new OfferDAO(this);
+        Injector.inject(this);
     }
 
     public boolean saveReceived(Offer offer) {
@@ -56,6 +67,7 @@ public class OfferPersistService {
         return offerDAO.isDeleted(id);
     }
 
+    @Override
     public void onDestroy() {
         if (offerDAO != null) {
             try {

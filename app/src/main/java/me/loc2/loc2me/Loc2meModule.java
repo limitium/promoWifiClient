@@ -91,12 +91,6 @@ public class Loc2meModule {
     }
 
     @Provides
-    @Singleton
-    OfferPersistService provideOfferPersistService(OfferCheckBackgroundService offerCheckBackgroundService) {
-        return new OfferPersistService(offerCheckBackgroundService);
-    }
-
-    @Provides
     RestAdapter provideRestAdapter(RestErrorHandler restErrorHandler, RestAdapterRequestInterceptor restRequestInterceptor, Gson gson) {
         return new RestAdapter.Builder()
                 .setEndpoint(Constants.Http.URL_BASE)
