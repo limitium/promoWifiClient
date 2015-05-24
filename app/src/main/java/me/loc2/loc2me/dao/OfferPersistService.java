@@ -1,7 +1,6 @@
 package me.loc2.loc2me.dao;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
@@ -10,11 +9,6 @@ import com.google.common.base.Optional;
 import java.math.BigInteger;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Qualifier;
-import javax.inject.Singleton;
-
-import dagger.Provides;
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.util.Ln;

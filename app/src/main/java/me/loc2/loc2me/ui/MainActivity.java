@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -21,10 +20,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.otto.Subscribe;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -33,12 +29,9 @@ import butterknife.Views;
 import me.loc2.loc2me.Loc2meServiceProvider;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.ApiService;
+import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.OfferCheckBackgroundService;
 import me.loc2.loc2me.core.services.OfferEventService;
-import me.loc2.loc2me.core.models.Offer;
-import me.loc2.loc2me.core.models.OfferImage;
-import me.loc2.loc2me.dao.OfferDAO;
-import me.loc2.loc2me.dao.OfferPersistService;
 import me.loc2.loc2me.events.NavItemSelectedEvent;
 import me.loc2.loc2me.ui.md.ColorGenerator;
 import me.loc2.loc2me.ui.md.OfferListFragment;
@@ -56,8 +49,6 @@ public class MainActivity extends Loc2meFragmentActivity {
     protected Loc2meServiceProvider serviceProvider;
     @Inject
     protected OfferEventService offerEventService;
-    @Inject
-    protected OfferPersistService offerPersistService;
 
     private boolean userHasAuthenticated = false;
 

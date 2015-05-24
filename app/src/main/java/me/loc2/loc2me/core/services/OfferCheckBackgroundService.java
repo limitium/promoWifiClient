@@ -37,8 +37,8 @@ public class OfferCheckBackgroundService extends Service {
     protected OfferLoaderService offerLoaderService;
     @Inject
     protected WifiScanService wifiScanService;
-    @Inject
-    protected OfferPersistService offerPersistService;
+//    @Inject
+//    protected OfferPersistService offerPersistService;
 
     private boolean started;
 
@@ -67,7 +67,7 @@ public class OfferCheckBackgroundService extends Service {
 
         offerLoaderService.unregister();
         wifiScanService.unregister(this);
-        offerPersistService.onDestroy();
+//        offerPersistService.onDestroy();
         super.onDestroy();
     }
 
@@ -115,19 +115,19 @@ public class OfferCheckBackgroundService extends Service {
         Offer offer = loadedOfferEvent.getOffer();
         Ln.i("New offer: " + offer.getId());
 
-        if (!offerPersistService.isDeleted(offer.getId())) {
-            Ln.i("Offer was deleted");
-            Optional<Offer> saved = offerPersistService.findOneReceived(offer.getId());
-            Ln.i("Offer was saved before: " + String.valueOf(saved.isPresent()));
-            if (!saved.isPresent() || !saved.get().getUpdated_at().equals(offer.getUpdated_at())) {
-                if (saved.isPresent()) {
-                    offerPersistService.deleteReceived(offer.getId());
-                }
-                offer.setAdded_at(System.currentTimeMillis());
-                offerPersistService.saveReceived(offer);
-                eventBus.post(new NewOfferEvent(offer));
-            }
-        }
+//        if (!offerPersistService.isDeleted(offer.getId())) {
+//            Ln.i("Offer was deleted");
+//            Optional<Offer> saved = offerPersistService.findOneReceived(offer.getId());
+//            Ln.i("Offer was saved before: " + String.valueOf(saved.isPresent()));
+//            if (!saved.isPresent() || !saved.get().getUpdated_at().equals(offer.getUpdated_at())) {
+//                if (saved.isPresent()) {
+//                    offerPersistService.deleteReceived(offer.getId());
+//                }
+//                offer.setAdded_at(System.currentTimeMillis());
+//                offerPersistService.saveReceived(offer);
+//                eventBus.post(new NewOfferEvent(offer));
+//            }
+//        }
     }
 
     @Subscribe
