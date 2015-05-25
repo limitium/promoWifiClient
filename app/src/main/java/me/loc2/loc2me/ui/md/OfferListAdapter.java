@@ -24,6 +24,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.List;
 
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.util.Ln;
 
@@ -114,7 +115,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                     .considerExifParams(true)
                     .displayer(new CircleBitmapDisplayer())
                     .build();
-            ImageLoader.getInstance().displayImage(offer.getAvatar(), mOfferImageAvatar, imageLoadingOptions);
+            ImageLoader.getInstance().displayImage(buildUrl(offer.getAvatar()), mOfferImageAvatar, imageLoadingOptions);
 
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.avatar_in_list_scale);
             animation.setDuration(ANIM_DURATION);
@@ -137,8 +138,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         }
 
         private String buildUrl(String image) {
-            return "http://lorempixel.com/1080/1920/animals/";
-//            return Constants.Http.URL_BASE+image;
+//            return "http://lorempixel.com/1080/1920/animals/";
+            return Constants.Http.URL_BASE+image;
         }
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)
