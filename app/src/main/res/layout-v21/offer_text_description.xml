@@ -17,14 +17,38 @@
         android:textColor="@color/white"
         android:textAppearance="@android:style/TextAppearance.Material.Large"/>
 
-    <TextView
-        android:id="@+id/offer_company_name"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_below="@+id/offer_promo_name"
-        android:text="Little big company"
-        android:textColor="@color/white"
-        android:textAppearance="@android:style/TextAppearance.Material.Small"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+
+        <TextView
+            android:id="@+id/offer_company_name"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/offer_promo_name"
+            android:text="Little big company"
+            android:layout_weight="0.3"
+            android:textColor="@color/white"
+            android:textAppearance="@android:style/TextAppearance.Material.Small"/>
+        <TextView
+            android:id="@+id/offer_date_created"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textAppearance="@android:style/TextAppearance.Material.Small"
+            android:paddingLeft="@dimen/padding_small"
+            android:paddingRight="@dimen/padding_small"
+            android:layout_weight="0.7"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:textStyle="italic"/>
+    </LinearLayout>
+
+
+
 
 
 </RelativeLayout>

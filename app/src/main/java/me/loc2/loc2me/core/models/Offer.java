@@ -5,8 +5,17 @@ import android.os.Parcelable;
 
 import com.google.common.base.MoreObjects;
 
+import org.ocpsoft.pretty.time.PrettyTime;
+
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import me.loc2.loc2me.util.Ln;
 
 public class Offer implements Parcelable, Serializable {
 
@@ -31,6 +40,7 @@ public class Offer implements Parcelable, Serializable {
     private String image;
     private int descriptionColor;
     private String avatarImage;
+    private String createdAsPrettyText;
 
     private Offer(Parcel in) {
         id = new BigInteger(in.readString());
@@ -152,5 +162,18 @@ public class Offer implements Parcelable, Serializable {
 
     public void setAvatarImage(String avatarImage) {
         this.avatarImage = avatarImage;
+    }
+
+    public String getCreatedAsPrettyText() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
+        Date createdAt = null;
+        try {
+            createdAt = df.parse(getCreated_at());
+            PrettyTime prettyTime = new PrettyTime(new Date());
+            return prettyTime.format(createdAt);
+        } catch (ParseException e) {
+            Ln.e(e.getMessage());
+            return "";
+        }
     }
 }

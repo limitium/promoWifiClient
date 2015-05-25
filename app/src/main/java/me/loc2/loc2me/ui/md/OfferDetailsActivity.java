@@ -55,6 +55,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private TextView mOfferCompanyName;
     private TextView mOfferPromoActionName;
     private View mOfferDescriptionLayout;
+    private TextView mOfferCreated;
     private Toolbar toolbar;
 
     private enum State {
@@ -192,6 +193,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mOfferDescriptionLayout = findViewById(R.id.offer_description_layout);
         mOfferCompanyName = (TextView) mOfferDescriptionLayout.findViewById(R.id.offer_company_name);
         mOfferPromoActionName = (TextView) mOfferDescriptionLayout.findViewById(R.id.offer_promo_name);
+        mOfferCreated = (TextView) mOfferDescriptionLayout.findViewById(R.id.offer_date_created);
 
         imageFrame = findViewById(R.id.squared_details_image);
 
@@ -206,9 +208,10 @@ public class OfferDetailsActivity extends AppCompatActivity {
     }
 
     private void loadTexts() {
-//        mOfferDescription.setText(offer.toString());
+        mOfferDescription.setText(offer.toString());
         mOfferCompanyName.setText("Little big company");
         mOfferPromoActionName.setText("Promo name 123");
+        mOfferCreated.setText(offer.getCreatedAsPrettyText());
         mOfferDescriptionLayout.setBackgroundColor(offer.getDescriptionColor());
     }
 

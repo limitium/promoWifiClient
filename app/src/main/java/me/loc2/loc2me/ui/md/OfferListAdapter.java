@@ -102,15 +102,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                     }
                 });
             }
-            try {
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
-                Date createdAt =  df.parse(offer.getCreated_at());
-                PrettyTime prettyTime = new PrettyTime(new Date());
-                mOfferDateCreated.setText(prettyTime.format(createdAt));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
+            mOfferDateCreated.setText(offer.getCreatedAsPrettyText());
             Ln.i("Color code: " + offer.getDescriptionColor());
             mOfferDescription.setBackgroundColor(offer.getDescriptionColor());
         }
