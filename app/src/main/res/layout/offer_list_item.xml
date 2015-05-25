@@ -19,30 +19,45 @@
     android:id="@+id/cardview"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
-    android:layout_margin="@dimen/margin_large"
-    card_view:cardElevation="5dp"
+    android:elevation="100dp"
     card_view:cardCornerRadius="2dp">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/relaGrid"
         android:orientation="vertical"
-        android:minHeight="100dp"
+        android:minHeight="@dimen/loader_gif_height"
         android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/offer_list_image"
+        <me.loc2.loc2me.ui.md.SquareFrameLayout
+            android:id="@+id/squared_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/offer_list_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:contentDescription="@string/offer_list_image_description"/>
+        </me.loc2.loc2me.ui.md.SquareFrameLayout>
+
+        <include android:id="@+id/offer_description_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="center"/>
+            android:layout_below="@+id/squared_image"
+            layout="@layout/offer_text_description"/>
 
-        <include android:id="@+id/offer_action_buttons_layout"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_below="@+id/offer_list_image"
-                 layout="@layout/offer_action_buttons"/>
+        <include
+            android:id="@+id/avatar"
+            layout="@layout/avatar"
+            android:layout_width="@dimen/size_avatar"
+            android:layout_height="@dimen/size_avatar"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/avatar_margin"
+            android:layout_below="@+id/squared_image"
+            android:visibility="invisible" />
     </RelativeLayout>
 
     <ProgressBar

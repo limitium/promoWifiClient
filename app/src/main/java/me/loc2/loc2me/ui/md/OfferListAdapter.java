@@ -90,12 +90,12 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                         Ln.i("On loading complete");
                         mSpinner.setVisibility(View.GONE);
                         mOfferDateCreated.setVisibility(View.VISIBLE);
+                        loadAvatar(offer);
                         imageLoaded = true;
                     }
                 });
             }
             mOfferDateCreated.setText(offer.getCreatedAsPrettyText());
-            loadAvatar(offer);
             Ln.i("Color code: " + offer.getDescriptionColor());
             mOfferDescription.setBackgroundColor(offer.getDescriptionColor());
         }
