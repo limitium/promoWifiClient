@@ -191,7 +191,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
         imageFrame = findViewById(R.id.squared_details_image);
 
         mAvatar = findViewById(R.id.avatar);
-        mAvatarImage = (ImageView)findViewById(R.id.avatar_image);
+        mAvatarImage = (ImageView) findViewById(R.id.avatar_image);
 
         createShowAnimations();
         createBackAnimations();
@@ -240,13 +240,13 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
     private void animateOpenDetails() {
         mAvatar.setY(imageFrame.getHeight() - mAvatar.getHeight() / 2);
-        for (Map.Entry<View, Animation> entry: showAnimations.entrySet()) {
+        for (Map.Entry<View, Animation> entry : showAnimations.entrySet()) {
             entry.getKey().startAnimation(entry.getValue());
         }
     }
 
     private void closeDetails() {
-        for (Map.Entry<View, Animation> entry: backAnimations.entrySet()) {
+        for (Map.Entry<View, Animation> entry : backAnimations.entrySet()) {
             entry.getKey().startAnimation(entry.getValue());
         }
     }
@@ -266,10 +266,10 @@ public class OfferDetailsActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 //        String url = image.getBaseUrl() + "/" + String.valueOf(image.getWidth()) + "/"
 //                + String.valueOf(image.getHeight()) + "/animals/";
-        String url = Constants.Http.URL_BASE+image;
+        String url = Constants.Http.URL_BASE + image;
         Ln.d("Loading url: " + url);
-        return "http://lorempixel.com/1080/1920/animals/";
-//        return url;
+//        return "http://lorempixel.com/1080/1920/animals/";
+        return url;
     }
 
     private void createShowAnimations() {
