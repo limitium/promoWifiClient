@@ -33,7 +33,8 @@ public class OfferDAO extends SQLiteOpenHelper {
         String createDeletedOffer = "create table " + OfferContract.DeletedOffer.TABLE_NAME +
                 "(" + OfferContract.DeletedOffer.COLUMN_ID + " " + OfferContract.DeletedOffer.COLUMN_ID_TYPE + " primary key" +
                 ", " + OfferContract.DeletedOffer.COLUMN_DELETED_OFFER_ID + " " + OfferContract.DeletedOffer.COLUMN_DELETED_OFFER_ID_TYPE + ");";
-        db.execSQL(createReceivedOffer + createDeletedOffer);
+        db.execSQL(createReceivedOffer);
+        db.execSQL(createDeletedOffer);
     }
 
     @Override
