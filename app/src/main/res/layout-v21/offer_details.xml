@@ -1,60 +1,67 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/toolbar"
-        android:transitionName="@string/toolbar_transition"
-        layout="@layout/toolbar" />
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/relaGrid"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <me.loc2.loc2me.ui.md.SquareFrameLayout
-            android:id="@+id/squared_details_image"
+        <include xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:transitionName="@string/toolbar_transition" />
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/relaGrid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:transitionName="@string/card_to_details">
 
-            <ImageView
-                android:id="@+id/offer_details_image"
+            <me.loc2.loc2me.ui.md.SquareFrameLayout
+                android:id="@+id/squared_details_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/offer_action_buttons_layout"
-                android:layout_alignParentTop="true"
-                android:scaleType="centerCrop"
-                android:transitionName="@string/card_to_details" />
-        </me.loc2.loc2me.ui.md.SquareFrameLayout>
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/offer_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/squared_details_image"
-            android:background="?android:colorPrimary"
-            android:padding="16dp"
-            android:scrollbars="vertical"
-            android:text="@string/bacon_ipsum"
-            android:textAppearance="@android:style/TextAppearance.Material.Body1"
-            android:visibility="invisible" />
+                <ImageView
+                    android:id="@+id/offer_details_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/offer_action_buttons_layout"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="centerCrop" />
+            </me.loc2.loc2me.ui.md.SquareFrameLayout>
 
-        <include
-            android:id="@+id/back_button"
-            layout="@layout/back_button"
-            android:layout_width="@dimen/size_button_message"
-            android:layout_height="@dimen/size_button_message"
-            android:layout_alignBottom="@+id/squared_details_image"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="end|bottom"
-            android:layout_marginRight="@dimen/back_button_margin"
-            android:visibility="invisible" />
+            <include
+                android:id="@+id/offer_description_layout"
+                layout="@layout/offer_text_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/squared_details_image"
+                android:transitionName="@string/description_details_transition"/>
+            <include
+                android:id="@+id/avatar"
+                layout="@layout/avatar"
+                android:layout_width="@dimen/size_avatar"
+                android:layout_height="@dimen/size_avatar"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/back_button_margin"
+                android:layout_below="@+id/squared_details_image"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/offer_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/offer_description_layout"
+                android:padding="16dp"
+                android:text="@string/bacon_ipsum"
+                android:textAppearance="@android:style/TextAppearance.Material.Body1" />
+        </RelativeLayout>
     </RelativeLayout>
-
-</RelativeLayout>
-
+</ScrollView>

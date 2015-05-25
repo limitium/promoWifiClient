@@ -139,7 +139,7 @@ public class OfferListFragment extends Fragment {
         intent.putExtra(OfferDetailsActivity.OFFER, (Parcelable) offer);
 
         View statusBar = getActivity().findViewById(android.R.id.statusBarBackground);
-        View sharedElement = sharedView.findViewById(R.id.offer_list_image);
+        View sharedElement = sharedView.findViewById(R.id.relaGrid);
         View toolbar = getActivity().findViewById(R.id.toolbar);
 
         List<Pair<View, String>> pairs = new ArrayList<>();

@@ -30,6 +30,7 @@ public class Offer implements Parcelable, Serializable {
     private Long added_at;
     private String image;
     private int descriptionColor;
+    private String avatarImage;
 
     private Offer(Parcel in) {
         id = new BigInteger(in.readString());
@@ -39,6 +40,8 @@ public class Offer implements Parcelable, Serializable {
         updated_at = in.readString();
         added_at = in.readLong();
         image = in.readString();
+        descriptionColor = in.readInt();
+        avatarImage = in.readString();
     }
 
     @Override
@@ -55,6 +58,8 @@ public class Offer implements Parcelable, Serializable {
         dest.writeString(updated_at);
         dest.writeLong(added_at);
         dest.writeString(image);
+        dest.writeInt(descriptionColor);
+        dest.writeString(avatarImage);
     }
 
 
@@ -139,5 +144,13 @@ public class Offer implements Parcelable, Serializable {
 
     public int getDescriptionColor() {
         return descriptionColor;
+    }
+
+    public String getAvatarImage() {
+        return avatarImage;
+    }
+
+    public void setAvatarImage(String avatarImage) {
+        this.avatarImage = avatarImage;
     }
 }

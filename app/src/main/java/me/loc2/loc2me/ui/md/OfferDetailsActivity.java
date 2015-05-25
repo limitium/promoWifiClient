@@ -3,13 +3,13 @@ package me.loc2.loc2me.ui.md;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.ScrollingMovementMethod;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -19,7 +19,6 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,16 +26,15 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
-import me.loc2.loc2me.core.dao.OfferDAO;
 import me.loc2.loc2me.util.Ln;
 
 public class OfferDetailsActivity extends AppCompatActivity {
@@ -47,13 +45,16 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private TextView mOfferDescription;
     private View imageFrame;
     private Offer offer;
-    private OfferDAO offerDAO;
 
     public static final String OFFER = "OFFER";
 
     private Map<View, Animation> showAnimations;
     private Map<View, Animation> backAnimations;
-    private View mBackButton;
+    private View mAvatar;
+    private ImageView mAvatarImage;
+    private TextView mOfferCompanyName;
+    private TextView mOfferPromoActionName;
+    private View mOfferDescriptionLayout;
     private Toolbar toolbar;
 
     private enum State {
@@ -92,9 +93,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        offerDAO = new OfferDAO(this);
-        Ln.e("all offers: " + Arrays.asList(offerDAO.findAllReceived().toArray()));
 
         setUpLayout();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -191,26 +189,27 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private void setUpLayout() {
         mOfferDetailsImage = (ImageView) findViewById(R.id.offer_details_image);
         mOfferDescription = (TextView) findViewById(R.id.offer_description);
-        mOfferDescription.setMovementMethod(new ScrollingMovementMethod());
+        mOfferDescriptionLayout = findViewById(R.id.offer_description_layout);
+        mOfferCompanyName = (TextView) mOfferDescriptionLayout.findViewById(R.id.offer_company_name);
+        mOfferPromoActionName = (TextView) mOfferDescriptionLayout.findViewById(R.id.offer_promo_name);
+
         imageFrame = findViewById(R.id.squared_details_image);
 
-        mBackButton = findViewById(R.id.back_button);
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        mAvatar = findViewById(R.id.avatar);
+        mAvatarImage = (ImageView)findViewById(R.id.avatar_image);
 
         createShowAnimations();
         createBackAnimations();
 
         loadThumbnail();
-        loadDescription();
+        loadTexts();
     }
 
-    private void loadDescription() {
+    private void loadTexts() {
         mOfferDescription.setText(offer.toString());
+        mOfferCompanyName.setText("Little big company");
+        mOfferPromoActionName.setText("Promo name 123");
+        mOfferDescriptionLayout.setBackgroundColor(offer.getDescriptionColor());
     }
 
     private void loadThumbnail() {
@@ -244,7 +243,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
     }
 
     private void animateOpenDetails() {
-        mBackButton.setY(imageFrame.getHeight() - mBackButton.getHeight() / 2);
+        mAvatar.setY(imageFrame.getHeight() + toolbar.getHeight() - mAvatar.getHeight() / 2);
         for (Map.Entry<View, Animation> entry: showAnimations.entrySet()) {
             entry.getKey().startAnimation(entry.getValue());
         }
@@ -254,10 +253,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
         for (Map.Entry<View, Animation> entry: backAnimations.entrySet()) {
             entry.getKey().startAnimation(entry.getValue());
         }
-    }
-
-    private int dpToPx(int dp) {
-        return Math.round((float) dp * getResources().getDisplayMetrics().density);
     }
 
     private DisplayImageOptions getDisplayImageOptions() {
@@ -284,27 +279,36 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private void createShowAnimations() {
         if (null == showAnimations) {
             showAnimations = new HashMap<>();
-            showAnimations.put(mBackButton, createBackButtonShowAnimation());
-            showAnimations.put(mOfferDescription, createTextDescriptionShowAnimation());
+            showAnimations.put(mAvatar, createBackButtonShowAnimation());
         }
     }
 
     private void createBackAnimations() {
         if (null == backAnimations) {
             backAnimations = new HashMap<>();
-            backAnimations.put(mBackButton, createBackButtonHideAnimation());
-            backAnimations.put(mOfferDescription, createTextDescriptionHideAnimation());
+            backAnimations.put(mAvatar, createBackButtonHideAnimation());
         }
     }
 
     private Animation createBackButtonShowAnimation() {
+        DisplayImageOptions imageLoadingOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .showImageForEmptyUri(R.drawable.rockstar)
+                .imageScaleType(ImageScaleType.NONE_SAFE)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .considerExifParams(true)
+                .displayer(new CircleBitmapDisplayer())
+                .build();
+        ImageLoader.getInstance().displayImage(offer.getAvatarImage(), mAvatarImage, imageLoadingOptions);
+
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_button_scale);
         animation.setDuration(ANIM_DURATION);
         animation.setInterpolator(new AccelerateInterpolator());
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                mBackButton.setVisibility(View.VISIBLE);
+                mAvatar.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -330,7 +334,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 state = State.CLOSED;
-                mBackButton.setVisibility(View.INVISIBLE);
+                mAvatar.setVisibility(View.INVISIBLE);
                 onBackPressed();
             }
 
@@ -341,53 +345,9 @@ public class OfferDetailsActivity extends AppCompatActivity {
         return animation;
     }
 
-    private Animation createTextDescriptionShowAnimation() {
-        float x = mOfferDescription.getX();
-        float y = getResources().getDisplayMetrics().heightPixels;
-        float newY = imageFrame.getHeight();
-        TranslateAnimation animation = new TranslateAnimation(x, x,
-                y, newY);          //  new TranslateAnimation(xFrom,xTo, yFrom,yTo)
-        animation.setDuration(ANIM_DURATION);
-        animation.setInterpolator(new AccelerateInterpolator());
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                mOfferDescription.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        return animation;
+    private int dpToPx(int dp) {
+        return Math.round((float) dp * getResources().getDisplayMetrics().density);
     }
 
-    private Animation createTextDescriptionHideAnimation() {
-        float x = mOfferDescription.getX();
-        float y = getResources().getDisplayMetrics().heightPixels;
-        float newY = imageFrame.getHeight();
-        TranslateAnimation animation = new TranslateAnimation(x, x,
-                newY, y);          //  new TranslateAnimation(xFrom,xTo, yFrom,yTo)
-        animation.setDuration(ANIM_DURATION);
-        animation.setInterpolator(new AccelerateInterpolator());
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mOfferDescription.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        return animation;
-    }
 }

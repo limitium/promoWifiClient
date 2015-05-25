@@ -93,4 +93,5 @@
     <string name="no_offers_found">No offers</string>
     <string name="menu_back">Back</string>
     <string name="menu_refresh">Refresh</string>
+    <string name="description_details_transition">description_details_transition</string>
 </resources>

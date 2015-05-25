@@ -20,8 +20,10 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.otto.Subscribe;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -30,6 +32,7 @@ import butterknife.Views;
 import me.loc2.loc2me.Loc2meServiceProvider;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.ApiService;
+import me.loc2.loc2me.core.dao.OfferPersistService;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.OfferCheckBackgroundService;
 import me.loc2.loc2me.core.services.OfferEventService;
@@ -50,6 +53,8 @@ public class MainActivity extends Loc2meFragmentActivity {
     protected Loc2meServiceProvider serviceProvider;
     @Inject
     protected OfferEventService offerEventService;
+    @Inject
+    protected OfferPersistService offerPersistService;
 
     private boolean userHasAuthenticated = false;
 
@@ -215,11 +220,16 @@ public class MainActivity extends Loc2meFragmentActivity {
                 offer.setCreated_at("2015-05-21T14:24:05+0000");
                 offer.setUpdated_at("2015-05-21T14:24:05+0000");
                 offer.setAdded_at(new Date().getTime());
+                offer.setAvatarImage("https://pbs.twimg.com/profile_images/478608982915821568/k9u7RJmk.png");
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, -1 * (index + 1));
                 int descriptionColor = getResources().getColor(ColorGenerator.getNextCardColor());
                 offer.setDescriptionColor(descriptionColor);
                 offerEventService.add(offer);
+
+                offerPersistService.saveReceived(offer);
+                List<Offer> all = offerPersistService.findAllReceived();
+                Ln.i("All: " + Arrays.toString(all.toArray()));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
