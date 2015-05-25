@@ -7,11 +7,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
-import android.transition.Fade;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -38,7 +36,7 @@ import java.util.Map;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
-import me.loc2.loc2me.dao.OfferDAO;
+import me.loc2.loc2me.core.dao.OfferDAO;
 import me.loc2.loc2me.util.Ln;
 
 public class OfferDetailsActivity extends AppCompatActivity {

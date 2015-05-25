@@ -1,4 +1,4 @@
-package me.loc2.loc2me.dao;
+package me.loc2.loc2me.core.dao;
 
 import android.provider.BaseColumns;
 

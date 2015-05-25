@@ -17,11 +17,11 @@ import javax.inject.Inject;
 
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.core.dao.OfferPersistService;
 import me.loc2.loc2me.core.events.LoadedOfferEvent;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.events.NewWifiNetworkEvent;
 import me.loc2.loc2me.core.models.Offer;
-import me.loc2.loc2me.dao.OfferPersistService;
 import me.loc2.loc2me.util.Ln;
 
 import static me.loc2.loc2me.core.Constants.Notification.SCAN_NOTIFICATION_ID;
@@ -37,8 +37,7 @@ public class OfferCheckBackgroundService extends Service {
     protected OfferLoaderService offerLoaderService;
     @Inject
     protected WifiScanService wifiScanService;
-//    @Inject
-//    protected OfferPersistService offerPersistService;
+    private OfferPersistService offerPersistService;
 
     private boolean started;
 
@@ -57,6 +56,7 @@ public class OfferCheckBackgroundService extends Service {
 
         wifiScanService.register(this);
         offerLoaderService.register();
+        offerPersistService = new OfferPersistService(this);
     }
 
     @Override
@@ -67,7 +67,8 @@ public class OfferCheckBackgroundService extends Service {
 
         offerLoaderService.unregister();
         wifiScanService.unregister(this);
-//        offerPersistService.onDestroy();
+        offerPersistService.close();
+
         super.onDestroy();
     }
 
@@ -115,25 +116,24 @@ public class OfferCheckBackgroundService extends Service {
         Offer offer = loadedOfferEvent.getOffer();
         Ln.i("New offer: " + offer.getId());
 
-//        if (!offerPersistService.isDeleted(offer.getId())) {
-//            Ln.i("Offer was deleted");
-//            Optional<Offer> saved = offerPersistService.findOneReceived(offer.getId());
-//            Ln.i("Offer was saved before: " + String.valueOf(saved.isPresent()));
-//            if (!saved.isPresent() || !saved.get().getUpdated_at().equals(offer.getUpdated_at())) {
-//                if (saved.isPresent()) {
-//                    offerPersistService.deleteReceived(offer.getId());
-//                }
-//                offer.setAdded_at(System.currentTimeMillis());
-//                offerPersistService.saveReceived(offer);
-//                eventBus.post(new NewOfferEvent(offer));
-//            }
-//        }
+        if (!offerPersistService.isDeleted(offer.getId())) {
+            Ln.i("Offer was deleted");
+            Optional<Offer> saved = offerPersistService.findOneReceived(offer.getId());
+            Ln.i("Offer was saved before: " + String.valueOf(saved.isPresent()));
+            if (!saved.isPresent() || !saved.get().getUpdated_at().equals(offer.getUpdated_at())) {
+                if (saved.isPresent()) {
+                    offerPersistService.deleteReceived(offer.getId());
+                }
+                offer.setAdded_at(System.currentTimeMillis());
+                offerPersistService.saveReceived(offer);
+                eventBus.post(new NewOfferEvent(offer));
+            }
+        }
     }
 
     @Subscribe
     public void onNewWifiNetworkEvent(NewWifiNetworkEvent wifiNetworkEvent) {
         Ln.i("New network: " + wifiNetworkEvent.getWifiInfo().getName());
-        //@todo: check wifi in cache
         offerLoaderService.loadWifiOffers(wifiNetworkEvent.getWifiInfo());
     }
 }
