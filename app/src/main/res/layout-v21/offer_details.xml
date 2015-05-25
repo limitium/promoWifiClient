@@ -48,11 +48,11 @@
                 layout="@layout/avatar"
                 android:layout_width="@dimen/size_avatar"
                 android:layout_height="@dimen/size_avatar"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/back_button_margin"
-                android:layout_below="@+id/squared_details_image"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                android:layout_above="@+id/offer_description_layout"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
             <TextView
                 android:id="@+id/offer_description"

@@ -206,7 +206,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
     }
 
     private void loadTexts() {
-        mOfferDescription.setText(offer.toString());
+//        mOfferDescription.setText(offer.toString());
         mOfferCompanyName.setText("Little big company");
         mOfferPromoActionName.setText("Promo name 123");
         mOfferDescriptionLayout.setBackgroundColor(offer.getDescriptionColor());
@@ -243,7 +243,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
     }
 
     private void animateOpenDetails() {
-        mAvatar.setY(imageFrame.getHeight() + toolbar.getHeight() - mAvatar.getHeight() / 2);
+        mAvatar.setY(imageFrame.getHeight() - mAvatar.getHeight() / 2);
         for (Map.Entry<View, Animation> entry: showAnimations.entrySet()) {
             entry.getKey().startAnimation(entry.getValue());
         }

@@ -48,6 +48,17 @@
             android:layout_below="@+id/squared_image"
             layout="@layout/offer_text_description"/>
 
+        <include
+            android:id="@+id/avatar"
+            layout="@layout/avatar"
+            android:layout_width="@dimen/size_avatar"
+            android:layout_height="@dimen/size_avatar"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/back_button_margin"
+            android:layout_below="@+id/squared_image"
+            android:visibility="invisible" />
+
 
         <include android:id="@+id/offer_action_buttons_layout"
             android:layout_width="match_parent"

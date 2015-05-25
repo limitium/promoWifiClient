@@ -7,6 +7,9 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -44,7 +47,12 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        private static final long ANIM_DURATION = 300;
+        private static final int AVATAR_HEIGHT = 60;
+        private Context context;
         private ImageView mOfferItemImage;
+        private View mOfferAvatar;
+        private ImageView mOfferImageAvatar;
         private TextView mOfferDateCreated;
         private View mOfferDescription;
         private ProgressBar mSpinner;
@@ -57,15 +65,19 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             super(v);
             this.metrics = metrics;
             this.imageLoadingOptions = imageLoadingOptions;
+            this.context = v.getContext();
             // Define click listener for the ViewHolder's View.
             mOfferItemImage = (ImageView) v.findViewById(R.id.offer_list_image);
             mOfferDateCreated = (TextView)v.findViewById(R.id.offer_date_created);
             mOfferDescription = v.findViewById(R.id.offer_description_layout);
+            mOfferAvatar = v.findViewById(R.id.avatar);
+            mOfferImageAvatar = (ImageView)v.findViewById(R.id.avatar_image);
             mSpinner = (ProgressBar)v.findViewById(R.id.loading);
         }
 
         public void loadData(final Offer offer) {
             if (!imageLoaded) {
+                mOfferAvatar.setY(mOfferItemImage.getHeight() - dpToPx(AVATAR_HEIGHT / 2));
                 mOfferDateCreated.setVisibility(View.INVISIBLE);
                 mSpinner.setVisibility(View.VISIBLE);
                 String url = buildUrl(offer.getImage());
@@ -85,6 +97,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                         Ln.i("On loading complete");
                         mSpinner.setVisibility(View.GONE);
                         mOfferDateCreated.setVisibility(View.VISIBLE);
+                        loadAvatar(offer);
                         imageLoaded = true;
                     }
                 });
@@ -100,6 +113,42 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
             Ln.i("Color code: " + offer.getDescriptionColor());
             mOfferDescription.setBackgroundColor(offer.getDescriptionColor());
+        }
+
+        private int dpToPx(int dp) {
+            return Math.round((float) dp * metrics.density);
+        }
+
+        private void loadAvatar(Offer offer) {
+            DisplayImageOptions imageLoadingOptions = new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .showImageForEmptyUri(R.drawable.rockstar)
+                    .imageScaleType(ImageScaleType.NONE_SAFE)
+                    .bitmapConfig(Bitmap.Config.RGB_565)
+                    .considerExifParams(true)
+                    .displayer(new CircleBitmapDisplayer())
+                    .build();
+            ImageLoader.getInstance().displayImage(offer.getAvatarImage(), mOfferImageAvatar, imageLoadingOptions);
+
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.back_button_scale);
+            animation.setDuration(ANIM_DURATION);
+            animation.setInterpolator(new AccelerateInterpolator());
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    mOfferAvatar.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+            });
+            mOfferAvatar.startAnimation(animation);
         }
 
         private String buildUrl(String image) {
