@@ -21,6 +21,7 @@ import com.squareup.otto.Subscribe;
 
 import java.math.BigInteger;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -213,6 +214,7 @@ public class MainActivity extends Loc2meFragmentActivity {
                 offer.setDescription(getString(R.string.lorem_ipsum_long));
                 offer.setCreated_at("2015-05-21T14:24:05+0000");
                 offer.setUpdated_at("2015-05-21T14:24:05+0000");
+                offer.setAdded_at(new Date().getTime());
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, -1 * (index + 1));
                 int descriptionColor = getResources().getColor(ColorGenerator.getNextCardColor());
