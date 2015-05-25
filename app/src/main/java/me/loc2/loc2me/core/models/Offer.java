@@ -44,7 +44,6 @@ public class Offer implements Parcelable, Serializable {
 
     private Long added_at;
     private int descriptionColor;
-    private String createdAsPrettyText;
 
     private Offer(Parcel in) {
         id = new BigInteger(in.readString());
@@ -60,7 +59,6 @@ public class Offer implements Parcelable, Serializable {
 
         added_at = in.readLong();
         descriptionColor = in.readInt();
-        createdAsPrettyText = in.readString();
     }
 
     @Override
@@ -83,7 +81,6 @@ public class Offer implements Parcelable, Serializable {
 
         dest.writeLong(added_at);
         dest.writeInt(descriptionColor);
-        dest.writeString(createdAsPrettyText);
     }
 
     @Override
@@ -103,7 +100,6 @@ public class Offer implements Parcelable, Serializable {
 
                 .add("added_at", added_at)
                 .add("descriptionColor", descriptionColor)
-                .add("createdAsPrettyText", createdAsPrettyText)
                 .toString();
     }
 
