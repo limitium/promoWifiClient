@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import me.loc2.loc2me.core.models.Offer;
-import me.loc2.loc2me.core.models.OfferImage;
 import me.loc2.loc2me.core.rest.WifiOffersService;
 import retrofit.RestAdapter;
 

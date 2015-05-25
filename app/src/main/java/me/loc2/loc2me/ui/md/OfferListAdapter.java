@@ -21,14 +21,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import org.ocpsoft.pretty.time.PrettyTime;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.models.Offer;
@@ -121,7 +114,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                     .considerExifParams(true)
                     .displayer(new CircleBitmapDisplayer())
                     .build();
-            ImageLoader.getInstance().displayImage(offer.getAvatarImage(), mOfferImageAvatar, imageLoadingOptions);
+            ImageLoader.getInstance().displayImage(offer.getAvatar(), mOfferImageAvatar, imageLoadingOptions);
 
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.avatar_in_list_scale);
             animation.setDuration(ANIM_DURATION);

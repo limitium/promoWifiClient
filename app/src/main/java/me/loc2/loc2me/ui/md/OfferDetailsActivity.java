@@ -3,7 +3,6 @@ package me.loc2.loc2me.ui.md;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -26,7 +25,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.HashMap;
@@ -298,7 +296,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 .considerExifParams(true)
                 .displayer(new CircleBitmapDisplayer())
                 .build();
-        ImageLoader.getInstance().displayImage(offer.getAvatarImage(), mAvatarImage, imageLoadingOptions);
+        ImageLoader.getInstance().displayImage(offer.getAvatar(), mAvatarImage, imageLoadingOptions);
 
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_button_scale);
         animation.setDuration(ANIM_DURATION);

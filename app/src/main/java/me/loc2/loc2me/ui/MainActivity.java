@@ -220,7 +220,7 @@ public class MainActivity extends Loc2meFragmentActivity {
                 offer.setCreated_at("2015-05-21T14:24:05+0000");
                 offer.setUpdated_at("2015-05-21T14:24:05+0000");
                 offer.setAdded_at(new Date().getTime());
-                offer.setAvatarImage("https://pbs.twimg.com/profile_images/478608982915821568/k9u7RJmk.png");
+                offer.setAvatar("https://pbs.twimg.com/profile_images/478608982915821568/k9u7RJmk.png");
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, -1 * (index + 1));
                 int descriptionColor = getResources().getColor(ColorGenerator.getNextCardColor());
