@@ -176,15 +176,10 @@ public class OfferDetailsActivity extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupExitAnimations() {
         Transition sharedElementReturnTransition = getWindow().getSharedElementReturnTransition();
-        View statusBar = findViewById(android.R.id.statusBarBackground);
-        sharedElementReturnTransition.setStartDelay(ANIM_DURATION);
-        sharedElementReturnTransition.excludeTarget(toolbar, true);
-        sharedElementReturnTransition.excludeTarget(statusBar, true);
+        sharedElementReturnTransition.setStartDelay(0);
 
         Transition returnTransition = getWindow().getReturnTransition();
-        returnTransition.excludeTarget(toolbar, true);
-        returnTransition.excludeTarget(statusBar, true);
-        returnTransition.setDuration(ANIM_DURATION);
+        returnTransition.setDuration(50);
     }
 
     private void setUpLayout() {

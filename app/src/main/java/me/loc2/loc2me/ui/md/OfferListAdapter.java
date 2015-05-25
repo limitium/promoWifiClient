@@ -97,12 +97,12 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                         Ln.i("On loading complete");
                         mSpinner.setVisibility(View.GONE);
                         mOfferDateCreated.setVisibility(View.VISIBLE);
-                        loadAvatar(offer);
                         imageLoaded = true;
                     }
                 });
             }
             mOfferDateCreated.setText(offer.getCreatedAsPrettyText());
+            loadAvatar(offer);
             Ln.i("Color code: " + offer.getDescriptionColor());
             mOfferDescription.setBackgroundColor(offer.getDescriptionColor());
         }
@@ -123,7 +123,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                     .build();
             ImageLoader.getInstance().displayImage(offer.getAvatarImage(), mOfferImageAvatar, imageLoadingOptions);
 
-            Animation animation = AnimationUtils.loadAnimation(context, R.anim.back_button_scale);
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.avatar_in_list_scale);
             animation.setDuration(ANIM_DURATION);
             animation.setInterpolator(new AccelerateInterpolator());
             animation.setAnimationListener(new Animation.AnimationListener() {
