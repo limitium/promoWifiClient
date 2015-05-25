@@ -53,15 +53,14 @@
                 android:layout_above="@+id/offer_description_layout"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
-
-            <TextView
-                android:id="@+id/offer_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/offer_description_layout"
-                android:padding="16dp"
-                android:text="@string/bacon_ipsum"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1" />
         </RelativeLayout>
+        <TextView
+            android:id="@+id/offer_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relaGrid"
+            android:padding="16dp"
+            android:text="@string/bacon_ipsum"
+            android:textAppearance="@android:style/TextAppearance.Material.Body1" />
     </RelativeLayout>
 </ScrollView>
