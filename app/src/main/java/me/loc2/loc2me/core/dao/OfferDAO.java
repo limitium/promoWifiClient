@@ -130,7 +130,7 @@ public class OfferDAO extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(OfferContract.DeletedOffer.COLUMN_ID, id.longValue());
-        long result = db.insert(OfferContract.ReceivedOffer.TABLE_NAME, null, contentValues);
+        long result = db.insert(OfferContract.DeletedOffer.TABLE_NAME, null, contentValues);
         return -1 != result;
     }
 
