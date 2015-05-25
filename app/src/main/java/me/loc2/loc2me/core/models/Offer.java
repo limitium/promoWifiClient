@@ -40,7 +40,6 @@ public class Offer implements Parcelable, Serializable {
     private String image;
     private int descriptionColor;
     private String avatarImage;
-    private String createdAsPrettyText;
 
     private Offer(Parcel in) {
         id = new BigInteger(in.readString());
