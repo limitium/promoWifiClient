@@ -16,6 +16,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.loc2.loc2me.core.dao.OfferPersistService;
 
 /**
  * Module for all Android related provisions
@@ -81,6 +82,11 @@ public class AndroidModule {
     @Provides
     WifiManager provideWifiManager(final Context context) {
         return (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+    }
+
+    @Provides
+    OfferPersistService provideOfferPersistService(final Context context){
+        return new OfferPersistService(context);
     }
 
 }

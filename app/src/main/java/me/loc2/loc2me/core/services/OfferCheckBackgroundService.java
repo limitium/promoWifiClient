@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -32,12 +33,12 @@ public class OfferCheckBackgroundService extends Service {
     protected Bus eventBus;
     @Inject
     protected NotificationManager notificationManager;
-
     @Inject
     protected OfferLoaderService offerLoaderService;
     @Inject
     protected WifiScanService wifiScanService;
-    private OfferPersistService offerPersistService;
+    @Inject
+    protected OfferPersistService offerPersistService;
 
     private boolean started;
 
@@ -56,7 +57,6 @@ public class OfferCheckBackgroundService extends Service {
 
         wifiScanService.register(this);
         offerLoaderService.register();
-        offerPersistService = new OfferPersistService(this);
     }
 
     @Override
@@ -67,7 +67,6 @@ public class OfferCheckBackgroundService extends Service {
 
         offerLoaderService.unregister();
         wifiScanService.unregister(this);
-        offerPersistService.close();
 
         super.onDestroy();
     }
