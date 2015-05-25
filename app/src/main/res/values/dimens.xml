@@ -29,4 +29,5 @@
     <dimen name="card_elevation">5dp</dimen>
     <dimen name="size_avatar">60dp</dimen>
     <dimen name="details_text_description_padding">16dp</dimen>
+    <dimen name="loader_gif_height">100dp</dimen>
 </resources>
