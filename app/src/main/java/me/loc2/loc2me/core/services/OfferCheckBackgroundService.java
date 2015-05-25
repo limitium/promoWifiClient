@@ -73,7 +73,7 @@ public class OfferCheckBackgroundService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        wifiScanService.scan();
         if (!started) {
 
             started = true;
@@ -113,10 +113,10 @@ public class OfferCheckBackgroundService extends Service {
     @Subscribe
     public void onLoadedOfferEvent(LoadedOfferEvent loadedOfferEvent) {
         Offer offer = loadedOfferEvent.getOffer();
-        Ln.i("New offer: " + offer.getId());
+        Ln.i("New offer: " + offer);
 
         if (!offerPersistService.isDeleted(offer.getId())) {
-            Ln.i("Offer was deleted");
+            Ln.i("Offer wasn't deleted");
             Optional<Offer> saved = offerPersistService.findOneReceived(offer.getId());
             Ln.i("Offer was saved before: " + String.valueOf(saved.isPresent()));
             if (!saved.isPresent() || !saved.get().getUpdated_at().equals(offer.getUpdated_at())) {

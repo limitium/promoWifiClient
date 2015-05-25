@@ -64,8 +64,11 @@ public class OfferDAO extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from " + OfferContract.ReceivedOffer.TABLE_NAME + " where id=" + id + "", null);
         try {
-            String serialized = res.getString(res.getColumnIndex(OfferContract.ReceivedOffer.COLUMN_JSON));
-            return Optional.fromNullable(getOfferSerializer().deserialize(serialized));
+            if (res.getCount() > 0) {
+                res.moveToFirst();
+                String serialized = res.getString(res.getColumnIndex(OfferContract.ReceivedOffer.COLUMN_JSON));
+                return Optional.fromNullable(getOfferSerializer().deserialize(serialized));
+            }
         } catch (Exception e) {
             Ln.e(e);
         } finally {

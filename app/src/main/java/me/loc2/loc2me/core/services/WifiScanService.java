@@ -27,6 +27,10 @@ public class WifiScanService extends BroadcastReceiver {
     private HashMap<String, Long> checked = new HashMap<String, Long>();
     private int cachedTime = 1000 * 60 * 60 * 3;
 
+    public boolean scan(){
+        return wifiManager.startScan();
+    }
+
     public void register(OfferCheckBackgroundService offerCheckBackgroundService) {
         offerCheckBackgroundService.registerReceiver(this, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
     }
