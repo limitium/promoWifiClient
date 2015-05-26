@@ -20,7 +20,7 @@
     </style>
 
     <style name="Widget.MyApp.Toolbar" parent="Widget.AppCompat.ActionBar">
-        <item name="android:background">@color/orange</item>
+        <item name="android:background">@color/green</item>
         <item name="theme">@style/ThemeOverlay.MyApp.ActionBar</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="titleTextAppearance">@style/TextAppearance.Widget.Event.Toolbar.Title</item>

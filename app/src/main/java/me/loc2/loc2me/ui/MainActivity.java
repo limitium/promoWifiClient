@@ -35,6 +35,7 @@ import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.core.services.OfferCheckBackgroundService;
 import me.loc2.loc2me.core.services.OfferEventService;
 import me.loc2.loc2me.events.NavItemSelectedEvent;
+import me.loc2.loc2me.settings.SettingsFragment;
 import me.loc2.loc2me.ui.md.ColorGenerator;
 import me.loc2.loc2me.ui.md.OfferListFragment;
 import me.loc2.loc2me.util.Ln;
@@ -149,6 +150,9 @@ public class MainActivity extends Loc2meFragmentActivity {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, new OfferListFragment())
                     .commit();
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.container, new SettingsFragment())
+//                    .commit();
         }
 
     }
