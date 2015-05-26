@@ -102,7 +102,7 @@ public class OfferCheckBackgroundService extends Service {
 
         return new NotificationCompat.Builder(this)
                 .setContentTitle(getString(R.string.app_name))
-                .setSmallIcon(R.drawable.ic_stat_ab_notification)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentText(message)
 //                .setAutoCancel(false)
 //                .setOnlyAlertOnce(true)

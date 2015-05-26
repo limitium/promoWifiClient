@@ -48,7 +48,7 @@ public class OfferNotificationService {
         final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setContentTitle(offer.getName())
                 .setContentText(offer.getOrganization_name())
-                .setSmallIcon(R.drawable.ic_stat_ab_notification)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(resultPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setLights(Color.BLUE, 500, 500)
