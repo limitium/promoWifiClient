@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.google.common.base.Optional;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class OfferDAO extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(OfferContract.ReceivedOffer.COLUMN_ID, offer.getId().longValue());
+        contentValues.put(OfferContract.ReceivedOffer.COLUMN_ID, offer.getId());
         try {
             contentValues.put(OfferContract.ReceivedOffer.COLUMN_JSON, getOfferSerializer().serialize(offer));
             db.insert(OfferContract.ReceivedOffer.TABLE_NAME, null, contentValues);
@@ -60,7 +59,7 @@ public class OfferDAO extends SQLiteOpenHelper {
         return true;
     }
 
-    public Optional<Offer> findOneReceived(BigInteger id) {
+    public Optional<Offer> findOneReceived(Integer id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from " + OfferContract.ReceivedOffer.TABLE_NAME + " where id=" + id + "", null);
         try {
@@ -80,7 +79,7 @@ public class OfferDAO extends SQLiteOpenHelper {
     public boolean updateReceived(Offer offer) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(OfferContract.ReceivedOffer.COLUMN_ID, offer.getId().longValue());
+        contentValues.put(OfferContract.ReceivedOffer.COLUMN_ID, offer.getId());
         try {
             contentValues.put(OfferContract.ReceivedOffer.COLUMN_JSON, getOfferSerializer().serialize(offer));
             db.update(OfferContract.ReceivedOffer.TABLE_NAME, contentValues, OfferContract.ReceivedOffer.COLUMN_ID + " = ? ",
@@ -92,7 +91,7 @@ public class OfferDAO extends SQLiteOpenHelper {
         return true;
     }
 
-    public Integer deleteReceived(BigInteger id) {
+    public Integer deleteReceived(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(OfferContract.ReceivedOffer.TABLE_NAME,
                 OfferContract.ReceivedOffer.COLUMN_ID + " = ? ",
@@ -118,7 +117,7 @@ public class OfferDAO extends SQLiteOpenHelper {
         return result;
     }
 
-    public boolean isDeleted(BigInteger id) {
+    public boolean isDeleted(Integer id) {
         boolean result;
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -130,7 +129,7 @@ public class OfferDAO extends SQLiteOpenHelper {
         return result;
     }
 
-    public boolean saveDeleted(BigInteger id) {
+    public boolean saveDeleted(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(OfferContract.DeletedOffer.COLUMN_ID, id.longValue());
@@ -138,7 +137,7 @@ public class OfferDAO extends SQLiteOpenHelper {
         return -1 != result;
     }
 
-    public void removeDeleted(BigInteger id) {
+    public void removeDeleted(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(OfferContract.DeletedOffer.TABLE_NAME,
                 OfferContract.DeletedOffer.COLUMN_DELETED_OFFER_ID + " = ? ",

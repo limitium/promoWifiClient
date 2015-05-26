@@ -214,7 +214,7 @@ public class MainActivity extends Loc2meFragmentActivity {
                 int index = random.nextInt(10);
                 String indexStr = String.valueOf(index);
 
-                offer.setId(new BigInteger(indexStr));
+                offer.setId(new Integer(indexStr));
                 offer.setWifi_name("Item " + indexStr);
                 offer.setDescription(getString(R.string.lorem_ipsum_long));
                 offer.setCreated_at("2015-05-21T14:24:05+0000");

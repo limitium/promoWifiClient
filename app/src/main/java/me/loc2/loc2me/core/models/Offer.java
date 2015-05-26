@@ -31,7 +31,7 @@ public class Offer implements Parcelable, Serializable {
     };
 
 
-    private BigInteger id;
+    private Integer id;
     private String name;
     private String image;
     private String description;
@@ -46,7 +46,7 @@ public class Offer implements Parcelable, Serializable {
     private int descriptionColor;
 
     private Offer(Parcel in) {
-        id = new BigInteger(in.readString());
+        id = new Integer(in.readString());
         name = in.readString();
         image = in.readString();
         description = in.readString();
@@ -108,11 +108,11 @@ public class Offer implements Parcelable, Serializable {
     }
 
 
-    public BigInteger getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

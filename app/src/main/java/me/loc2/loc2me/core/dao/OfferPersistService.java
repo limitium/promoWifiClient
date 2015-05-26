@@ -7,7 +7,6 @@ import android.os.IBinder;
 
 import com.google.common.base.Optional;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import me.loc2.loc2me.Injector;
@@ -26,7 +25,7 @@ public class OfferPersistService {
         return offerDAO.saveReceived(offer);
     }
 
-    public Optional<Offer> findOneReceived(BigInteger id) {
+    public Optional<Offer> findOneReceived(Integer id) {
         return offerDAO.findOneReceived(id);
     }
 
@@ -34,7 +33,7 @@ public class OfferPersistService {
         return offerDAO.updateReceived(offer);
     }
 
-    public Integer deleteReceived(BigInteger id) {
+    public Integer deleteReceived(Integer id) {
         return offerDAO.deleteReceived(id);
     }
 
@@ -42,15 +41,15 @@ public class OfferPersistService {
         return offerDAO.findAllReceived();
     }
 
-    public void removeDeleted(BigInteger id) {
+    public void removeDeleted(Integer id) {
         offerDAO.removeDeleted(id);
     }
 
-    public boolean saveDeleted(BigInteger id) {
+    public boolean saveDeleted(Integer id) {
         return offerDAO.saveDeleted(id);
     }
 
-    public boolean isDeleted(BigInteger id) {
+    public boolean isDeleted(Integer id) {
         return offerDAO.isDeleted(id);
     }
 

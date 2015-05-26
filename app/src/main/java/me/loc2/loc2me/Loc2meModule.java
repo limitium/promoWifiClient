@@ -18,7 +18,6 @@ import me.loc2.loc2me.core.RestAdapterRequestInterceptor;
 import me.loc2.loc2me.core.RestErrorHandler;
 import me.loc2.loc2me.core.UserAgentProvider;
 import me.loc2.loc2me.core.services.WifiScanService;
-import me.loc2.loc2me.core.dao.OfferPersistService;
 import me.loc2.loc2me.ui.FilterFragment;
 import me.loc2.loc2me.ui.MainActivity;
 import me.loc2.loc2me.ui.md.OfferListFragment;
