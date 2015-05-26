@@ -102,6 +102,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             }
             mOfferDateCreated.setText(offer.getCreatedAsPrettyText());
             Ln.i("Color code: " + offer.getDescriptionColor());
+            mOfferPromoActionName.setText(offer.getName());
             mOfferCompanyName.setText(offer.getOrganization_name());
             mOfferDescription.setBackgroundColor(offer.getDescriptionColor());
         }
