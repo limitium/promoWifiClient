@@ -2,6 +2,7 @@ package me.loc2.loc2me.core.services;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
@@ -36,16 +38,22 @@ public class OfferNotificationService {
         }
 
         Intent resultIntent = new Intent(context, OfferDetailsActivity.class);
-        // Because clicking the notification opens a new ("special") activity, there's
-        // no need to create an artificial back stack.
-
+        resultIntent.putExtra(OfferDetailsActivity.OFFER, (Parcelable) offer);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+// Adds the back stack
+        stackBuilder.addParentStack(OfferDetailsActivity.class);
+// Adds the Intent to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+// Gets a PendingIntent containing the entire back stack
         PendingIntent resultPendingIntent =
-                PendingIntent.getActivity(
-                        context,
-                        0,
-                        resultIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+//        PendingIntent resultPendingIntent =
+//                PendingIntent.getActivity(
+//                        context,
+//                        0,
+//                        resultIntent,
+//                        PendingIntent.FLAG_CANCEL_CURRENT
+//                );
 
 
         final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
@@ -57,6 +65,7 @@ public class OfferNotificationService {
                 .setLights(Color.BLUE, 500, 500)
                 .setStyle(new NotificationCompat.InboxStyle())
                 .setColor(context.getResources().getColor(R.color.green))
+                .setAutoCancel(true)
                 .setWhen(System.currentTimeMillis());
 
         if (withSound()) {

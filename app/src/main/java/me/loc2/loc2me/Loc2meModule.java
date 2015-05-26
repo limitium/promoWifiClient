@@ -20,6 +20,7 @@ import me.loc2.loc2me.core.UserAgentProvider;
 import me.loc2.loc2me.core.services.WifiScanService;
 import me.loc2.loc2me.ui.FilterFragment;
 import me.loc2.loc2me.ui.MainActivity;
+import me.loc2.loc2me.ui.md.OfferDetailsActivity;
 import me.loc2.loc2me.ui.md.OfferListFragment;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -34,6 +35,7 @@ import retrofit.converter.GsonConverter;
         injects = {
                 Loc2meApplication.class,
                 MainActivity.class,
+                OfferDetailsActivity.class,
                 FilterFragment.class,
                 OfferListFragment.class,
                 WifiScanService.class,
