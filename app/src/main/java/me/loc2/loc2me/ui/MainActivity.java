@@ -6,11 +6,16 @@ import android.accounts.OperationCanceledException;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -48,6 +53,9 @@ import me.loc2.loc2me.util.UIUtils;
  */
 public class MainActivity extends Loc2meFragmentActivity {
 
+    private static final String LIST_FRAGMENT_TAG = "ListFragmentTag";
+    private static final String SETTINGS_FRAGMENT_TAG = "SettingsFragmentTag";
+
     @Inject
     protected Loc2meServiceProvider serviceProvider;
     @Inject
@@ -61,6 +69,8 @@ public class MainActivity extends Loc2meFragmentActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
+    private OfferListFragment offerListFragment;
+    private SettingsFragment settingsFragment;
     private CharSequence drawerTitle;
     private CharSequence title;
 
@@ -110,7 +120,14 @@ public class MainActivity extends Loc2meFragmentActivity {
         }
         checkAuth();
 
-
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                Ln.i("Value for checkbox " + key + " has changed to " + sharedPreferences.getBoolean(key, false));
+            }
+        });
     }
 
     private boolean isTablet() {
@@ -146,16 +163,33 @@ public class MainActivity extends Loc2meFragmentActivity {
             }
 
             Ln.d("Foo");
-            final FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, new OfferListFragment())
-                    .commit();
-//            fragmentManager.beginTransaction()
-//                    .replace(R.id.container, new SettingsFragment())
-//                    .commit();
+            openFragment(getOfferListFragment(), LIST_FRAGMENT_TAG);
         }
 
     }
+
+    private void openFragment(Fragment fragment, String fragmentTag) {
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .addToBackStack(fragmentTag)
+                .commit();
+    }
+
+    private OfferListFragment getOfferListFragment() {
+        if (null == offerListFragment) {
+            offerListFragment = new OfferListFragment();
+        }
+        return offerListFragment;
+    }
+
+    public SettingsFragment getSettingsFragment() {
+        if (null == settingsFragment) {
+            settingsFragment = new SettingsFragment();
+        }
+        return settingsFragment;
+    }
+
 
     private boolean isServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -198,14 +232,10 @@ public class MainActivity extends Loc2meFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
-
-        if (!isTablet() && drawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
         switch (item.getItemId()) {
             case android.R.id.home:
-                //menuDrawer.toggleMenu();
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                onBackPressed();
                 return true;
             case R.id.menu_add:
                 Offer offer = new Offer();
@@ -230,6 +260,9 @@ public class MainActivity extends Loc2meFragmentActivity {
                 List<Offer> all = offerPersistService.findAllReceived();
                 Ln.i("All: " + Arrays.toString(all.toArray()));
                 return true;
+
+            case R.id.menu_settings:
+                openFragment(getSettingsFragment(), SETTINGS_FRAGMENT_TAG);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -247,4 +280,5 @@ public class MainActivity extends Loc2meFragmentActivity {
                 break;
         }
     }
+
 }

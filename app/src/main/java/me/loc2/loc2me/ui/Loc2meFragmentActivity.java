@@ -1,6 +1,8 @@
 package me.loc2.loc2me.ui;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -27,12 +29,20 @@ public abstract class Loc2meFragmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Injector.inject(this);
+
         setContentView(getLayoutResource());
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-        Injector.inject(this);
+
+        getSupportFragmentManager().addOnBackStackChangedListener(
+                new FragmentManager.OnBackStackChangedListener() {
+                    public void onBackStackChanged() {
+                        toolbar.setTitle(R.string.app_name);
+                    }
+                });
     }
 
     @Override
@@ -52,4 +62,8 @@ public abstract class Loc2meFragmentActivity extends AppCompatActivity {
         super.onPause();
         eventBus.unregister(this);
     }
- }
+
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+}
