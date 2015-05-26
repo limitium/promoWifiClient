@@ -96,6 +96,9 @@
     <string name="description_details_transition">description_details_transition</string>
     <string name="offer_list_image_description">Click to see details</string>
 
+    <!-- Details -->
+    <string name="details_toolbar_title">Details</string>
+
 
     <!-- Settings -->
     <string name="pref_title">Settings</string>

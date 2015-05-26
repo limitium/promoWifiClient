@@ -75,7 +75,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            View toolbar = findViewById(R.id.toolbar);
+            getSupportActionBar().setTitle(R.string.details_toolbar_title);
             ViewCompat.setTransitionName(toolbar, getString(R.string.toolbar_transition));
         }
 
@@ -108,7 +108,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate our menu from the resources by using the menu inflater.
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        getMenuInflater().inflate(R.menu.toolbar_menu_details, menu);
         return true;
     }
 
