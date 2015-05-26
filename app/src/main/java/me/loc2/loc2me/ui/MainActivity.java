@@ -15,11 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.otto.Subscribe;
 
-import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,6 +31,7 @@ import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.core.dao.OfferPersistService;
 import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.core.services.OfferCheckBackgroundService;
 import me.loc2.loc2me.core.services.OfferEventService;
 import me.loc2.loc2me.events.NavItemSelectedEvent;
@@ -55,6 +53,8 @@ public class MainActivity extends Loc2meFragmentActivity {
     protected OfferEventService offerEventService;
     @Inject
     protected OfferPersistService offerPersistService;
+    @Inject
+    protected ImageLoaderService imageLoaderService;
 
     private boolean userHasAuthenticated = false;
 
@@ -187,15 +187,10 @@ public class MainActivity extends Loc2meFragmentActivity {
                 super.onSuccess(hasAuthenticated);
                 userHasAuthenticated = true;
                 initScreen();
-                initImageLoader();
             }
         }.execute();
     }
 
-    private void initImageLoader() {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
-        ImageLoader.getInstance().init(config);
-    }
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {

@@ -17,6 +17,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import me.loc2.loc2me.core.dao.OfferPersistService;
+import me.loc2.loc2me.core.services.ImageLoaderService;
 
 /**
  * Module for all Android related provisions
@@ -85,8 +86,14 @@ public class AndroidModule {
     }
 
     @Provides
-    OfferPersistService provideOfferPersistService(final Context context){
+    OfferPersistService provideOfferPersistService(final Context context) {
         return new OfferPersistService(context);
+    }
+
+    @Provides
+    @Singleton
+    ImageLoaderService provideImageLoaderService(final Context context) {
+        return new ImageLoaderService(context);
     }
 
 }

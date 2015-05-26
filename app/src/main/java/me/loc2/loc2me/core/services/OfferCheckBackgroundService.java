@@ -39,6 +39,8 @@ public class OfferCheckBackgroundService extends Service {
     protected WifiScanService wifiScanService;
     @Inject
     protected OfferPersistService offerPersistService;
+    @Inject
+    protected OfferNotificationService offerNotificationService;
 
     private boolean started;
 
@@ -80,8 +82,8 @@ public class OfferCheckBackgroundService extends Service {
 
             // Run as foreground service: http://stackoverflow.com/a/3856940/5210
             // Another example: https://github.com/commonsguy/cw-android/blob/master/Notifications/FakePlayer/src/com/commonsware/android/fakeplayerfg/PlayerService.java
-            startForeground(TIMER_NOTIFICATION_ID, getNotification(getString(R.string.bg_offer_checker)));
-            notificationManager.cancel(TIMER_NOTIFICATION_ID);
+            startForeground(SCAN_NOTIFICATION_ID, getNotification(getString(R.string.bg_offer_checker)));
+            notificationManager.cancel(SCAN_NOTIFICATION_ID);
         }
 
         return START_NOT_STICKY;
@@ -102,9 +104,9 @@ public class OfferCheckBackgroundService extends Service {
                 .setContentTitle(getString(R.string.app_name))
                 .setSmallIcon(R.drawable.ic_stat_ab_notification)
                 .setContentText(message)
-                .setAutoCancel(false)
-                .setOnlyAlertOnce(true)
-                .setOngoing(true)
+//                .setAutoCancel(false)
+//                .setOnlyAlertOnce(true)
+//                .setOngoing(true)
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(pendingIntent)
                 .getNotification();
@@ -134,5 +136,10 @@ public class OfferCheckBackgroundService extends Service {
     public void onNewWifiNetworkEvent(NewWifiNetworkEvent wifiNetworkEvent) {
         Ln.i("New network: " + wifiNetworkEvent.getWifiInfo().getName());
         offerLoaderService.loadWifiOffers(wifiNetworkEvent.getWifiInfo());
+    }
+
+    @Subscribe
+    public void onNewOfferEvent(NewOfferEvent newOfferEvent) {
+        offerNotificationService.notify(newOfferEvent.getOffer());
     }
 }

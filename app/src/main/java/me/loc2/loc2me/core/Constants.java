@@ -73,8 +73,6 @@ public final class Constants {
 
         public static final int TIMER_NOTIFICATION_ID = 1000; // Why 1000? Why not? :)
         public static final int SCAN_NOTIFICATION_ID = 2000; // Why 1000? Why not? :)
-        public static final int INFO_NOTIFICATION_ID = 3000; // Why 1000? Why not? :)
-        public static final int STORAGE_NOTIFICATION_ID = 4000; // Why 1000? Why not? :)
     }
 
 }
