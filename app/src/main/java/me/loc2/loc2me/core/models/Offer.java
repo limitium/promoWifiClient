@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.google.common.base.MoreObjects;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.ocpsoft.pretty.time.PrettyTime;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import java.util.Locale;
 
 import me.loc2.loc2me.util.Ln;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Offer implements Parcelable, Serializable {
 
     // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods

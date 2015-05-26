@@ -63,6 +63,7 @@ public class OfferListFragment extends Fragment {
     @Subscribe
     public void addOfferToTheList(NewOfferEvent event) {
         Offer offer = event.getOffer();
+        offer.setDescriptionColor(ColorGenerator.getNextCardColor());
         if (null != mAdapter) {
             int position = mAdapter.add(offer);
             mLayoutManager.scrollToPosition(position - 1);

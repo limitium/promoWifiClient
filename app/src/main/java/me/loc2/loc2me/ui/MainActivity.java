@@ -237,30 +237,29 @@ public class MainActivity extends Loc2meFragmentActivity {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 onBackPressed();
                 return true;
-            case R.id.menu_add:
-                Offer offer = new Offer();
-                Random random = new Random();
-                int index = random.nextInt(10);
-                String indexStr = String.valueOf(index);
-
-                offer.setId(new Integer(indexStr));
-                offer.setWifi_name("Item " + indexStr);
-                offer.setDescription(getString(R.string.lorem_ipsum_long));
-                offer.setCreated_at("2015-05-21T14:24:05+0000");
-                offer.setUpdated_at("2015-05-21T14:24:05+0000");
-                offer.setAdded_at(new Date().getTime());
-                offer.setAvatar("https://pbs.twimg.com/profile_images/478608982915821568/k9u7RJmk.png");
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, -1 * (index + 1));
-                int descriptionColor = getResources().getColor(ColorGenerator.getNextCardColor());
-                offer.setDescriptionColor(descriptionColor);
-                offerEventService.add(offer);
-
-                offerPersistService.saveReceived(offer);
-                List<Offer> all = offerPersistService.findAllReceived();
-                Ln.i("All: " + Arrays.toString(all.toArray()));
-                return true;
-
+//            case R.id.menu_add:
+//                Offer offer = new Offer();
+//                Random random = new Random();
+//                int index = random.nextInt(10);
+//                String indexStr = String.valueOf(index);
+//
+//                offer.setId(new Integer(indexStr));
+//                offer.setWifi_name("Item " + indexStr);
+//                offer.setDescription(getString(R.string.lorem_ipsum_long));
+//                offer.setCreated_at("2015-05-21T14:24:05+0000");
+//                offer.setUpdated_at("2015-05-21T14:24:05+0000");
+//                offer.setAdded_at(new Date().getTime());
+//                offer.setAvatar("https://pbs.twimg.com/profile_images/478608982915821568/k9u7RJmk.png");
+//                Calendar cal = Calendar.getInstance();
+//                cal.add(Calendar.DATE, -1 * (index + 1));
+//                int descriptionColor = getResources().getColor(ColorGenerator.getNextCardColor());
+//                offer.setDescriptionColor(descriptionColor);
+//                offerEventService.add(offer);
+//
+//                offerPersistService.saveReceived(offer);
+//                List<Offer> all = offerPersistService.findAllReceived();
+//                Ln.i("All: " + Arrays.toString(all.toArray()));
+//                return true;
             case R.id.menu_settings:
                 openFragment(getSettingsFragment(), SETTINGS_FRAGMENT_TAG);
             default:

@@ -48,6 +48,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         private View mOfferAvatar;
         private ImageView mOfferImageAvatar;
         private TextView mOfferDateCreated;
+        private TextView mOfferCompanyName;
+        private TextView mOfferPromoActionName;
         private View mOfferDescription;
         private ProgressBar mSpinner;
 
@@ -64,6 +66,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             mOfferItemImage = (ImageView) v.findViewById(R.id.offer_list_image);
             mOfferDateCreated = (TextView)v.findViewById(R.id.offer_date_created);
             mOfferDescription = v.findViewById(R.id.offer_description_layout);
+            mOfferCompanyName = (TextView) mOfferDescription.findViewById(R.id.offer_company_name);
+            mOfferPromoActionName = (TextView) mOfferDescription.findViewById(R.id.offer_promo_name);
             mOfferAvatar = v.findViewById(R.id.avatar);
             mOfferImageAvatar = (ImageView)v.findViewById(R.id.avatar_image);
             mSpinner = (ProgressBar)v.findViewById(R.id.loading);
@@ -98,6 +102,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             }
             mOfferDateCreated.setText(offer.getCreatedAsPrettyText());
             Ln.i("Color code: " + offer.getDescriptionColor());
+            mOfferCompanyName.setText(offer.getOrganization_name());
             mOfferDescription.setBackgroundColor(offer.getDescriptionColor());
         }
 
