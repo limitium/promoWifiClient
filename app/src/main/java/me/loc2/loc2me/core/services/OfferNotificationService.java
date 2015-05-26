@@ -4,10 +4,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
 
@@ -18,6 +20,7 @@ import javax.inject.Inject;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.ui.md.OfferDetailsActivity;
+import me.loc2.loc2me.util.Ln;
 
 public class OfferNotificationService {
     @Inject
@@ -48,11 +51,12 @@ public class OfferNotificationService {
         final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setContentTitle(offer.getName())
                 .setContentText(offer.getOrganization_name())
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_launcher_notify)
                 .setContentIntent(resultPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setLights(Color.BLUE, 500, 500)
                 .setStyle(new NotificationCompat.InboxStyle())
+                .setColor(context.getResources().getColor(R.color.green))
                 .setWhen(System.currentTimeMillis());
 
         if (withSound()) {
@@ -85,5 +89,16 @@ public class OfferNotificationService {
 
     private boolean isNotifyDisabled() {
         return false;
+    }
+
+    private void qwe() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                Ln.i("Value for checkbox " + key + " has changed to " + sharedPreferences.getBoolean(key, false));
+            }
+        });
+
     }
 }
