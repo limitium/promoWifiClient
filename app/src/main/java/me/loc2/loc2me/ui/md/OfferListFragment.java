@@ -25,8 +25,10 @@ import javax.inject.Inject;
 
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.core.dao.OfferPersistService;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.core.services.OfferEventService;
 import me.loc2.loc2me.ui.graphics.Animations;
 import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
@@ -44,7 +46,7 @@ public class OfferListFragment extends Fragment {
     protected TextView mNoDataTextView;
 
     @Inject
-    OfferEventService offerService;
+    protected OfferEventService offerService;
 
     @Inject
     protected Bus eventBus;

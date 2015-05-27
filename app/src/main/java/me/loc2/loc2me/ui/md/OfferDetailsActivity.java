@@ -3,13 +3,10 @@ package me.loc2.loc2me.ui.md;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.NotificationManager;
-import android.app.TaskStackBuilder;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -40,6 +37,7 @@ import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.util.Ln;
 
 public class OfferDetailsActivity extends AppCompatActivity {
@@ -48,6 +46,8 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
     @Inject
     protected NotificationManager notificationManager;
+    @Inject
+    protected ImageLoaderService imageLoaderService;
 
     private ImageView mOfferDetailsImage;
     private TextView mOfferDescription;
@@ -227,15 +227,11 @@ public class OfferDetailsActivity extends AppCompatActivity {
     }
 
     private void loadThumbnail() {
-        String url = buildUrl(offer.getImage());
-        DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
-        ImageLoader.getInstance().displayImage(url, mOfferDetailsImage, imageLoadingOptions);
+        imageLoaderService.loadImage(offer.getImage(), mOfferDetailsImage);
     }
 
     private void loadImage() {
-        String url = buildUrl(offer.getImage());
-        DisplayImageOptions imageLoadingOptions = getDisplayImageOptions();
-        ImageLoader.getInstance().displayImage(url, mOfferDetailsImage, imageLoadingOptions, new SimpleImageLoadingListener() {
+        imageLoaderService.loadImage(offer.getImage(), new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 Ln.i("On loading started");
@@ -253,7 +249,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
                 animateOpenDetails();
             }
         });
-
     }
 
     private void animateOpenDetails() {
@@ -269,26 +264,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private DisplayImageOptions getDisplayImageOptions() {
-        return new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.NONE_SAFE)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .considerExifParams(true)
-                .build();
-    }
-
-    private String buildUrl(String image) {
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-//        String url = image.getBaseUrl() + "/" + String.valueOf(image.getWidth()) + "/"
-//                + String.valueOf(image.getHeight()) + "/animals/";
-        String url = Constants.Http.URL_BASE + image;
-        Ln.d("Loading url: " + url);
-//        return "http://lorempixel.com/1080/1920/animals/";
-        return url;
-    }
 
     private void createShowAnimations() {
         if (null == showAnimations) {
@@ -305,16 +280,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
     }
 
     private Animation createBackButtonShowAnimation() {
-        DisplayImageOptions imageLoadingOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .showImageForEmptyUri(R.drawable.rockstar)
-                .imageScaleType(ImageScaleType.NONE_SAFE)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .considerExifParams(true)
-                .displayer(new CircleBitmapDisplayer())
-                .build();
-        ImageLoader.getInstance().displayImage(offer.getAvatar(), mAvatarImage, imageLoadingOptions);
+        imageLoaderService.loadAvatar(offer.getAvatar(), mAvatarImage);
 
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_button_scale);
         animation.setDuration(ANIM_DURATION);

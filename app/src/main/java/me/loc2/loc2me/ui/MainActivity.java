@@ -6,27 +6,17 @@ import android.accounts.OperationCanceledException;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
 import com.squareup.otto.Subscribe;
-
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -35,13 +25,10 @@ import me.loc2.loc2me.Loc2meServiceProvider;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.core.dao.OfferPersistService;
-import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.core.services.OfferCheckBackgroundService;
-import me.loc2.loc2me.core.services.OfferEventService;
 import me.loc2.loc2me.events.NavItemSelectedEvent;
 import me.loc2.loc2me.settings.SettingsFragment;
-import me.loc2.loc2me.ui.md.ColorGenerator;
 import me.loc2.loc2me.ui.md.OfferListFragment;
 import me.loc2.loc2me.util.Ln;
 import me.loc2.loc2me.util.SafeAsyncTask;
@@ -58,12 +45,6 @@ public class MainActivity extends Loc2meFragmentActivity {
 
     @Inject
     protected Loc2meServiceProvider serviceProvider;
-    @Inject
-    protected OfferEventService offerEventService;
-    @Inject
-    protected OfferPersistService offerPersistService;
-    @Inject
-    protected ImageLoaderService imageLoaderService;
 
     private boolean userHasAuthenticated = false;
 
@@ -120,14 +101,6 @@ public class MainActivity extends Loc2meFragmentActivity {
         }
         checkAuth();
 
-        SharedPreferences prefs =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                Ln.i("Value for checkbox " + key + " has changed to " + sharedPreferences.getBoolean(key, false));
-            }
-        });
     }
 
     private boolean isTablet() {

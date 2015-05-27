@@ -4,7 +4,7 @@ import retrofit.RetrofitError;
 
 /**
  * The event that is posted when a network error event occurs.
- * TODO: Consume this event in the {@link me.loc2.loc2me.ui.Loc2meActivity} and
+ * TODO: Consume this event in the {@link me.loc2.loc2me.ui.MainActivity} and
  * show a dialog that something went wrong.
  */
 public class NetworkErrorEvent {
