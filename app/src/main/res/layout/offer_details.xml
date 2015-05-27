@@ -37,7 +37,7 @@
 
             <include
                 android:id="@+id/offer_description_layout"
-                layout="@layout/offer_text_description"
+                layout="@layout/offer_meta_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

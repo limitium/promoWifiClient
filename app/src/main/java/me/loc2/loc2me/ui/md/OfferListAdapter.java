@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -43,12 +44,12 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
         private static final long ANIM_DURATION = 300;
         private static final int AVATAR_HEIGHT = 60;
+        private RelativeLayout mOfferItemHolder;
         private Context context;
         private ImageLoaderService imageLoaderService;
         private ImageView mOfferItemImage;
         private View mOfferAvatar;
         private ImageView mOfferImageAvatar;
-        private TextView mOfferDateCreated;
         private TextView mOfferCompanyName;
         private TextView mOfferPromoActionName;
         private View mOfferDescription;
@@ -65,8 +66,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             this.imageLoaderService = imageLoaderService;
             this.context = v.getContext();
             // Define click listener for the ViewHolder's View.
+            mOfferItemHolder = (RelativeLayout) v.findViewById(R.id.relaGrid);
             mOfferItemImage = (ImageView) v.findViewById(R.id.offer_list_image);
-            mOfferDateCreated = (TextView)v.findViewById(R.id.offer_date_created);
             mOfferDescription = v.findViewById(R.id.offer_description_layout);
             mOfferCompanyName = (TextView) mOfferDescription.findViewById(R.id.offer_company_name);
             mOfferPromoActionName = (TextView) mOfferDescription.findViewById(R.id.offer_promo_name);
@@ -78,32 +79,33 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         public void loadData(final Offer offer) {
 //            if (!imageLoaded) {
                 mOfferAvatar.setY(mOfferItemImage.getHeight() - dpToPx(AVATAR_HEIGHT / 2));
-                mSpinner.setVisibility(View.VISIBLE);
-                imageLoaderService.loadImage(offer.getImage(), mOfferItemImage, new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                        Ln.i("On loading started");
-                        mSpinner.setVisibility(View.VISIBLE);
-                    }
+            mSpinner.setVisibility(View.VISIBLE);
+            imageLoaderService.loadImage(offer.getImage(), mOfferItemImage, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+                    Ln.i("On loading started");
+                    mSpinner.setVisibility(View.VISIBLE);
+                }
 
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        Ln.i("On loading failed");
-                        mSpinner.setVisibility(View.GONE);
-                    }
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    Ln.i("On loading failed");
+                    mSpinner.setVisibility(View.GONE);
+                }
 
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        Ln.i("On loading complete");
-                        mSpinner.setVisibility(View.GONE);
-                        loadAvatar(offer);
-                        imageLoaded = true;
-                    }
-                });
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    Ln.i("On loading complete");
+                    mSpinner.setVisibility(View.GONE);
+                    loadAvatar(offer);
+                    imageLoaded = true;
+                }
+            });
 //            }
-            mOfferDateCreated.setText(offer.getCreatedAsPrettyText());
             mOfferPromoActionName.setText(offer.getName());
             mOfferCompanyName.setText(offer.getOrganization_name());
+            mOfferCompanyName.setTextColor(offer.getTextColor());
+            mOfferItemHolder.setBackgroundColor(offer.getBackgroundColor());
             mOfferDescription.setBackgroundColor(offer.getBackgroundColor());
         }
 
