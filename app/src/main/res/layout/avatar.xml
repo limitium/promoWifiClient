@@ -10,7 +10,5 @@
         android:id="@+id/avatar_image"
         android:layout_width="@dimen/size_avatar"
         android:layout_height="@dimen/size_avatar"
-        android:layout_gravity="center"
-        android:minHeight="@dimen/size_avatar"
-        android:minWidth="@dimen/size_avatar" />
+        android:layout_gravity="center" />
 </FrameLayout>

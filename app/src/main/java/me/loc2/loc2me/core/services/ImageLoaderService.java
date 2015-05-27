@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.media.ThumbnailUtils;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -18,7 +19,6 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.nostra13.universalimageloader.core.process.BitmapProcessor;
 
 import me.loc2.loc2me.core.Constants;
-import me.loc2.loc2me.ui.md.CircleBitmapDisplayer;
 
 public class ImageLoaderService {
 
@@ -72,9 +72,15 @@ public class ImageLoaderService {
 
     private DisplayImageOptions getAvatarOptions(final boolean withBorder) {
         return getCommonOptions()
-                .postProcessor(new BitmapProcessor() {
+                .preProcessor(new BitmapProcessor() {
                     @Override
                     public Bitmap process(Bitmap bitmap) {
+                        bitmap = squarizeAndResize(bitmap);
+                        bitmap = cropCircle(bitmap);
+                        return bitmap;
+                    }
+
+                    private Bitmap cropCircle(Bitmap bitmap) {
                         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_4444);
 
                         Canvas canvas = new Canvas(output);
@@ -103,6 +109,12 @@ public class ImageLoaderService {
                             canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, (float) (bitmap.getWidth() / 2 - Math.ceil(borderWidth / 2)), paint2);
                         }
                         return output;
+                    }
+
+                    private Bitmap squarizeAndResize(Bitmap bitmap) {
+                        final int IMAGE_SIZE = 256;
+                        bitmap = ThumbnailUtils.extractThumbnail(bitmap, IMAGE_SIZE, IMAGE_SIZE);
+                        return bitmap;
                     }
                 })
                 .build();
