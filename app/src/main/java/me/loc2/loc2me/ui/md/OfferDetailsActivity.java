@@ -216,11 +216,8 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private void loadTexts() {
         mOfferDescription.setText(offer.getDescription());
         mOfferCompanyName.setText(offer.getOrganization_name());
-        mOfferCompanyName.setTextColor(offer.getTextColor());
         mOfferPromoActionName.setText(offer.getName());
-        mOfferPromoActionName.setTextColor(offer.getTextColor());
         mOfferCreated.setText(offer.getCreatedAsPrettyText());
-        mOfferCreated.setTextColor(offer.getTextColor());
         mOfferDescriptionLayout.setBackgroundColor(offer.getBackgroundColor());
     }
 

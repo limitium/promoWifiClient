@@ -31,7 +31,8 @@
             android:textColor="@color/white"
             android:textSize="@dimen/offer_description_promo_text_size"
             android:textStyle="normal"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_marginTop="@dimen/offer_description_company_margin"/>
 
         <TextView
             android:id="@+id/offer_date_created"
@@ -43,5 +44,6 @@
             android:textColor="@color/white"
             android:textStyle="normal"
             android:gravity="center"
-            tools:text="4 day ago" />
+            tools:text="4 day ago"
+            android:layout_marginTop="@dimen/offer_description_time_margin"/>
 </LinearLayout>
