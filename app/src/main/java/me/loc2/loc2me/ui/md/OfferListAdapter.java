@@ -15,7 +15,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
@@ -24,7 +23,6 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.List;
 
 import me.loc2.loc2me.R;
-import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.util.Ln;
@@ -106,7 +104,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             mOfferDateCreated.setText(offer.getCreatedAsPrettyText());
             mOfferPromoActionName.setText(offer.getName());
             mOfferCompanyName.setText(offer.getOrganization_name());
-            mOfferDescription.setBackgroundColor(offer.getDescriptionColor());
+            mOfferDescription.setBackgroundColor(offer.getBackgroundColor());
         }
 
         private void loadAvatar(Offer offer) {

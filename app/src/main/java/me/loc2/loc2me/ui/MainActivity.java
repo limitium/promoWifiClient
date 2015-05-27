@@ -226,7 +226,7 @@ public class MainActivity extends Loc2meFragmentActivity {
 //                Calendar cal = Calendar.getInstance();
 //                cal.add(Calendar.DATE, -1 * (index + 1));
 //                int descriptionColor = getResources().getColor(ColorGenerator.getNextCardColor());
-//                offer.setDescriptionColor(descriptionColor);
+//                offer.setBackgroundColor(descriptionColor);
 //                offerEventService.add(offer);
 //
 //                offerPersistService.saveReceived(offer);

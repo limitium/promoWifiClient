@@ -9,7 +9,6 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.ocpsoft.pretty.time.PrettyTime;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +44,8 @@ public class Offer implements Parcelable, Serializable {
     private String avatar;
 
     private Long added_at;
-    private int descriptionColor;
+    private int backgroundColor;
+    private int textColor;
 
     private Offer(Parcel in) {
         id = new Integer(in.readString());
@@ -60,7 +60,8 @@ public class Offer implements Parcelable, Serializable {
         avatar = in.readString();
 
         added_at = in.readLong();
-        descriptionColor = in.readInt();
+        backgroundColor = in.readInt();
+        textColor = in.readInt();
     }
 
     @Override
@@ -82,7 +83,8 @@ public class Offer implements Parcelable, Serializable {
         dest.writeString(avatar);
 
         dest.writeLong(added_at);
-        dest.writeInt(descriptionColor);
+        dest.writeInt(backgroundColor);
+        dest.writeInt(textColor);
     }
 
     @Override
@@ -101,7 +103,8 @@ public class Offer implements Parcelable, Serializable {
                 .add("avatar", avatar)
 
                 .add("added_at", added_at)
-                .add("descriptionColor", descriptionColor)
+                .add("backgroundColor", backgroundColor)
+                .add("textColor", textColor)
                 .toString();
     }
 
@@ -166,12 +169,20 @@ public class Offer implements Parcelable, Serializable {
         this.added_at = added_at;
     }
 
-    public void setDescriptionColor(int descriptionColor) {
-        this.descriptionColor = descriptionColor;
+    public void setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 
-    public int getDescriptionColor() {
-        return descriptionColor;
+    public int getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
     }
 
     public String getAvatar() {

@@ -7,11 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Parcelable;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
 
@@ -22,7 +20,6 @@ import javax.inject.Inject;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.ui.md.OfferDetailsActivity;
-import me.loc2.loc2me.util.Ln;
 
 public class OfferNotificationService {
     @Inject
@@ -31,6 +28,8 @@ public class OfferNotificationService {
     protected NotificationManager notificationManager;
     @Inject
     protected ImageLoaderService imageLoaderService;
+    @Inject
+    protected SharedPreferences sharedPreferences;
 
     public void notify(final Offer offer) {
         if (isNotifyDisabled()) {
@@ -56,7 +55,7 @@ public class OfferNotificationService {
 //                );
 
 
-        int color = context.getResources().getColor(R.color.green);
+        int color = context.getResources().getColor(R.color.teal);
         final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setContentTitle(offer.getName())
                 .setContentText(offer.getOrganization_name())
@@ -90,25 +89,18 @@ public class OfferNotificationService {
     }
 
     private boolean withVibration() {
-        return false;
+        return getSharedPref(R.string.pref_notification_vibro, true);
     }
 
     private boolean withSound() {
-        return false;
+        return getSharedPref(R.string.pref_notification_sound, true);
     }
 
     private boolean isNotifyDisabled() {
-        return false;
+        return !getSharedPref(R.string.pref_notification_show, true);
     }
 
-    private void qwe() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                Ln.i("Value for checkbox " + key + " has changed to " + sharedPreferences.getBoolean(key, false));
-            }
-        });
-
+    private boolean getSharedPref(int key, boolean def) {
+        return sharedPreferences.getBoolean(context.getResources().getString(key), def);
     }
 }

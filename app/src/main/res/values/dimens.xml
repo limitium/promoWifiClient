@@ -27,7 +27,7 @@
     <dimen name="padding_small">4dp</dimen>
     <dimen name="floating_title_top_padding">100dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
-    <dimen name="size_avatar">60dp</dimen>
+    <dimen name="size_avatar">75dp</dimen>
     <dimen name="details_text_description_padding">16dp</dimen>
     <dimen name="loader_gif_height">100dp</dimen>
     <dimen name="offer_description_company_margin">20dp</dimen>

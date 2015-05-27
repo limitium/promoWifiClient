@@ -11,7 +11,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,10 +21,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.HashMap;
@@ -35,7 +31,6 @@ import javax.inject.Inject;
 
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
-import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.util.Ln;
@@ -87,7 +82,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.details_toolbar_title);
+            getSupportActionBar().setTitle(offer.getName());
             ViewCompat.setTransitionName(toolbar, getString(R.string.toolbar_transition));
         }
 
@@ -221,9 +216,12 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private void loadTexts() {
         mOfferDescription.setText(offer.getDescription());
         mOfferCompanyName.setText(offer.getOrganization_name());
+        mOfferCompanyName.setTextColor(offer.getTextColor());
         mOfferPromoActionName.setText(offer.getName());
+        mOfferPromoActionName.setTextColor(offer.getTextColor());
         mOfferCreated.setText(offer.getCreatedAsPrettyText());
-        mOfferDescriptionLayout.setBackgroundColor(offer.getDescriptionColor());
+        mOfferCreated.setTextColor(offer.getTextColor());
+        mOfferDescriptionLayout.setBackgroundColor(offer.getBackgroundColor());
     }
 
 //    private void loadThumbnail() {
