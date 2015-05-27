@@ -34,6 +34,10 @@ public class ImageLoaderService {
         load(url, imageLoadingListener, getImageOptions());
     }
 
+    public void loadImage(String url, ImageView imageView, SimpleImageLoadingListener imageLoadingListener) {
+        loadIntoView(url, imageView, getImageOptions(), imageLoadingListener);
+    }
+
 
     public void loadImage(String url, ImageView imageView) {
         loadIntoView(url, imageView, getImageOptions());
@@ -49,6 +53,11 @@ public class ImageLoaderService {
 
     private void loadIntoView(String url, ImageView imageView, DisplayImageOptions imageOptions) {
         ImageLoader.getInstance().displayImage(getFullUrl(url), imageView, imageOptions);
+    }
+
+    private void loadIntoView(String url, ImageView imageView, DisplayImageOptions imageOptions,
+                              SimpleImageLoadingListener imageLoadingListener) {
+        ImageLoader.getInstance().displayImage(getFullUrl(url), imageView, imageOptions, imageLoadingListener);
     }
 
     private String getFullUrl(String url) {

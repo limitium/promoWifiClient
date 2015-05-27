@@ -214,7 +214,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
         createShowAnimations();
         createBackAnimations();
 
-        loadThumbnail();
+//        loadThumbnail();
         loadTexts();
     }
 
@@ -226,12 +226,12 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mOfferDescriptionLayout.setBackgroundColor(offer.getDescriptionColor());
     }
 
-    private void loadThumbnail() {
-        imageLoaderService.loadImage(offer.getImage(), mOfferDetailsImage);
-    }
+//    private void loadThumbnail() {
+//        imageLoaderService.loadImage(offer.getImage(), mOfferDetailsImage);
+//    }
 
     private void loadImage() {
-        imageLoaderService.loadImage(offer.getImage(), new SimpleImageLoadingListener() {
+        imageLoaderService.loadImage(offer.getImage(), mOfferDetailsImage, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 Ln.i("On loading started");

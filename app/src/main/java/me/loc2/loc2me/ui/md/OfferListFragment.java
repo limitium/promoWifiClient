@@ -52,6 +52,9 @@ public class OfferListFragment extends Fragment {
     @Inject
     protected OfferPersistService offerPersistService;
 
+    @Inject
+    protected ImageLoaderService imageLoaderService;
+
 
     @Inject
     protected Bus eventBus;
@@ -99,7 +102,7 @@ public class OfferListFragment extends Fragment {
     }
 
     private void setUpListData() {
-        mAdapter = new OfferListAdapter(mDataSet);
+        mAdapter = new OfferListAdapter(mDataSet, imageLoaderService);
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);

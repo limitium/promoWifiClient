@@ -26,6 +26,7 @@ import java.util.List;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.util.Ln;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.ViewHolder> {
@@ -35,6 +36,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     private List<Offer> mDataSet;
     private DisplayMetrics metrics;
     private final DisplayImageOptions imageLoadingOptions;
+    private ImageLoaderService imageLoaderService;
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
@@ -44,6 +46,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         private static final long ANIM_DURATION = 300;
         private static final int AVATAR_HEIGHT = 60;
         private Context context;
+        private ImageLoaderService imageLoaderService;
         private ImageView mOfferItemImage;
         private View mOfferAvatar;
         private ImageView mOfferImageAvatar;
@@ -57,10 +60,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         private final DisplayImageOptions imageLoadingOptions;
         private boolean imageLoaded = false;
 
-        public ViewHolder(View v, DisplayMetrics metrics, DisplayImageOptions imageLoadingOptions) {
+        public ViewHolder(View v, DisplayMetrics metrics, DisplayImageOptions imageLoadingOptions, ImageLoaderService imageLoaderService) {
             super(v);
             this.metrics = metrics;
             this.imageLoadingOptions = imageLoadingOptions;
+            this.imageLoaderService = imageLoaderService;
             this.context = v.getContext();
             // Define click listener for the ViewHolder's View.
             mOfferItemImage = (ImageView) v.findViewById(R.id.offer_list_image);
@@ -74,54 +78,39 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         }
 
         public void loadData(final Offer offer) {
-            if (!imageLoaded) {
+//            if (!imageLoaded) {
                 mOfferAvatar.setY(mOfferItemImage.getHeight() - dpToPx(AVATAR_HEIGHT / 2));
-                mOfferDateCreated.setVisibility(View.INVISIBLE);
                 mSpinner.setVisibility(View.VISIBLE);
-                String url = buildUrl(offer.getImage());
-                ImageLoader.getInstance().displayImage(url, mOfferItemImage, imageLoadingOptions, new SimpleImageLoadingListener() {
+                imageLoaderService.loadImage(offer.getImage(), mOfferItemImage, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         Ln.i("On loading started");
                         mSpinner.setVisibility(View.VISIBLE);
                     }
+
                     @Override
                     public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                         Ln.i("On loading failed");
                         mSpinner.setVisibility(View.GONE);
                     }
+
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         Ln.i("On loading complete");
                         mSpinner.setVisibility(View.GONE);
-                        mOfferDateCreated.setVisibility(View.VISIBLE);
                         loadAvatar(offer);
                         imageLoaded = true;
                     }
                 });
-            }
+//            }
             mOfferDateCreated.setText(offer.getCreatedAsPrettyText());
-            Ln.i("Color code: " + offer.getDescriptionColor());
             mOfferPromoActionName.setText(offer.getName());
             mOfferCompanyName.setText(offer.getOrganization_name());
             mOfferDescription.setBackgroundColor(offer.getDescriptionColor());
         }
 
-        private int dpToPx(int dp) {
-            return Math.round((float) dp * metrics.density);
-        }
-
         private void loadAvatar(Offer offer) {
-            DisplayImageOptions imageLoadingOptions = new DisplayImageOptions.Builder()
-                    .cacheInMemory(true)
-                    .cacheOnDisk(true)
-                    .showImageForEmptyUri(R.drawable.rockstar)
-                    .imageScaleType(ImageScaleType.NONE_SAFE)
-                    .bitmapConfig(Bitmap.Config.RGB_565)
-                    .considerExifParams(true)
-                    .displayer(new CircleBitmapDisplayer())
-                    .build();
-            ImageLoader.getInstance().displayImage(buildUrl(offer.getAvatar()), mOfferImageAvatar, imageLoadingOptions);
+            imageLoaderService.loadAvatar(offer.getAvatar(), mOfferImageAvatar);
 
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.avatar_in_list_scale);
             animation.setDuration(ANIM_DURATION);
@@ -141,11 +130,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 }
             });
             mOfferAvatar.startAnimation(animation);
+
         }
 
-        private String buildUrl(String image) {
-//            return "http://lorempixel.com/1080/1920/animals/";
-            return Constants.Http.URL_BASE+image;
+        private int dpToPx(int dp) {
+            return Math.round((float) dp * metrics.density);
         }
     }
     // END_INCLUDE(recyclerViewSampleViewHolder)
@@ -155,8 +144,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
      *
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public OfferListAdapter(List<Offer> dataSet) {
+    public OfferListAdapter(List<Offer> dataSet, ImageLoaderService imageLoaderService) {
         mDataSet = dataSet;
+        this.imageLoaderService = imageLoaderService;
 //                .showImageForEmptyUri(R.drawable.ic_empty)
 //                .showImageOnFail(R.drawable.ic_error)
         imageLoadingOptions = new DisplayImageOptions.Builder()
@@ -176,7 +166,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 .inflate(R.layout.offer_list_item, viewGroup, false);
         final int viewGroupWidth = viewGroup.getWidth();
 
-        return new ViewHolder(v, getMetrics(), imageLoadingOptions);
+        return new ViewHolder(v, getMetrics(), imageLoadingOptions, imageLoaderService);
     }
 
     @Override
