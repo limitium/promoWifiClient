@@ -76,8 +76,18 @@ public class ImageLoaderService {
                     @Override
                     public Bitmap process(Bitmap bitmap) {
                         bitmap = squarizeAndResize(bitmap);
+                        bitmap = removeTransparency(bitmap);
                         bitmap = cropCircle(bitmap);
                         return bitmap;
+                    }
+
+                    private Bitmap removeTransparency(Bitmap bitmap) {
+                        Bitmap imageWithBG = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());  // Create another image the same size
+                        imageWithBG.eraseColor(Color.WHITE);  // set its background to white, or whatever color you want
+                        Canvas canvas = new Canvas(imageWithBG);  // create a canvas to draw on the new image
+                        canvas.drawBitmap(bitmap, 0f, 0f, null); // draw old image on the background
+                        bitmap.recycle();
+                        return imageWithBG;
                     }
 
                     private Bitmap cropCircle(Bitmap bitmap) {
