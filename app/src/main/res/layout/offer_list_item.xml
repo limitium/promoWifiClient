@@ -20,7 +20,10 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:elevation="100dp"
-    card_view:cardCornerRadius="2dp">
+    card_view:cardCornerRadius="0dp"
+    card_view:cardElevation="8dp"
+    android:layout_marginBottom="8dp"
+    >
 
     <RelativeLayout
         android:id="@+id/relaGrid"

@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar"
+            android:elevation="2dp"
             android:transitionName="@string/card_to_details">
 
             <me.loc2.loc2me.ui.md.SquareFrameLayout
@@ -26,6 +27,7 @@
 
                 <ImageView
                     android:id="@+id/offer_details_image"
+                    android:elevation="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/offer_action_buttons_layout"

@@ -30,4 +30,8 @@
     <dimen name="size_avatar">60dp</dimen>
     <dimen name="details_text_description_padding">16dp</dimen>
     <dimen name="loader_gif_height">100dp</dimen>
+    <dimen name="offer_description_company_margin">20dp</dimen>
+    <dimen name="offer_description_promo_margin">45dp</dimen>
+    <dimen name="offer_description_promo_text_size">40sp</dimen>
+    <dimen name="offer_description_time_margin">90dp</dimen>
 </resources>

@@ -1,5 +1,6 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:id="@+id/offer_description"
     android:padding="@dimen/actions_padding"
     android:paddingLeft="@dimen/actions_padding_left"
@@ -8,42 +9,39 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true">
+    android:layout_alignParentStart="true"
+    android:background="@color/blue">
 
-    <TextView
-        android:id="@+id/offer_promo_name"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        tools:text="Promo name"
-        android:textColor="@color/white"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_below="@+id/offer_promo_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1" >
 
         <TextView
             android:id="@+id/offer_company_name"
             tools:text="Little big company"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_weight="0.3"
             android:textColor="@color/white"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/offer_description_company_margin"/>
+
+        <TextView
+            android:id="@+id/offer_promo_name"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            tools:text="Promo name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/offer_description_promo_text_size"
+            android:textStyle="normal"
+            android:gravity="center"/>
+
         <TextView
             android:id="@+id/offer_date_created"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:paddingLeft="@dimen/padding_small"
             android:paddingRight="@dimen/padding_small"
-            android:layout_weight="0.7"
             android:textSize="12sp"
             android:textColor="@color/white"
-            android:textStyle="italic"/>
-    </LinearLayout>
-</RelativeLayout>
+            android:textStyle="normal"
+            android:gravity="center"
+            tools:text="4 day ago" />
+</LinearLayout>
