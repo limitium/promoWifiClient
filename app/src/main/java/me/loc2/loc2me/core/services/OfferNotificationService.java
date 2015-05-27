@@ -56,15 +56,16 @@ public class OfferNotificationService {
 //                );
 
 
+        int color = context.getResources().getColor(R.color.green);
         final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setContentTitle(offer.getName())
                 .setContentText(offer.getOrganization_name())
                 .setSmallIcon(R.mipmap.ic_launcher_notify)
                 .setContentIntent(resultPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setLights(Color.BLUE, 500, 500)
+                .setLights(color, 500, 500)
                 .setStyle(new NotificationCompat.InboxStyle())
-                .setColor(context.getResources().getColor(R.color.green))
+                .setColor(color)
                 .setAutoCancel(true)
                 .setWhen(System.currentTimeMillis());
 
@@ -89,11 +90,11 @@ public class OfferNotificationService {
     }
 
     private boolean withVibration() {
-        return true;
+        return false;
     }
 
     private boolean withSound() {
-        return true;
+        return false;
     }
 
     private boolean isNotifyDisabled() {

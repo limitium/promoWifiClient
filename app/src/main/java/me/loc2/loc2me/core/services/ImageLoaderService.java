@@ -2,7 +2,12 @@ package me.loc2.loc2me.core.services;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -10,6 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.nostra13.universalimageloader.core.process.BitmapProcessor;
 
 import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.ui.md.CircleBitmapDisplayer;
@@ -64,10 +70,41 @@ public class ImageLoaderService {
         return Constants.Http.URL_BASE + url;
     }
 
-    private DisplayImageOptions getAvatarOptions(boolean withBorder) {
-        CircleBitmapDisplayer circleBitmapDisplayer = withBorder ? new CircleBitmapDisplayer(Color.WHITE, 3) : new CircleBitmapDisplayer();
+    private DisplayImageOptions getAvatarOptions(final boolean withBorder) {
         return getCommonOptions()
-                .displayer(circleBitmapDisplayer)
+                .postProcessor(new BitmapProcessor() {
+                    @Override
+                    public Bitmap process(Bitmap bitmap) {
+                        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_4444);
+
+                        Canvas canvas = new Canvas(output);
+
+                        final int color = 0xff424242;
+                        final Paint paint = new Paint();
+                        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+                        paint.setAntiAlias(true);
+                        canvas.drawARGB(0, 0, 0, 0);
+                        paint.setColor(color);
+
+                        //--CROP THE IMAGE
+                        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, bitmap.getWidth() / 2 - 1, paint);
+                        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+                        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+                        //--ADD BORDER IF NEEDED
+                        if (withBorder) {
+                            int borderWidth = bitmap.getWidth() / 54;
+                            final Paint paint2 = new Paint();
+                            paint2.setAntiAlias(true);
+                            paint2.setColor(Color.WHITE);
+                            paint2.setStrokeWidth(borderWidth);
+                            paint2.setStyle(Paint.Style.STROKE);
+                            canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, (float) (bitmap.getWidth() / 2 - Math.ceil(borderWidth / 2)), paint2);
+                        }
+                        return output;
+                    }
+                })
                 .build();
     }
 
