@@ -47,7 +47,7 @@
                 layout="@layout/avatar"
                 android:layout_width="@dimen/size_avatar"
                 android:layout_height="@dimen/size_avatar"
-                android:visibility="visible"
+                android:visibility="invisible"
                 android:layout_above="@+id/offer_description_layout"
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.google.common.collect.FluentIterable;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -49,6 +50,10 @@ public class OfferListFragment extends Fragment {
     protected OfferEventService offerService;
 
     @Inject
+    protected OfferPersistService offerPersistService;
+
+
+    @Inject
     protected Bus eventBus;
 
 
@@ -56,8 +61,8 @@ public class OfferListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initDataSet();
         Injector.inject(this);
+        initDataSet();
         eventBus.register(this);
 
     }
@@ -171,7 +176,7 @@ public class OfferListFragment extends Fragment {
      * to abstract data initialization.
      */
     private void initDataSet() {
-        mDataSet = new ArrayList<>();
+        mDataSet = offerPersistService.findAllReceived();
     }
 
 }

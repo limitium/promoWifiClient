@@ -18,6 +18,7 @@ import me.loc2.loc2me.core.events.LoadedOfferEvent;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.events.NewWifiNetworkEvent;
 import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.ui.md.ColorGenerator;
 import me.loc2.loc2me.util.Ln;
 
 import static me.loc2.loc2me.core.Constants.Notification.SCAN_NOTIFICATION_ID;
@@ -85,6 +86,7 @@ public class OfferCheckBackgroundService extends Service {
                     offerPersistService.deleteReceived(offer.getId());
                 }
                 offer.setAdded_at(System.currentTimeMillis());
+                offer.setDescriptionColor(ColorGenerator.getNextCardColor());
                 offerPersistService.saveReceived(offer);
                 eventBus.post(new NewOfferEvent(offer));
             }
