@@ -1,5 +1,6 @@
 package me.loc2.loc2me.ui.md;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -33,10 +34,11 @@ import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.core.services.OfferEventService;
+import me.loc2.loc2me.ui.Loc2meFragmentActivity;
 import me.loc2.loc2me.ui.graphics.Animations;
 import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
 
-public class OfferListFragment extends Fragment {
+public class OfferListFragment extends Fragment implements BackPressListener {
 
     private static final String TAG = "RecyclerViewFragment";
     public static final int SPACE_BETWEEN_CARDS = 16;
@@ -65,7 +67,7 @@ public class OfferListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ((Loc2meFragmentActivity)getActivity()).setOnBackPressListener(this);
         Injector.inject(this);
         initDataSet();
         eventBus.register(this);
@@ -168,6 +170,7 @@ public class OfferListFragment extends Fragment {
                 pairs.get(0), pairs.get(1), pairs.get(2));
         Bundle bundle = transitionActivityOptions.toBundle();
         getActivity().startActivity(intent, bundle);
+        getActivity().finish();
     }
 
     private boolean noOffers() {
@@ -183,4 +186,8 @@ public class OfferListFragment extends Fragment {
         mDataSet = offerPersistService.findAllReceived();
     }
 
+    @Override
+    public void goBack(Activity activity) {
+        activity.finish();
+    }
 }

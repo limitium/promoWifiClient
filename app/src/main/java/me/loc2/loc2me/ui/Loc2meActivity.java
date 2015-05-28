@@ -42,6 +42,7 @@ public abstract class Loc2meActivity extends FragmentActivity {
                 final Intent homeIntent = new Intent(this, MainActivity.class);
                 homeIntent.addFlags(FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(homeIntent);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
