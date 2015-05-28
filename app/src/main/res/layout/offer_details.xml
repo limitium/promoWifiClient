@@ -7,10 +7,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!--<include-->
-            <!--android:id="@+id/toolbar"-->
-            <!--layout="@layout/toolbar"-->
-            <!--android:transitionName="@string/toolbar_transition"/>-->
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:transitionName="@string/toolbar_transition"/>
 
         <RelativeLayout
             android:id="@+id/relaGrid"
