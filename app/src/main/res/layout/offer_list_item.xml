@@ -52,14 +52,15 @@
 
         <include
             android:id="@+id/avatar"
-            layout="@layout/avatar"
-            android:layout_width="@dimen/size_avatar"
-            android:layout_height="@dimen/size_avatar"
+            layout="@layout/avatar_list"
+            android:layout_width="@dimen/size_avatar_list"
+            android:layout_height="@dimen/size_avatar_list"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/avatar_margin"
             android:visibility="invisible"
             android:layout_alignParentTop="false"
-            android:layout_alignTop="@+id/offer_description_layout" />
+            android:layout_alignTop="@+id/offer_description_layout"
+            android:layout_marginTop="-17.5dp"/>
     </RelativeLayout>
 
     <ProgressBar

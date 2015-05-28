@@ -78,7 +78,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
         public void loadData(final Offer offer) {
 //            if (!imageLoaded) {
-                mOfferAvatar.setY(mOfferItemImage.getHeight() - dpToPx(AVATAR_HEIGHT / 2));
             mSpinner.setVisibility(View.VISIBLE);
             imageLoaderService.loadImage(offer.getImage(), mOfferItemImage, new SimpleImageLoadingListener() {
                 @Override
