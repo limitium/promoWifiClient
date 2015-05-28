@@ -136,7 +136,6 @@ public class MainActivity extends Loc2meFragmentActivity {
                 startService(new Intent(this, OfferCheckBackgroundService.class));
             }
 
-            Ln.d("Foo");
             openFragment(getOfferListFragment(), LIST_FRAGMENT_TAG);
         }
 
@@ -245,8 +244,6 @@ public class MainActivity extends Loc2meFragmentActivity {
 
     @Subscribe
     public void onNavigationItemSelected(NavItemSelectedEvent event) {
-
-        Ln.d("Selected: %1$s", event.getItemPosition());
 
         switch (event.getItemPosition()) {
             case 0:

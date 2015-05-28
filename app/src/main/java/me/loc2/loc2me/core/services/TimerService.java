@@ -66,7 +66,6 @@ public class TimerService extends Service {
 
         notificationManager.cancel(TIMER_NOTIFICATION_ID);
 
-        Ln.d("Service has been destroyed");
 
         super.onDestroy();
     }
@@ -175,7 +174,6 @@ public class TimerService extends Service {
     private void dispatchTimerUpdate(long now) {
 
         currentRunningTimeInMillis = now - base;
-        Ln.d("Elapsed Seconds: " + currentRunningTimeInMillis / 1000);
 
         eventBus.post(produceTickEvent());
 
