@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -143,7 +144,7 @@ public class OfferListFragment extends Fragment {
 
     private void setUpListAppearance() {
         //TODO: Add tablet support with grid manager (2 columns)
-        mLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+        mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
