@@ -22,7 +22,6 @@ public class SettingsFragment extends PreferenceFragment implements BackPressLis
         VIBRO_KEY = getString(R.string.pref_notification_vibro);
         addPreferencesFromResource(R.xml.settings);
         Loc2meFragmentActivity activity = (Loc2meFragmentActivity) getActivity();
-        activity.setOnBackPressListener(this);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
