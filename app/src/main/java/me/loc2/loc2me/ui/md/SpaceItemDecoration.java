@@ -18,17 +18,18 @@ public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
                                RecyclerView parent, RecyclerView.State state) {
 
         int position = parent.getChildPosition(view);
-        Ln.i("Position: " + position);
+        Ln.d("Position: " + position);
         if (position % 2 == 1) {
             outRect.left = space;
+            outRect.right = space * 2;
         } else {
             outRect.right = space;
+            outRect.left = space * 2;
         }
-        if (position != 1 && position != 0) {
+        if (position == 1 || position == 0) {
             outRect.top = space;
-        }
-        if (position != parent.getChildCount() && position != (parent.getChildCount() - 1) ) {
-            outRect.bottom = space;
+        } else {
+            outRect.top = space * 2;
         }
     }
 }

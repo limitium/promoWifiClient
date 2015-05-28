@@ -20,8 +20,6 @@ import android.widget.TextView;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
-import com.yqritc.recyclerviewflexibledivider.VerticalDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,8 +144,9 @@ public class OfferListFragment extends Fragment implements BackPressListener {
     private void setUpListAppearance() {
         //TODO: Add tablet support with grid manager (2 columns)
         mLayoutManager = new GridLayoutManager(getActivity(), 2);
+        mRecyclerView.addItemDecoration(new SpaceItemDecoration(1));
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()), 2));
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()), 2));
         mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
     }
 

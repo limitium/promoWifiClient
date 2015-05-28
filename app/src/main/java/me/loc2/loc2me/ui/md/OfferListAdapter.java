@@ -172,7 +172,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        Ln.i("Position: " + position);
         viewHolder.loadData(mDataSet.get(position));
     }
 
