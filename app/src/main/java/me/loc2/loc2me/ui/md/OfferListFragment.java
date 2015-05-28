@@ -2,6 +2,7 @@ package me.loc2.loc2me.ui.md;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -10,6 +11,7 @@ import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import android.widget.TextView;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
+import com.yqritc.recyclerviewflexibledivider.VerticalDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,6 +147,7 @@ public class OfferListFragment extends Fragment implements BackPressListener {
         //TODO: Add tablet support with grid manager (2 columns)
         mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()), 2));
         mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
     }
 
