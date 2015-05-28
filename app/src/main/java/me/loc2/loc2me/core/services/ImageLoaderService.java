@@ -44,6 +44,12 @@ public class ImageLoaderService {
         loadIntoView(url, imageView, getImageOptions(), imageLoadingListener);
     }
 
+    public void loadImage(String url, ImageView mOfferItemImage,
+                          DisplayImageOptions imageLoadingOptions, SimpleImageLoadingListener simpleImageLoadingListener) {
+        loadIntoView(url, mOfferItemImage, imageLoadingOptions, simpleImageLoadingListener);
+    }
+
+
 
     public void loadImage(String url, ImageView imageView) {
         loadIntoView(url, imageView, getImageOptions());
