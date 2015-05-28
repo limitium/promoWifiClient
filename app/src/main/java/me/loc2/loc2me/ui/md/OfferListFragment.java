@@ -1,18 +1,25 @@
 package me.loc2.loc2me.ui.md;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,7 +34,7 @@ import me.loc2.loc2me.core.services.OfferEventService;
 import me.loc2.loc2me.ui.graphics.Animations;
 import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
 
-public class OfferListFragment extends Fragment {
+public class OfferListFragment extends Fragment implements BackPressListener {
 
     private static final String TAG = "RecyclerViewFragment";
     public static final int SPACE_BETWEEN_CARDS = 16;
@@ -56,7 +63,6 @@ public class OfferListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Injector.inject(this);
         initDataSet();
         eventBus.register(this);
@@ -127,7 +133,7 @@ public class OfferListFragment extends Fragment {
                 new RecyclerItemClickListener(mRootView.getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        OfferDetailsActivity.launchTransition(getActivity(), view, mDataSet.get(position));
+                        goToDetails(view, mDataSet.get(position));
                     }
                 })
         );
@@ -137,9 +143,26 @@ public class OfferListFragment extends Fragment {
         //TODO: Add tablet support with grid manager (2 columns)
         mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
+    }
+
+    private void goToDetails(View sharedView, Offer offer) {
+        Intent intent = new Intent(getActivity(), OfferDetailsActivity.class);
+        intent.putExtra(OfferDetailsActivity.OFFER, (Parcelable) offer);
+
+        View statusBar = getActivity().findViewById(android.R.id.statusBarBackground);
+        View sharedElement = sharedView.findViewById(R.id.relaGrid);
+        View toolbar = getActivity().findViewById(R.id.toolbar);
+
+        List<Pair<View, String>> pairs = new ArrayList<>();
+        pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
+        pairs.add(Pair.create(sharedElement, getString(R.string.card_to_details)));
+        pairs.add(Pair.create(toolbar, getString(R.string.toolbar_transition)));
+        ActivityOptionsCompat transitionActivityOptions;
+        transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                pairs.get(0), pairs.get(1), pairs.get(2));
+        Bundle bundle = transitionActivityOptions.toBundle();
+        getActivity().startActivity(intent, bundle);
     }
 
     private boolean noOffers() {
@@ -155,4 +178,8 @@ public class OfferListFragment extends Fragment {
         mDataSet = offerPersistService.findAllReceived();
     }
 
+    @Override
+    public void goBack(Activity activity) {
+        activity.finish();
+    }
 }

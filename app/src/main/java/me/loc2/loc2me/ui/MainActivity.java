@@ -29,6 +29,7 @@ import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.core.services.OfferCheckBackgroundService;
 import me.loc2.loc2me.events.NavItemSelectedEvent;
 import me.loc2.loc2me.settings.SettingsFragment;
+import me.loc2.loc2me.ui.md.BackPressListener;
 import me.loc2.loc2me.ui.md.OfferListFragment;
 import me.loc2.loc2me.util.Ln;
 import me.loc2.loc2me.util.SafeAsyncTask;
@@ -40,8 +41,8 @@ import me.loc2.loc2me.util.UIUtils;
  */
 public class MainActivity extends Loc2meFragmentActivity {
 
-    private static final String LIST_FRAGMENT_TAG = "ListFragmentTag";
-    private static final String SETTINGS_FRAGMENT_TAG = "SettingsFragmentTag";
+    public static final String LIST_FRAGMENT_TAG = "ListFragmentTag";
+    public static final String SETTINGS_FRAGMENT_TAG = "SettingsFragmentTag";
 
     @Inject
     protected Loc2meServiceProvider serviceProvider;
@@ -141,15 +142,16 @@ public class MainActivity extends Loc2meFragmentActivity {
 
     }
 
-    private void openFragment(Fragment fragment, String fragmentTag) {
+    public void openFragment(Fragment fragment, String fragmentTag) {
         final FragmentManager fragmentManager = getSupportFragmentManager();
+        this.setOnBackPressListener((BackPressListener)fragment);
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(fragmentTag)
                 .commit();
     }
 
-    private OfferListFragment getOfferListFragment() {
+    public OfferListFragment getOfferListFragment() {
         if (null == offerListFragment) {
             offerListFragment = new OfferListFragment();
         }
@@ -234,6 +236,7 @@ public class MainActivity extends Loc2meFragmentActivity {
 //                Ln.i("All: " + Arrays.toString(all.toArray()));
 //                return true;
             case R.id.menu_settings:
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 openFragment(getSettingsFragment(), SETTINGS_FRAGMENT_TAG);
             default:
                 return super.onOptionsItemSelected(item);

@@ -10,6 +10,7 @@ import com.google.common.base.Optional;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import me.loc2.loc2me.core.models.Offer;
@@ -99,7 +100,7 @@ public class OfferDAO extends SQLiteOpenHelper {
     }
 
     public List<Offer> findAllReceived() {
-        ArrayList<Offer> result = new ArrayList<>();
+        LinkedList<Offer> result = new LinkedList<>();
         //hp = new HashMap();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from " + OfferContract.ReceivedOffer.TABLE_NAME, null);

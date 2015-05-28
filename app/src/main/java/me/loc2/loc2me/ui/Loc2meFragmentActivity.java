@@ -13,6 +13,8 @@ import javax.inject.Inject;
 
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.settings.SettingsFragment;
+import me.loc2.loc2me.ui.md.BackPressListener;
 
 /**
  * Base class for all Bootstrap Activities that need fragments.
@@ -23,6 +25,7 @@ public abstract class Loc2meFragmentActivity extends AppCompatActivity {
     protected Bus eventBus;
 
     protected Toolbar toolbar;
+    private BackPressListener onBackPressListener;
 
     protected abstract int getLayoutResource();
 
@@ -34,15 +37,15 @@ public abstract class Loc2meFragmentActivity extends AppCompatActivity {
         setContentView(getLayoutResource());
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
+            toolbar.setBackgroundColor(getResources().getColor(R.color.teal));
             setSupportActionBar(toolbar);
+            getSupportFragmentManager().addOnBackStackChangedListener(
+                    new FragmentManager.OnBackStackChangedListener() {
+                        public void onBackStackChanged() {
+                            toolbar.setTitle(R.string.app_name);
+                        }
+                    });
         }
-
-        getSupportFragmentManager().addOnBackStackChangedListener(
-                new FragmentManager.OnBackStackChangedListener() {
-                    public void onBackStackChanged() {
-                        toolbar.setTitle(R.string.app_name);
-                    }
-                });
     }
 
     @Override
@@ -63,7 +66,24 @@ public abstract class Loc2meFragmentActivity extends AppCompatActivity {
         eventBus.unregister(this);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (null != getOnBackPressListener()) {
+            getOnBackPressListener().goBack(this);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     public Toolbar getToolbar() {
         return toolbar;
+    }
+
+    public void setOnBackPressListener(BackPressListener onBackPressListener) {
+        this.onBackPressListener = onBackPressListener;
+    }
+
+    public BackPressListener getOnBackPressListener() {
+        return onBackPressListener;
     }
 }

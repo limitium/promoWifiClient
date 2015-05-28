@@ -3,14 +3,11 @@ package me.loc2.loc2me.ui.md;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.NotificationManager;
-import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -29,9 +27,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -40,6 +36,7 @@ import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.ImageLoaderService;
+import me.loc2.loc2me.core.services.OfferNotificationService;
 import me.loc2.loc2me.util.Ln;
 
 public class OfferDetailsActivity extends AppCompatActivity {
@@ -90,7 +87,13 @@ public class OfferDetailsActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(offer.getName());
+            toolbar.setBackgroundColor(offer.getBackgroundColor());
+
             ViewCompat.setTransitionName(toolbar, getString(R.string.toolbar_transition));
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setActionBarColor();
         }
 
         // Postpone the transition until the window's decor view has
@@ -109,12 +112,33 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
         setUpLayout();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setupWindowAnimations();
+            boolean isFromNotification = getIntent().getBooleanExtra(OfferNotificationService.NOTIFICATION_INTENT, false);
+            if (isFromNotification) {
+                loadImage();
+            } else {
+                loadThumbnail();
+                setupWindowAnimations();
+            }
         } else {
             loadImage();
         }
+        loadTexts();
 
         closeNotificationIfExists();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setActionBarColor() {
+        float[] hsv = new float[3];
+        int color = offer.getBackgroundColor();
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.85f; // value component
+        color = Color.HSVToColor(hsv);
+
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(color);
     }
 
     private void closeNotificationIfExists() {
@@ -215,9 +239,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
         createShowAnimations();
         createBackAnimations();
-
-        loadThumbnail();
-        loadTexts();
     }
 
     private void loadTexts() {
@@ -226,6 +247,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mOfferPromoActionName.setText(offer.getName());
         mOfferCreated.setText(offer.getCreatedAsPrettyText());
         mOfferDescriptionLayout.setBackgroundColor(offer.getBackgroundColor());
+        imageFrame.setBackgroundColor(offer.getBackgroundColor());
     }
 
     private void loadThumbnail() {
@@ -254,7 +276,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
     }
 
     private void animateOpenDetails() {
-        mAvatar.setY(imageFrame.getHeight() - mAvatar.getHeight() / 2);
         for (Map.Entry<View, Animation> entry : showAnimations.entrySet()) {
             entry.getKey().startAnimation(entry.getValue());
         }
@@ -270,21 +291,21 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private void createShowAnimations() {
         if (null == showAnimations) {
             showAnimations = new HashMap<>();
-            showAnimations.put(mAvatar, createBackButtonShowAnimation());
+            showAnimations.put(mAvatar, createAvatarShowAnimation());
         }
     }
 
     private void createBackAnimations() {
         if (null == backAnimations) {
             backAnimations = new HashMap<>();
-            backAnimations.put(mAvatar, createBackButtonHideAnimation());
+            backAnimations.put(mAvatar, createAvatarHideAnimation());
         }
     }
 
-    private Animation createBackButtonShowAnimation() {
+    private Animation createAvatarShowAnimation() {
         imageLoaderService.loadAvatar(offer.getAvatar(), mAvatarImage);
 
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_button_scale);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.avatar_scale);
         animation.setDuration(ANIM_DURATION);
         animation.setInterpolator(new AccelerateInterpolator());
         animation.setAnimationListener(new Animation.AnimationListener() {
@@ -304,8 +325,8 @@ public class OfferDetailsActivity extends AppCompatActivity {
         return animation;
     }
 
-    private Animation createBackButtonHideAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_button_hide_scale);
+    private Animation createAvatarHideAnimation() {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.avatar_hide_scale);
         animation.setDuration(ANIM_DURATION);
         animation.setInterpolator(new AccelerateInterpolator());
         animation.setAnimationListener(new Animation.AnimationListener() {
@@ -325,25 +346,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
             }
         });
         return animation;
-    }
-
-    public static void launchTransition(Activity activity, View sharedView, Offer offer) {
-        Intent intent = new Intent(activity, OfferDetailsActivity.class);
-        intent.putExtra(OfferDetailsActivity.OFFER, (Parcelable) offer);
-
-        View statusBar = activity.findViewById(android.R.id.statusBarBackground);
-        View sharedElement = sharedView;
-        View toolbar = activity.findViewById(R.id.toolbar);
-
-        List<Pair<View, String>> pairs = new ArrayList<>();
-        pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
-        pairs.add(Pair.create(sharedElement, activity.getString(R.string.card_to_details)));
-        pairs.add(Pair.create(toolbar, activity.getString(R.string.toolbar_transition)));
-        ActivityOptionsCompat transitionActivityOptions;
-        transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
-                pairs.get(0), pairs.get(1), pairs.get(2));
-        Bundle bundle = transitionActivityOptions.toBundle();
-        activity.startActivity(intent, bundle);
     }
 
     private int dpToPx(int dp) {

@@ -51,7 +51,8 @@
                 android:layout_height="@dimen/size_avatar"
                 android:visibility="invisible"
                 android:layout_above="@+id/offer_description_layout"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="-32.5dp" />
         </RelativeLayout>
         <TextView
             android:id="@+id/offer_description"
