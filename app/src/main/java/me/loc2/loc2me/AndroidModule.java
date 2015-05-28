@@ -8,6 +8,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.view.inputmethod.InputMethodManager;
@@ -48,6 +49,10 @@ public class AndroidModule {
     @Provides
     TelephonyManager provideTelephonyManager(Context context) {
         return getSystemService(context, Context.TELEPHONY_SERVICE);
+    }
+    @Provides
+    Vibrator provideVibrator(Context context) {
+        return getSystemService(context, Context.VIBRATOR_SERVICE);
     }
 
     @SuppressWarnings("unchecked")

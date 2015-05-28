@@ -182,9 +182,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     }
 
     public int add(Offer item) {
-        mDataSet.add(item);
-        notifyItemInserted(mDataSet.size() - 1);
-        return mDataSet.size();
+        mDataSet.add(0, item);
+        notifyItemInserted(0);
+        return 1;
     }
 
     public Offer remove(Offer item) {

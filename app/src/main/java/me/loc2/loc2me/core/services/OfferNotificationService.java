@@ -7,9 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
 
@@ -32,12 +34,24 @@ public class OfferNotificationService {
     protected ImageLoaderService imageLoaderService;
     @Inject
     protected SharedPreferences sharedPreferences;
+    @Inject
+    protected Vibrator vibrator;
+    private long[] pattern = {0, 100, 1000, 300, 200, 100, 500, 200, 100};
 
     public void notify(final Offer offer) {
         if (isNotifyDisabled()) {
+            if (withSound()) {
+                playSound();
+            }
+            if (withVibration()) {
+                vibrate();
+            }
             return;
         }
+        sendNotification(offer);
+    }
 
+    private void sendNotification(final Offer offer) {
         Intent resultIntent = new Intent(context, OfferDetailsActivity.class);
         resultIntent.putExtra(OfferDetailsActivity.OFFER, (Parcelable) offer);
         resultIntent.putExtra(NOTIFICATION_INTENT, true);
@@ -78,7 +92,6 @@ public class OfferNotificationService {
         }
 
         if (withVibration()) {
-            long[] pattern = {100, 200, 300};
             notificationBuilder.setVibrate(pattern);
         }
 
@@ -89,6 +102,20 @@ public class OfferNotificationService {
                 notificationManager.notify(offer.getId(), notificationBuilder.build());
             }
         });
+    }
+
+    private void playSound() {
+        try {
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone r = RingtoneManager.getRingtone(context, notification);
+            r.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void vibrate() {
+        vibrator.vibrate(pattern, -1);
     }
 
     private boolean withVibration() {
