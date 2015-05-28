@@ -170,7 +170,6 @@ public class OfferListFragment extends Fragment implements BackPressListener {
                 pairs.get(0), pairs.get(1), pairs.get(2));
         Bundle bundle = transitionActivityOptions.toBundle();
         getActivity().startActivity(intent, bundle);
-        getActivity().finish();
     }
 
     private boolean noOffers() {
