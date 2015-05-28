@@ -16,9 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.List;
@@ -34,7 +32,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
     private List<Offer> mDataSet;
     private DisplayMetrics metrics;
-    private final DisplayImageOptions imageLoadingOptions;
     private ImageLoaderService imageLoaderService;
 
     /**
@@ -56,13 +53,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         private ProgressBar mSpinner;
 
         private final DisplayMetrics metrics;
-        private final DisplayImageOptions imageLoadingOptions;
         private boolean imageLoaded = false;
 
-        public ViewHolder(View v, DisplayMetrics metrics, DisplayImageOptions imageLoadingOptions, ImageLoaderService imageLoaderService) {
+        public ViewHolder(View v, DisplayMetrics metrics, ImageLoaderService imageLoaderService) {
             super(v);
             this.metrics = metrics;
-            this.imageLoadingOptions = imageLoadingOptions;
             this.imageLoaderService = imageLoaderService;
             this.context = v.getContext();
             // Define click listener for the ViewHolder's View.
@@ -84,8 +79,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                         // Remove after the first run so it doesn't fire forever
                         mOfferItemImage.getViewTreeObserver().removeOnPreDrawListener(this);
                         //ImageLoadingOptions are unique here - they scale the image.
-                        imageLoaderService.loadImage(offer.getImage(), mOfferItemImage, imageLoadingOptions,
-                                new SimpleImageLoadingListener() {
+                        imageLoaderService.loadImage(offer.getImage(), mOfferItemImage, new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingStarted(String imageUri, View view) {
                                 Ln.i("On loading started");
@@ -157,13 +151,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         this.imageLoaderService = imageLoaderService;
 //                .showImageForEmptyUri(R.drawable.ic_empty)
 //                .showImageOnFail(R.drawable.ic_error)
-        imageLoadingOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .considerExifParams(true)
-                .build();
     }
 
     @Override
@@ -173,7 +160,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
                 .inflate(R.layout.offer_list_item, viewGroup, false);
         final int viewGroupWidth = viewGroup.getWidth();
 
-        return new ViewHolder(v, getMetrics(), imageLoadingOptions, imageLoaderService);
+        return new ViewHolder(v, getMetrics(), imageLoaderService);
     }
 
     @Override

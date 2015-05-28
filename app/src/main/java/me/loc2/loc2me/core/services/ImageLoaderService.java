@@ -44,13 +44,6 @@ public class ImageLoaderService {
         loadIntoView(url, imageView, getImageOptions(), imageLoadingListener);
     }
 
-    public void loadImage(String url, ImageView mOfferItemImage,
-                          DisplayImageOptions imageLoadingOptions, SimpleImageLoadingListener simpleImageLoadingListener) {
-        loadIntoView(url, mOfferItemImage, imageLoadingOptions, simpleImageLoadingListener);
-    }
-
-
-
     public void loadImage(String url, ImageView imageView) {
         loadIntoView(url, imageView, getImageOptions());
     }
@@ -145,7 +138,7 @@ public class ImageLoaderService {
         return new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.NONE_SAFE)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .considerExifParams(true);
     }

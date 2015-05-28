@@ -145,7 +145,8 @@ public class OfferListFragment extends Fragment implements BackPressListener {
         //TODO: Add tablet support with grid manager (2 columns)
         mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()), 2));
+        final RecyclerView.ItemDecoration decoration = new DividerItemDecoration((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()), 2);
+        mRecyclerView.addItemDecoration(decoration);
         mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView) {
             @Override
             public void onAddFinished(RecyclerView.ViewHolder item) {
@@ -153,6 +154,7 @@ public class OfferListFragment extends Fragment implements BackPressListener {
                 mAdapter.notifyDataSetChanged();
             }
         });
+
     }
 
     private void goToDetails(View sharedView, Offer offer) {
