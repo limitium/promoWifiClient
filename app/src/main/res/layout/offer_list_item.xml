@@ -20,8 +20,6 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="0dp"
-    android:layout_marginBottom="@dimen/divider"
-    android:layout_marginRight="@dimen/divider"
     >
 
     <RelativeLayout

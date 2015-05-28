@@ -42,5 +42,5 @@
     <dimen name="offer_description_time_margin">22dp</dimen>
     <dimen name="offer_description_time_bottom_margin">6dp</dimen>
 
-    <dimen name="divider">1dp</dimen>
+    <dimen name="divider">10dp</dimen>
 </resources>
