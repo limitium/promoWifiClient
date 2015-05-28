@@ -22,6 +22,8 @@ import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.ui.md.OfferDetailsActivity;
 
 public class OfferNotificationService {
+
+    public static final String NOTIFICATION_INTENT = "FromNotification";
     @Inject
     protected Context context;
     @Inject
@@ -38,6 +40,7 @@ public class OfferNotificationService {
 
         Intent resultIntent = new Intent(context, OfferDetailsActivity.class);
         resultIntent.putExtra(OfferDetailsActivity.OFFER, (Parcelable) offer);
+        resultIntent.putExtra(NOTIFICATION_INTENT, true);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
 // Adds the back stack
         stackBuilder.addParentStack(OfferDetailsActivity.class);

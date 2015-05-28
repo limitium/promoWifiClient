@@ -33,6 +33,7 @@ import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.ImageLoaderService;
+import me.loc2.loc2me.core.services.OfferNotificationService;
 import me.loc2.loc2me.util.Ln;
 
 public class OfferDetailsActivity extends AppCompatActivity {
@@ -102,10 +103,17 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
         setUpLayout();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setupWindowAnimations();
+            boolean isFromNotification = getIntent().getBooleanExtra(OfferNotificationService.NOTIFICATION_INTENT, false);
+            if (isFromNotification) {
+                loadImage();
+            } else {
+                loadThumbnail();
+                setupWindowAnimations();
+            }
         } else {
             loadImage();
         }
+        loadTexts();
 
         closeNotificationIfExists();
     }
@@ -208,9 +216,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
         createShowAnimations();
         createBackAnimations();
-
-//        loadThumbnail();
-        loadTexts();
     }
 
     private void loadTexts() {
@@ -221,9 +226,9 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mOfferDescriptionLayout.setBackgroundColor(offer.getBackgroundColor());
     }
 
-//    private void loadThumbnail() {
-//        imageLoaderService.loadImage(offer.getImage(), mOfferDetailsImage);
-//    }
+    private void loadThumbnail() {
+        imageLoaderService.loadImage(offer.getImage(), mOfferDetailsImage);
+    }
 
     private void loadImage() {
         imageLoaderService.loadImage(offer.getImage(), mOfferDetailsImage, new SimpleImageLoadingListener() {
@@ -247,7 +252,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
     }
 
     private void animateOpenDetails() {
-        mAvatar.setY(imageFrame.getHeight() - mAvatar.getHeight() / 2);
         for (Map.Entry<View, Animation> entry : showAnimations.entrySet()) {
             entry.getKey().startAnimation(entry.getValue());
         }
@@ -263,21 +267,21 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private void createShowAnimations() {
         if (null == showAnimations) {
             showAnimations = new HashMap<>();
-            showAnimations.put(mAvatar, createBackButtonShowAnimation());
+            showAnimations.put(mAvatar, createAvatarShowAnimation());
         }
     }
 
     private void createBackAnimations() {
         if (null == backAnimations) {
             backAnimations = new HashMap<>();
-            backAnimations.put(mAvatar, createBackButtonHideAnimation());
+            backAnimations.put(mAvatar, createAvatarHideAnimation());
         }
     }
 
-    private Animation createBackButtonShowAnimation() {
+    private Animation createAvatarShowAnimation() {
         imageLoaderService.loadAvatar(offer.getAvatar(), mAvatarImage);
 
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_button_scale);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.avatar_scale);
         animation.setDuration(ANIM_DURATION);
         animation.setInterpolator(new AccelerateInterpolator());
         animation.setAnimationListener(new Animation.AnimationListener() {
@@ -297,8 +301,8 @@ public class OfferDetailsActivity extends AppCompatActivity {
         return animation;
     }
 
-    private Animation createBackButtonHideAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.back_button_hide_scale);
+    private Animation createAvatarHideAnimation() {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.avatar_hide_scale);
         animation.setDuration(ANIM_DURATION);
         animation.setInterpolator(new AccelerateInterpolator());
         animation.setAnimationListener(new Animation.AnimationListener() {
