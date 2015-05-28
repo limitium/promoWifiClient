@@ -67,7 +67,6 @@ public class OfferListFragment extends Fragment implements BackPressListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((Loc2meFragmentActivity)getActivity()).setOnBackPressListener(this);
         Injector.inject(this);
         initDataSet();
         eventBus.register(this);

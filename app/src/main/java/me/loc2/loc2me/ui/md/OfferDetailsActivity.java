@@ -91,7 +91,10 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
             ViewCompat.setTransitionName(toolbar, getString(R.string.toolbar_transition));
         }
-        setActionBarColor();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setActionBarColor();
+        }
 
         // Postpone the transition until the window's decor view has
         // finished its layout.

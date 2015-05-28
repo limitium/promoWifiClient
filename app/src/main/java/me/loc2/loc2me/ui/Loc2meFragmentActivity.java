@@ -37,6 +37,7 @@ public abstract class Loc2meFragmentActivity extends AppCompatActivity {
         setContentView(getLayoutResource());
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
+            toolbar.setBackgroundColor(getResources().getColor(R.color.teal));
             setSupportActionBar(toolbar);
             getSupportFragmentManager().addOnBackStackChangedListener(
                     new FragmentManager.OnBackStackChangedListener() {
