@@ -144,9 +144,9 @@ public class OfferListFragment extends Fragment implements BackPressListener {
     private void setUpListAppearance() {
         //TODO: Add tablet support with grid manager (2 columns)
         mLayoutManager = new GridLayoutManager(getActivity(), 2);
-        mRecyclerView.addItemDecoration(new SpaceItemDecoration((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics())));
+//        mRecyclerView.addItemDecoration(new SpaceItemDecoration((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics())));
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        mRecyclerView.addItemDecoration(new DividerItemDecoration((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()), 2));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics()), 2));
         mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
     }
 

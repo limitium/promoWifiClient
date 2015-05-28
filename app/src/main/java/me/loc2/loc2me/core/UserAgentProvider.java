@@ -74,7 +74,7 @@ public class UserAgentProvider implements Provider<String> {
                         final Method get = SystemProperties.getMethod("get", String.class);
                         params.add("clientidbase=" + get.invoke(SystemProperties, "ro.com.google.clientidbase"));
                     } catch (Exception ignored) {
-                        Ln.d(ignored);
+                        Ln.w(ignored);
                     }
 
 

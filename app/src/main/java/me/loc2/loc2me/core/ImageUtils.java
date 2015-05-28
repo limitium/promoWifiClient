@@ -60,14 +60,14 @@ public final class ImageUtils {
             return BitmapFactory.decodeFileDescriptor(file.getFD(), null,
                     options);
         } catch (IOException e) {
-            Ln.d(e, "Could not get cached bitmap.");
+            Ln.w(e, "Could not get cached bitmap.");
             return null;
         } finally {
             if (file != null)
                 try {
                     file.close();
                 } catch (IOException e) {
-                    Ln.d(e, "Could not get cached bitmap.");
+                    Ln.w(e, "Could not get cached bitmap.");
                 }
         }
     }
@@ -88,14 +88,14 @@ public final class ImageUtils {
             BitmapFactory.decodeFileDescriptor(file.getFD(), null, options);
             return new Point(options.outWidth, options.outHeight);
         } catch (final IOException e) {
-            Ln.d(e, "Could not get size.");
+            Ln.w(e, "Could not get size.");
             return null;
         } finally {
             if (file != null) {
                 try {
                     file.close();
                 } catch (final IOException e) {
-                    Ln.d(e, "Could not get size.");
+                    Ln.w(e, "Could not get size.");
                 }
             }
         }

@@ -232,8 +232,8 @@ public class Ln {
                         ? Log.VERBOSE : Log.INFO;
                 scope = packageName.toUpperCase();
 
-                Ln.d("Configuring Logging, minimum log level is %s",
-                        logLevelToString(minimumLogLevel));
+//                Ln.d("Configuring Logging, minimum log level is %s",
+//                        logLevelToString(minimumLogLevel));
 
             } catch (Exception e) {
                 try {
