@@ -35,14 +35,13 @@ public abstract class Loc2meFragmentActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
+            getSupportFragmentManager().addOnBackStackChangedListener(
+                    new FragmentManager.OnBackStackChangedListener() {
+                        public void onBackStackChanged() {
+                            toolbar.setTitle(R.string.app_name);
+                        }
+                    });
         }
-
-        getSupportFragmentManager().addOnBackStackChangedListener(
-                new FragmentManager.OnBackStackChangedListener() {
-                    public void onBackStackChanged() {
-                        toolbar.setTitle(R.string.app_name);
-                    }
-                });
     }
 
     @Override
