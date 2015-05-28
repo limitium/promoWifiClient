@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -15,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -84,8 +87,11 @@ public class OfferDetailsActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(offer.getName());
+            toolbar.setBackgroundColor(offer.getBackgroundColor());
+
             ViewCompat.setTransitionName(toolbar, getString(R.string.toolbar_transition));
         }
+        setActionBarColor();
 
         // Postpone the transition until the window's decor view has
         // finished its layout.
@@ -116,6 +122,20 @@ public class OfferDetailsActivity extends AppCompatActivity {
         loadTexts();
 
         closeNotificationIfExists();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setActionBarColor() {
+        float[] hsv = new float[3];
+        int color = offer.getBackgroundColor();
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.85f; // value component
+        color = Color.HSVToColor(hsv);
+
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(color);
     }
 
     private void closeNotificationIfExists() {
@@ -224,6 +244,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mOfferPromoActionName.setText(offer.getName());
         mOfferCreated.setText(offer.getCreatedAsPrettyText());
         mOfferDescriptionLayout.setBackgroundColor(offer.getBackgroundColor());
+        imageFrame.setBackgroundColor(offer.getBackgroundColor());
     }
 
     private void loadThumbnail() {

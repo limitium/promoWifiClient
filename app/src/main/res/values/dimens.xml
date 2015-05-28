@@ -28,16 +28,17 @@
     <dimen name="floating_title_top_padding">100dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
     <dimen name="size_avatar">65dp</dimen>
+    <dimen name="size_avatar_list">35dp</dimen>
     <dimen name="details_text_description_padding">16dp</dimen>
     <dimen name="loader_gif_height">100dp</dimen>
     <dimen name="offer_description_company_margin">22dp</dimen>
     <dimen name="offer_description_company_margin_list">7dp</dimen>
-    <dimen name="offer_description_company_margin_bottom_list">12dp</dimen>
-    <dimen name="offer_description_company_text_size_list">16sp</dimen>
+    <dimen name="offer_description_company_margin_bottom_list">5dp</dimen>
+    <dimen name="offer_description_company_text_size_list">14sp</dimen>
     <dimen name="offer_description_promo_margin">24dp</dimen>
-    <dimen name="offer_description_promo_margin_list">25dp</dimen>
+    <dimen name="offer_description_promo_margin_list">12dp</dimen>
     <dimen name="offer_description_promo_text_size">40sp</dimen>
-    <dimen name="offer_description_promo_text_size_list">36sp</dimen>
+    <dimen name="offer_description_promo_text_size_list">18sp</dimen>
     <dimen name="offer_description_time_margin">22dp</dimen>
     <dimen name="offer_description_time_bottom_margin">6dp</dimen>
 </resources>
