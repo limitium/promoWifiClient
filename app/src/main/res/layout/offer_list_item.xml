@@ -19,9 +19,9 @@
     android:id="@+id/cardview"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:elevation="100dp"
     card_view:cardCornerRadius="0dp"
-    card_view:cardElevation="2dp"
+    android:layout_marginBottom="@dimen/divider"
+    android:layout_marginRight="@dimen/divider"
     >
 
     <RelativeLayout
@@ -30,7 +30,8 @@
         android:minHeight="@dimen/loader_gif_height"
         android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <me.loc2.loc2me.ui.md.SquareFrameLayout
             android:id="@+id/squared_image"

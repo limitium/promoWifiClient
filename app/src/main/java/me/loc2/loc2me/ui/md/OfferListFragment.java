@@ -8,9 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.google.common.collect.FluentIterable;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -34,7 +31,6 @@ import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.core.services.OfferEventService;
-import me.loc2.loc2me.ui.Loc2meFragmentActivity;
 import me.loc2.loc2me.ui.graphics.Animations;
 import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
 
@@ -147,8 +143,6 @@ public class OfferListFragment extends Fragment implements BackPressListener {
         //TODO: Add tablet support with grid manager (2 columns)
         mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
         mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
     }
 
