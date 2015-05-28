@@ -3,10 +3,14 @@ package me.loc2.loc2me.ui.md;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -24,7 +29,9 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -209,7 +216,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
         createShowAnimations();
         createBackAnimations();
 
-//        loadThumbnail();
+        loadThumbnail();
         loadTexts();
     }
 
@@ -221,9 +228,9 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mOfferDescriptionLayout.setBackgroundColor(offer.getBackgroundColor());
     }
 
-//    private void loadThumbnail() {
-//        imageLoaderService.loadImage(offer.getImage(), mOfferDetailsImage);
-//    }
+    private void loadThumbnail() {
+        imageLoaderService.loadImage(offer.getImage(), mOfferDetailsImage);
+    }
 
     private void loadImage() {
         imageLoaderService.loadImage(offer.getImage(), mOfferDetailsImage, new SimpleImageLoadingListener() {
@@ -318,6 +325,25 @@ public class OfferDetailsActivity extends AppCompatActivity {
             }
         });
         return animation;
+    }
+
+    public static void launchTransition(Activity activity, View sharedView, Offer offer) {
+        Intent intent = new Intent(activity, OfferDetailsActivity.class);
+        intent.putExtra(OfferDetailsActivity.OFFER, (Parcelable) offer);
+
+        View statusBar = activity.findViewById(android.R.id.statusBarBackground);
+        View sharedElement = sharedView;
+        View toolbar = activity.findViewById(R.id.toolbar);
+
+        List<Pair<View, String>> pairs = new ArrayList<>();
+        pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
+        pairs.add(Pair.create(sharedElement, activity.getString(R.string.card_to_details)));
+        pairs.add(Pair.create(toolbar, activity.getString(R.string.toolbar_transition)));
+        ActivityOptionsCompat transitionActivityOptions;
+        transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
+                pairs.get(0), pairs.get(1), pairs.get(2));
+        Bundle bundle = transitionActivityOptions.toBundle();
+        activity.startActivity(intent, bundle);
     }
 
     private int dpToPx(int dp) {

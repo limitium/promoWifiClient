@@ -1,27 +1,18 @@
 package me.loc2.loc2me.ui.md;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
 
-import com.google.common.collect.FluentIterable;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -136,7 +127,7 @@ public class OfferListFragment extends Fragment {
                 new RecyclerItemClickListener(mRootView.getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        goToDetails(view, mDataSet.get(position));
+                        OfferDetailsActivity.launchTransition(getActivity(), view, mDataSet.get(position));
                     }
                 })
         );
@@ -149,25 +140,6 @@ public class OfferListFragment extends Fragment {
 
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
-    }
-
-    private void goToDetails(View sharedView, Offer offer) {
-        Intent intent = new Intent(getActivity(), OfferDetailsActivity.class);
-        intent.putExtra(OfferDetailsActivity.OFFER, (Parcelable) offer);
-
-        View statusBar = getActivity().findViewById(android.R.id.statusBarBackground);
-        View sharedElement = sharedView.findViewById(R.id.relaGrid);
-        View toolbar = getActivity().findViewById(R.id.toolbar);
-
-        List<Pair<View, String>> pairs = new ArrayList<>();
-        pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
-        pairs.add(Pair.create(sharedElement, getString(R.string.card_to_details)));
-        pairs.add(Pair.create(toolbar, getString(R.string.toolbar_transition)));
-        ActivityOptionsCompat transitionActivityOptions;
-        transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                pairs.get(0), pairs.get(1), pairs.get(2));
-        Bundle bundle = transitionActivityOptions.toBundle();
-        getActivity().startActivity(intent, bundle);
     }
 
     private boolean noOffers() {

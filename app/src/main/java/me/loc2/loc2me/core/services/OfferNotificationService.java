@@ -39,11 +39,11 @@ public class OfferNotificationService {
         Intent resultIntent = new Intent(context, OfferDetailsActivity.class);
         resultIntent.putExtra(OfferDetailsActivity.OFFER, (Parcelable) offer);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-// Adds the back stack
+        // Adds the back stack
         stackBuilder.addParentStack(OfferDetailsActivity.class);
-// Adds the Intent to the top of the stack
+        // Adds the Intent to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
-// Gets a PendingIntent containing the entire back stack
+        // Gets a PendingIntent containing the entire back stack
         PendingIntent resultPendingIntent =
                 stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 //        PendingIntent resultPendingIntent =
