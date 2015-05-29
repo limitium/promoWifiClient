@@ -81,7 +81,7 @@ public class TimerService extends Service {
 
             // Run as foreground service: http://stackoverflow.com/a/3856940/5210
             // Another example: https://github.com/commonsguy/cw-android/blob/master/Notifications/FakePlayer/src/com/commonsware/android/fakeplayerfg/PlayerService.java
-            startForeground(TIMER_NOTIFICATION_ID, getNotification(getString(R.string.timer_running)));
+            startForeground(TIMER_NOTIFICATION_ID, getNotification("run"));
             notificationManager.cancel(TIMER_NOTIFICATION_ID);
         }
 
@@ -115,7 +115,7 @@ public class TimerService extends Service {
      */
     private void pauseTimer() {
 
-        updateNotification(getString(R.string.timer_is_paused));
+//        updateNotification(getString(R.string.timer_is_paused));
 
         timerHandler.removeMessages(TICK_WHAT);
         pausedBaseTime = SystemClock.elapsedRealtime() - base;
@@ -181,7 +181,7 @@ public class TimerService extends Service {
 
 
     private void notifyTimerRunning() {
-        updateNotification(getString(R.string.timer_running));
+        updateNotification("run");
         produceTimerIsPausedEvent();
     }
 

@@ -55,14 +55,6 @@ public class Loc2mePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(final int position) {
-        switch (position) {
-            case 0:
-                return resources.getString(R.string.page_wises);
-            case 1:
-                return resources.getString(R.string.page_filters);
-
-            default:
                 return null;
-        }
     }
 }

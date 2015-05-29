@@ -74,8 +74,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 102
-        versionName '1.0'
+        versionCode 1
+        versionName '0.5.0'
     }
 
     packagingOptions {
@@ -109,9 +109,9 @@ android {
             // zipAlign false // this is default for debug
         }
         release {
-            // runProguard true
-            // proguardFile '..\proguard.cfg'
-            // signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //signingConfig signingConfigs.release
             // zipAlign true // this is default for release
             // testPackageName 'me.loc2.loc2me.tests'
             // testInstrumentationRunner 'android.test.InstrumentationTestRunner' // this is the default

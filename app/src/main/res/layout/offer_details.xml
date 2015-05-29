@@ -60,7 +60,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/relaGrid"
             android:padding="@dimen/details_text_description_padding"
-            android:text="@string/bacon_ipsum"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
     </RelativeLayout>
 </ScrollView>
