@@ -90,8 +90,9 @@ public class OfferCheckBackgroundService extends Service {
             if (true || !saved.isPresent() || !saved.get().getUpdated_at().equals(offer.getUpdated_at())) {
                 if (saved.isPresent()) {
                     offerPersistService.deleteReceived(offer.getId());
+                }else{
+                    offer.setAdded_at(System.currentTimeMillis());
                 }
-                offer.setAdded_at(System.currentTimeMillis());
                 setOfferColors(offer);
             }
         }
