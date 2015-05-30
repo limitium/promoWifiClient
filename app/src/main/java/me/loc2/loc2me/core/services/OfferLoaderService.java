@@ -7,7 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import me.loc2.loc2me.core.ApiService;
-import me.loc2.loc2me.core.events.LoadedOfferEvent;
+import me.loc2.loc2me.core.events.LoadedOffersEvent;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.WifiInfo;
 import me.loc2.loc2me.util.SafeAsyncTask;
@@ -43,9 +43,7 @@ public class OfferLoaderService {
 
             @Override
             public void onSuccess(final List<Offer> offers) {
-                for (Offer offer : offers) {
-                    onWifiInfo(offer);
-                }
+                    onWifiInfo(wifi,offers);
             }
 
             @Override
@@ -55,8 +53,8 @@ public class OfferLoaderService {
         }.execute();
     }
 
-    private void onWifiInfo(Offer offer) {
-        eventBus.post(new LoadedOfferEvent(offer));
+    private void onWifiInfo(WifiInfo wifi, List<Offer> offers) {
+        eventBus.post(new LoadedOffersEvent(wifi,offers));
     }
 
     public void register() {

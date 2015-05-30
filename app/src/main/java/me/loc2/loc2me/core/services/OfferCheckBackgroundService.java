@@ -15,11 +15,13 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.core.dao.OfferPersistService;
-import me.loc2.loc2me.core.events.LoadedOfferEvent;
+import me.loc2.loc2me.core.events.LoadedOffersEvent;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.events.NewWifiNetworkEvent;
 import me.loc2.loc2me.core.models.Offer;
@@ -79,21 +81,23 @@ public class OfferCheckBackgroundService extends Service {
     }
 
     @Subscribe
-    public void onLoadedOfferEvent(LoadedOfferEvent loadedOfferEvent) {
-        Offer offer = loadedOfferEvent.getOffer();
-        Ln.i("New offer: " + offer);
-
-        if (!offerPersistService.isDeleted(offer.getId())) {
-            Ln.i("Offer wasn't deleted");
-            Optional<Offer> saved = offerPersistService.findOneReceived(offer.getId());
-            Ln.i("Offer was saved before: " + String.valueOf(saved.isPresent()));
-            if (!saved.isPresent() || !saved.get().getUpdated_at().equals(offer.getUpdated_at())) {
-                if (saved.isPresent()) {
-                    offerPersistService.deleteReceived(offer.getId());
-                }else{
-                    offer.setAdded_at(System.currentTimeMillis());
+    public void onLoadedOffersEvent(LoadedOffersEvent loadedOffersEvent) {
+        List<Offer> offers = loadedOffersEvent.getOffers();
+//TODO: remove or mark deleted offers
+        for (Offer offer : offers) {
+            Ln.i("New offer: " + offer);
+            if (!offerPersistService.isDeleted(offer.getId())) {
+                Ln.i("Offer wasn't deleted");
+                Optional<Offer> saved = offerPersistService.findOneReceived(offer.getId());
+                Ln.i("Offer was saved before: " + String.valueOf(saved.isPresent()));
+                if (!saved.isPresent() || !saved.get().getUpdated_at().equals(offer.getUpdated_at())) {
+                    if (saved.isPresent()) {
+                        offerPersistService.deleteReceived(offer.getId());
+                    } else {
+                        offer.setAdded_at(System.currentTimeMillis());
+                    }
+                    setOfferColors(offer);
                 }
-                setOfferColors(offer);
             }
         }
     }
