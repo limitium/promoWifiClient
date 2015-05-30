@@ -87,7 +87,7 @@ public class OfferCheckBackgroundService extends Service {
             Ln.i("Offer wasn't deleted");
             Optional<Offer> saved = offerPersistService.findOneReceived(offer.getId());
             Ln.i("Offer was saved before: " + String.valueOf(saved.isPresent()));
-            if (true || !saved.isPresent() || !saved.get().getUpdated_at().equals(offer.getUpdated_at())) {
+            if (!saved.isPresent() || !saved.get().getUpdated_at().equals(offer.getUpdated_at())) {
                 if (saved.isPresent()) {
                     offerPersistService.deleteReceived(offer.getId());
                 }else{

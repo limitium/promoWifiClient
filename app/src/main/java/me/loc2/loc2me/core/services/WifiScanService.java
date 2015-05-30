@@ -44,8 +44,7 @@ public class WifiScanService extends BroadcastReceiver {
         long currentTimeMillis = System.currentTimeMillis();
         cleanCache(currentTimeMillis);
         for (ScanResult scanResult : wifiManager.getScanResults()) {
-            //TODO: change check key
-            if (!checked.containsKey(scanResult.SSID)) {
+            if (!checked.containsKey(scanResult.SSID + scanResult.BSSID)) {
                 checked.put(scanResult.SSID + scanResult.BSSID, currentTimeMillis);
                 eventBus.post(new NewWifiNetworkEvent(new WifiInfo(scanResult)));
             }
