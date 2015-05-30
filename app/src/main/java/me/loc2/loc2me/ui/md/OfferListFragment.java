@@ -1,6 +1,7 @@
 package me.loc2.loc2me.ui.md;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -32,7 +33,6 @@ import me.loc2.loc2me.core.dao.OfferPersistService;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.ImageLoaderService;
-import me.loc2.loc2me.core.services.OfferEventService;
 import me.loc2.loc2me.ui.graphics.Animations;
 import me.loc2.loc2me.ui.md.animation.SlideInOutLeftItemAnimator;
 
@@ -49,14 +49,13 @@ public class OfferListFragment extends Fragment implements BackPressListener {
     protected TextView mNoDataTextView;
 
     @Inject
-    protected OfferEventService offerService;
-
-    @Inject
     protected OfferPersistService offerPersistService;
 
     @Inject
     protected ImageLoaderService imageLoaderService;
 
+    @Inject
+    protected NotificationManager notificationManager;
 
     @Inject
     protected Bus eventBus;
@@ -125,7 +124,9 @@ public class OfferListFragment extends Fragment implements BackPressListener {
                         if (mAdapter.hasNoOffers()) {
                             Animations.crossFade(mNoDataTextView, mRecyclerView);
                         }
-                        offerService.remove(offer);
+                        notificationManager.cancel(offer.getId());
+                        offerPersistService.saveDeleted(offer.getId());
+                        offerPersistService.deleteReceived(offer.getId());
                     }
                 })
                 .setIsVertical(false)

@@ -11,7 +11,6 @@ import dagger.Provides;
 import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.core.Constants;
 import me.loc2.loc2me.core.services.OfferCheckBackgroundService;
-import me.loc2.loc2me.core.services.OfferEventService;
 import me.loc2.loc2me.core.services.OfferLoaderService;
 import me.loc2.loc2me.core.PostFromAnyThreadBus;
 import me.loc2.loc2me.core.RestAdapterRequestInterceptor;
@@ -41,7 +40,6 @@ import retrofit.converter.GsonConverter;
                 WifiScanService.class,
                 OfferLoaderService.class,
                 OfferCheckBackgroundService.class,
-                OfferEventService.class
         }
 )
 public class Loc2meModule {
