@@ -12,19 +12,23 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.SeekBar;
 
 import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
+import butterknife.InjectView;
 import butterknife.Views;
 import me.loc2.loc2me.Loc2meServiceProvider;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.core.dao.OfferPersistService;
+import me.loc2.loc2me.core.events.ForceReloadEvent;
 import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.core.services.OfferCheckBackgroundService;
 import me.loc2.loc2me.events.NavItemSelectedEvent;
@@ -58,7 +62,7 @@ public class MainActivity extends Loc2meFragmentActivity {
 
     @Override
     protected int getLayoutResource() {
-        if(isTablet()) {
+        if (isTablet()) {
             return R.layout.main_activity_tablet;
         } else {
             return R.layout.main_activity;
@@ -70,7 +74,7 @@ public class MainActivity extends Loc2meFragmentActivity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         super.onCreate(savedInstanceState);
-        
+
         // View injection with Butterknife
         Views.inject(this);
 
@@ -101,7 +105,19 @@ public class MainActivity extends Loc2meFragmentActivity {
             drawerLayout.setDrawerListener(drawerToggle);
         }
         checkAuth();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        menu.findItem(R.id.menu_force).getActionView().setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                eventBus.post(new ForceReloadEvent());
+                return false;
+            }
+        });
+        return true;
     }
 
     private boolean isTablet() {
@@ -143,7 +159,7 @@ public class MainActivity extends Loc2meFragmentActivity {
 
     public void openFragment(Fragment fragment, String fragmentTag) {
         final FragmentManager fragmentManager = getSupportFragmentManager();
-        this.setOnBackPressListener((BackPressListener)fragment);
+        this.setOnBackPressListener((BackPressListener) fragment);
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(fragmentTag)

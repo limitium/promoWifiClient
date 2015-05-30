@@ -15,8 +15,10 @@ import java.util.Iterator;
 
 import javax.inject.Inject;
 
+import me.loc2.loc2me.core.events.ForceReloadEvent;
 import me.loc2.loc2me.core.events.NewWifiNetworkEvent;
 import me.loc2.loc2me.core.models.WifiInfo;
+import me.loc2.loc2me.util.Ln;
 
 public class WifiScanService extends BroadcastReceiver {
 
@@ -26,6 +28,7 @@ public class WifiScanService extends BroadcastReceiver {
     WifiManager wifiManager;
     private HashMap<String, Long> checked = new HashMap<String, Long>();
     private int cachedTime = 1000 * 60 * 60 * 3;
+    private boolean force = false;
 
     public boolean scan() {
         return wifiManager.startScan();
@@ -33,10 +36,12 @@ public class WifiScanService extends BroadcastReceiver {
 
     public void register(OfferCheckBackgroundService offerCheckBackgroundService) {
         offerCheckBackgroundService.registerReceiver(this, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        eventBus.register(this);
     }
 
     public void unregister(OfferCheckBackgroundService offerCheckBackgroundService) {
         offerCheckBackgroundService.unregisterReceiver(this);
+        eventBus.unregister(this);
     }
 
     @Override
@@ -55,9 +60,16 @@ public class WifiScanService extends BroadcastReceiver {
         Iterator<String> iterator = checked.keySet().iterator();
         while (iterator.hasNext()) {
             String key = iterator.next();
-            if (currentTimeMillis == 0 || currentTimeMillis - checked.get(key) > cachedTime) {
+            if (force || currentTimeMillis == 0 || currentTimeMillis - checked.get(key) > cachedTime) {
                 iterator.remove();
             }
         }
+        force = false;
+    }
+
+    @Subscribe
+    public void onForceReloadEvent(ForceReloadEvent forceReloadEvent) {
+        scan();
+        force = true;
     }
 }
