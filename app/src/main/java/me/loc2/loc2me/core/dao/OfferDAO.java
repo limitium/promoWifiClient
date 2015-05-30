@@ -29,7 +29,9 @@ public class OfferDAO extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createReceivedOffer = "create table " + OfferContract.ReceivedOffer.TABLE_NAME +
                 "(" + OfferContract.ReceivedOffer.COLUMN_ID + " " + OfferContract.ReceivedOffer.COLUMN_ID_TYPE + " primary key" +
-                ", " + OfferContract.ReceivedOffer.COLUMN_JSON + " " + OfferContract.ReceivedOffer.COLUMN_JSON_TYPE + ");";
+                ", " + OfferContract.ReceivedOffer.COLUMN_JSON + " " + OfferContract.ReceivedOffer.COLUMN_JSON_TYPE +
+                ", " + OfferContract.ReceivedOffer.COLUMN_WIFI + " " + OfferContract.ReceivedOffer.COLUMN_WIFI_TYPE +
+                ");";
         String createDeletedOffer = "create table " + OfferContract.DeletedOffer.TABLE_NAME +
                 "(" + OfferContract.DeletedOffer.COLUMN_ID + " " + OfferContract.DeletedOffer.COLUMN_ID_TYPE + " primary key" +
                 ", " + OfferContract.DeletedOffer.COLUMN_DELETED_OFFER_ID + " " + OfferContract.DeletedOffer.COLUMN_DELETED_OFFER_ID_TYPE + ");";
@@ -39,7 +41,6 @@ public class OfferDAO extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS " + OfferContract.ReceivedOffer.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + OfferContract.DeletedOffer.TABLE_NAME);
         onCreate(db);
@@ -50,6 +51,7 @@ public class OfferDAO extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(OfferContract.ReceivedOffer.COLUMN_ID, offer.getId());
+        contentValues.put(OfferContract.ReceivedOffer.COLUMN_WIFI, offer.getWifi_name());
         try {
             contentValues.put(OfferContract.ReceivedOffer.COLUMN_JSON, getOfferSerializer().serialize(offer));
             db.insert(OfferContract.ReceivedOffer.TABLE_NAME, null, contentValues);
@@ -81,6 +83,7 @@ public class OfferDAO extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(OfferContract.ReceivedOffer.COLUMN_ID, offer.getId());
+        contentValues.put(OfferContract.ReceivedOffer.COLUMN_WIFI, offer.getWifi_name());
         try {
             contentValues.put(OfferContract.ReceivedOffer.COLUMN_JSON, getOfferSerializer().serialize(offer));
             db.update(OfferContract.ReceivedOffer.TABLE_NAME, contentValues, OfferContract.ReceivedOffer.COLUMN_ID + " = ? ",

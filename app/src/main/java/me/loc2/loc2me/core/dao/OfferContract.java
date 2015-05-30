@@ -13,6 +13,8 @@ public final class OfferContract {
         public static final String COLUMN_ID_TYPE = "integer";
         public static final String COLUMN_JSON = "json";
         public static final String COLUMN_JSON_TYPE = "text";
+        public static final String COLUMN_WIFI = "wifi";
+        public static final String COLUMN_WIFI_TYPE = "text";
     }
 
     public static abstract class DeletedOffer implements BaseColumns {
