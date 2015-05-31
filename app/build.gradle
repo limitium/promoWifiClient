@@ -74,9 +74,10 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 1
-        versionName '0.5.0'
+        versionCode 3
+        versionName '0.5.3'
     }
+
 
     packagingOptions {
         // Exclude file to avoid
@@ -89,14 +90,20 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
-    // signingConfigs {
-        // release {
-            // storeFile file(System.getenv('ANDROID_KEYSTORE_PATH'))
-            // storePassword System.getenv('ANDROID_STORE_PASS')
-            // keyAlias System.getenv('ANDROID_KEY_ALIAS')
-            // keyPassword System.getenv('ANDROID_KEY_PASS')
-        // }
-    // }
+     signingConfigs {
+//         release {
+//             storeFile file(System.getenv('ANDROID_KEYSTORE_PATH'))
+//             storePassword System.getenv('ANDROID_STORE_PASS')
+//             keyAlias System.getenv('ANDROID_KEY_ALIAS')
+//             keyPassword System.getenv('ANDROID_KEY_PASS')
+//         }
+         release {
+             storeFile file('/home/limi/keystore/android.jks')
+             storePassword 'qweqwe123'
+             keyAlias 'android'
+             keyPassword 'qweqwe123'
+         }
+     }
 
     lintOptions {
         abortOnError false
