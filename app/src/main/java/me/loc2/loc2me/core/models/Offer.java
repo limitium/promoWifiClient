@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import me.loc2.loc2me.core.receivers.BootReceiver;
 import me.loc2.loc2me.util.Ln;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -35,6 +36,8 @@ public class Offer implements Parcelable, Serializable {
     private Integer id;
     private String name;
     private String image;
+    private Boolean is_disposable=false;
+    private Boolean is_used=false;
     private String description;
     private String created_at;
     private String updated_at;
@@ -51,6 +54,8 @@ public class Offer implements Parcelable, Serializable {
         id = new Integer(in.readString());
         name = in.readString();
         image = in.readString();
+        is_disposable = in.readByte() != 0;
+        is_used = in.readByte() != 0;
         description = in.readString();
         created_at = in.readString();
         updated_at = in.readString();
@@ -74,6 +79,8 @@ public class Offer implements Parcelable, Serializable {
         dest.writeString(id.toString());
         dest.writeString(name);
         dest.writeString(image);
+        dest.writeByte((byte) (is_disposable ? 1 : 0));
+        dest.writeByte((byte) (is_used ? 1 : 0));
         dest.writeString(description);
         dest.writeString(created_at);
         dest.writeString(updated_at);
@@ -94,6 +101,8 @@ public class Offer implements Parcelable, Serializable {
                 .add("id", id)
                 .add("name", name)
                 .add("image", image)
+                .add("is_disposable", is_disposable)
+                .add("is_used", is_used)
                 .add("description", description)
                 .add("created_at", created_at)
                 .add("updated_at", updated_at)
@@ -209,6 +218,21 @@ public class Offer implements Parcelable, Serializable {
         this.organization_name = organization_name;
     }
 
+    public Boolean getIs_disposable() {
+        return is_disposable;
+    }
+
+    public void setIs_disposable(Boolean is_disposable) {
+        this.is_disposable = is_disposable;
+    }
+
+    public Boolean getIs_used() {
+        return is_used;
+    }
+
+    public void setIs_used(Boolean is_used) {
+        this.is_used = is_used;
+    }
 
     public String getCreatedAsPrettyText() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);

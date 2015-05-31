@@ -3,12 +3,15 @@ package me.loc2.loc2me.ui.md;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
@@ -21,11 +24,15 @@ import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.common.eventbus.EventBus;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.squareup.otto.Bus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,9 +41,13 @@ import javax.inject.Inject;
 
 import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
+import me.loc2.loc2me.core.dao.OfferPersistService;
+import me.loc2.loc2me.core.events.OfferChangedEvent;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.core.services.OfferNotificationService;
+import me.loc2.loc2me.ui.MainActivity;
+import me.loc2.loc2me.util.ColorUtil;
 import me.loc2.loc2me.util.Ln;
 
 public class OfferDetailsActivity extends AppCompatActivity {
@@ -47,6 +58,10 @@ public class OfferDetailsActivity extends AppCompatActivity {
     protected NotificationManager notificationManager;
     @Inject
     protected ImageLoaderService imageLoaderService;
+    @Inject
+    protected OfferPersistService offerPersistService;
+    @Inject
+    protected Bus eventBus;
 
     private ImageView mOfferDetailsImage;
     private TextView mOfferDescription;
@@ -64,6 +79,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
     private View mOfferDescriptionLayout;
     private TextView mOfferCreated;
     private Toolbar toolbar;
+    private Button mButton;
 
     private enum State {
         CLOSED,
@@ -77,7 +93,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Injector.inject(this);
-
         setContentView(R.layout.offer_details);
 
         offer = (Offer) getIntent().getParcelableExtra(OFFER);
@@ -129,12 +144,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setActionBarColor() {
-        float[] hsv = new float[3];
-        int color = offer.getBackgroundColor();
-        Color.colorToHSV(color, hsv);
-        hsv[2] *= 0.85f; // value component
-        color = Color.HSVToColor(hsv);
-
+        int color = ColorUtil.darker(offer.getBackgroundColor(), 0.85f);
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -231,6 +241,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mOfferCompanyName = (TextView) mOfferDescriptionLayout.findViewById(R.id.offer_company_name);
         mOfferPromoActionName = (TextView) mOfferDescriptionLayout.findViewById(R.id.offer_promo_name);
         mOfferCreated = (TextView) mOfferDescriptionLayout.findViewById(R.id.offer_date_created);
+        mButton = (Button) findViewById(R.id.use);
 
         imageFrame = findViewById(R.id.squared_details_image);
 
@@ -248,14 +259,45 @@ public class OfferDetailsActivity extends AppCompatActivity {
         mOfferCreated.setText(offer.getCreatedAsPrettyText());
         mOfferDescriptionLayout.setBackgroundColor(offer.getBackgroundColor());
         imageFrame.setBackgroundColor(offer.getBackgroundColor());
+        setUpUseButton();
+    }
+
+    private void setUpUseButton() {
+        mButton.setVisibility(!offer.getIs_disposable() || offer.getIs_used() ? View.INVISIBLE : View.VISIBLE);
+        mButton.setBackgroundColor(ColorUtil.darker(offer.getBackgroundColor(), 0.7f));
+        mButton.setTextColor(Color.WHITE);
+        mButton.setOnClickListener(new View.OnClickListener() {
+                                       @Override
+                                       public void onClick(View v) {
+                                           final OfferDetailsActivity offerDetailsActivity = OfferDetailsActivity.this;
+                                           new AlertDialog.Builder(OfferDetailsActivity.this)
+                                                   .setTitle(offerDetailsActivity.getString(R.string.use_title))
+                                                   .setMessage(offerDetailsActivity.getString(R.string.use_question))
+                                                   .setIcon(android.R.drawable.ic_dialog_alert)
+                                                   .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                                       public void onClick(DialogInterface dialog, int whichButton) {
+                                                           Toast.makeText(offerDetailsActivity, offerDetailsActivity.getString(R.string.used), Toast.LENGTH_SHORT).show();
+                                                           mButton.setVisibility(View.INVISIBLE);
+                                                           offer.setIs_used(true);
+                                                           eventBus.post(new OfferChangedEvent(offer));
+                                                           loadThumbnail();
+                                                           offerPersistService.updateReceived(offer);
+                                                       }
+                                                   })
+                                                   .setNegativeButton(android.R.string.no, null)
+                                                   .show();
+                                       }
+                                   }
+        );
     }
 
     private void loadThumbnail() {
-        imageLoaderService.loadImage(offer.getImage(), mOfferDetailsImage);
+        imageLoaderService.loadImage(offer, mOfferDetailsImage);
     }
 
     private void loadImage() {
-        imageLoaderService.loadImage(offer.getImage(), mOfferDetailsImage, new SimpleImageLoadingListener() {
+        imageLoaderService.loadImage(offer, mOfferDetailsImage, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 Ln.i("On loading started");

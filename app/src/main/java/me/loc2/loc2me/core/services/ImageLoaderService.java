@@ -8,7 +8,11 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.media.ThumbnailUtils;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -18,11 +22,17 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.nostra13.universalimageloader.core.process.BitmapProcessor;
 
+import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.Constants;
+import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.util.ColorUtil;
 
 public class ImageLoaderService {
 
+    private final Context context;
+
     public ImageLoaderService(Context context) {
+        this.context = context;
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).build();
         ImageLoader.getInstance().init(config);
     }
@@ -36,16 +46,16 @@ public class ImageLoaderService {
         loadIntoView(url, imageView, getAvatarOptions(true));
     }
 
-    public void loadImage(String url, SimpleImageLoadingListener imageLoadingListener) {
-        load(url, imageLoadingListener, getImageOptions());
+    public void loadImage(Offer offer, SimpleImageLoadingListener imageLoadingListener) {
+        load(offer.getImage(), imageLoadingListener, getImageOptions(offer));
     }
 
-    public void loadImage(String url, ImageView imageView, SimpleImageLoadingListener imageLoadingListener) {
-        loadIntoView(url, imageView, getImageOptions(), imageLoadingListener);
+    public void loadImage(Offer offer, ImageView imageView, SimpleImageLoadingListener imageLoadingListener) {
+        loadIntoView(offer.getImage(), imageView, getImageOptions(offer), imageLoadingListener);
     }
 
-    public void loadImage(String url, ImageView imageView) {
-        loadIntoView(url, imageView, getImageOptions());
+    public void loadImage(Offer offer, ImageView imageView) {
+        loadIntoView(offer.getImage(), imageView, getImageOptions(offer));
     }
 
     private void load(String url, SimpleImageLoadingListener imageLoadingListener, DisplayImageOptions imageOptions) {
@@ -129,8 +139,61 @@ public class ImageLoaderService {
                 .build();
     }
 
-    private DisplayImageOptions getImageOptions() {
+    private DisplayImageOptions getImageOptions(final Offer offer) {
         return getCommonOptions()
+                .postProcessor(new BitmapProcessor() {
+                    @Override
+                    public Bitmap process(Bitmap original) {
+                        if (!offer.getIs_used()) {
+                            return original;
+                        }
+                        Bitmap bitmap = Bitmap.createBitmap(
+                                original.getWidth(), original.getHeight(),
+                                Bitmap.Config.ARGB_8888);
+                        Canvas canvas = new Canvas(bitmap);
+
+                        canvas.drawBitmap(original, 0, 0, null);
+
+                        Paint maskPaint = new Paint();
+                        Bitmap mask = CreateText(original.getWidth(), original.getHeight());
+                        canvas.drawBitmap(mask, 0, 0, maskPaint);
+
+                        return bitmap;
+                    }
+
+                    private Bitmap CreateText(int width, int height) {
+                        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                        Canvas canvas = new Canvas(bitmap);
+
+                        Paint paint = new Paint();
+                        paint.setStyle(Paint.Style.FILL);
+                        paint.setColor(Color.HSVToColor(200, ColorUtil.getHSV(ColorUtil.darker(offer.getBackgroundColor(), 0.7f))));
+                        int top = height / 6;
+                        canvas.drawRect(0, top, width, 2 * top, paint);
+
+                        TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG
+                                | Paint.LINEAR_TEXT_FLAG | Paint.FAKE_BOLD_TEXT_FLAG);
+                        textPaint.setStyle(Paint.Style.FILL);
+                        textPaint.setColor(offer.getTextColor());
+
+                        //text suitble text size
+                        final float testTextSize = 48f;
+                        // Get the bounds of the text, using our testTextSize.
+                        textPaint.setTextSize(testTextSize);
+                        Rect bounds = new Rect();
+                        String text = context.getString(R.string.used);
+                        textPaint.getTextBounds(text, 0, text.length(), bounds);
+
+                        // Calculate the desired size as a proportion of our testTextSize.
+                        float desiredTextSize = testTextSize * width * 0.9f / bounds.width();
+                        textPaint.setTextSize(Math.min(desiredTextSize, top));
+
+                        textPaint.getTextBounds(text, 0, text.length(), bounds);
+
+                        canvas.drawText(text, (width - bounds.width()) / 2f, 2f * top - ((top - bounds.height()) / 2), textPaint);
+                        return bitmap;
+                    }
+                })
                 .build();
     }
 

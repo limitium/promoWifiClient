@@ -22,7 +22,7 @@ public class OfferDAO extends SQLiteOpenHelper {
     private OfferSerializer offerSerializer;
 
     public OfferDAO(Context context) {
-        super(context, OfferContract.DATABASE_NAME, null, 1);
+        super(context, OfferContract.DATABASE_NAME, null, 2);
     }
 
     @Override
