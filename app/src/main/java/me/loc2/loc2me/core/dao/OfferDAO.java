@@ -22,7 +22,7 @@ public class OfferDAO extends SQLiteOpenHelper {
     private OfferSerializer offerSerializer;
 
     public OfferDAO(Context context) {
-        super(context, OfferContract.DATABASE_NAME, null, 2);
+        super(context, OfferContract.DATABASE_NAME, null, 3);
     }
 
     @Override
@@ -33,8 +33,7 @@ public class OfferDAO extends SQLiteOpenHelper {
                 ", " + OfferContract.ReceivedOffer.COLUMN_WIFI + " " + OfferContract.ReceivedOffer.COLUMN_WIFI_TYPE +
                 ");";
         String createDeletedOffer = "create table " + OfferContract.DeletedOffer.TABLE_NAME +
-                "(" + OfferContract.DeletedOffer.COLUMN_ID + " " + OfferContract.DeletedOffer.COLUMN_ID_TYPE + " primary key" +
-                ", " + OfferContract.DeletedOffer.COLUMN_DELETED_OFFER_ID + " " + OfferContract.DeletedOffer.COLUMN_DELETED_OFFER_ID_TYPE + ");";
+                "(" + OfferContract.DeletedOffer.COLUMN_ID + " " + OfferContract.DeletedOffer.COLUMN_ID_TYPE + " primary key);";
         db.execSQL(createReceivedOffer);
         db.execSQL(createDeletedOffer);
     }
@@ -126,7 +125,7 @@ public class OfferDAO extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String Query = "Select * from " + OfferContract.DeletedOffer.TABLE_NAME + " where " +
-                OfferContract.DeletedOffer.COLUMN_DELETED_OFFER_ID + " = " + id.longValue();
+                OfferContract.DeletedOffer.COLUMN_ID + " = " + id.longValue();
         Cursor cursor = db.rawQuery(Query, null);
         result = cursor.getCount() > 0;
         cursor.close();
@@ -144,7 +143,7 @@ public class OfferDAO extends SQLiteOpenHelper {
     public void removeDeleted(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(OfferContract.DeletedOffer.TABLE_NAME,
-                OfferContract.DeletedOffer.COLUMN_DELETED_OFFER_ID + " = ? ",
+                OfferContract.DeletedOffer.COLUMN_ID + " = ? ",
                 new String[]{Long.toString(id.longValue())});
     }
 

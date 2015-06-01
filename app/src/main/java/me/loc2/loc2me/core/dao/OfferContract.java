@@ -21,8 +21,6 @@ public final class OfferContract {
         public static final String TABLE_NAME = "deleted_offers";
         public static final String COLUMN_ID = "id";
         public static final String COLUMN_ID_TYPE = "integer";
-        public static final String COLUMN_DELETED_OFFER_ID = "deleted_offer_id";
-        public static final String COLUMN_DELETED_OFFER_ID_TYPE = "integer";
     }
 
     private OfferContract() {

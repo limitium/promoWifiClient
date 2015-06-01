@@ -72,8 +72,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 3
-        versionName '0.5.3'
+        versionCode 4
+        versionName '0.5.4'
     }
 
 
@@ -96,7 +96,7 @@ android {
 //             keyPassword System.getenv('ANDROID_KEY_PASS')
 //         }
         release {
-            storeFile file('C:/Users/user/Dropbox/Android/android.jks')
+            storeFile file('/home/limi/keystore/android.jks')
             storePassword 'qweqwe123'
             keyAlias 'android'
             keyPassword 'qweqwe123'
