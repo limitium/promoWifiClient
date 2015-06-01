@@ -54,12 +54,23 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="-32.5dp" />
         </RelativeLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/use"
+            android:id="@+id/use"
+            android:layout_below="@+id/relaGrid"
+            android:textStyle="bold"
+            android:textSize="26sp"
+            android:elevation="100dp" />
+
         <TextView
             android:id="@+id/offer_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/relaGrid"
             android:padding="@dimen/details_text_description_padding"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+            android:layout_below="@+id/use"
+            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 </ScrollView>

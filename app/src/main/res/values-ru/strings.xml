@@ -31,4 +31,8 @@
     <string name="pref_notification_show_summary_title">Уведомления</string>
     <string name="navigation_drawer_open">Открыть</string>
     <string name="navigation_drawer_close">Закрыть</string>
+    <string name="use">Использовать</string>
+    <string name="used">Использовано</string>
+    <string name="use_title">Использовать предложение</string>
+    <string name="use_question">Это предложение можно исопльзовать только один раз</string>
 </resources>

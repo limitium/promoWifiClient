@@ -31,6 +31,7 @@ import me.loc2.loc2me.Injector;
 import me.loc2.loc2me.R;
 import me.loc2.loc2me.core.dao.OfferPersistService;
 import me.loc2.loc2me.core.events.NewOfferEvent;
+import me.loc2.loc2me.core.events.OfferChangedEvent;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.ui.graphics.Animations;
@@ -100,6 +101,12 @@ public class OfferListFragment extends Fragment implements BackPressListener {
         return mRootView;
     }
 
+    @Subscribe
+    public void onOfferChangedEvent(OfferChangedEvent offerChangedEvent) {
+        if(mAdapter!=null){
+            mAdapter.updateOffer(offerChangedEvent.getOffer());
+        }
+    }
     private void setUpListData() {
         mAdapter = new OfferListAdapter(mDataSet, imageLoaderService);
 

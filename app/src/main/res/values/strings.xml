@@ -30,4 +30,8 @@
     <string name="pref_notification_show_summary_title">Notifications</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
+    <string name="use">Use</string>
+    <string name="used">Used</string>
+    <string name="use_title">Use offer</string>
+    <string name="use_question">This offer can be used only once</string>
 </resources>

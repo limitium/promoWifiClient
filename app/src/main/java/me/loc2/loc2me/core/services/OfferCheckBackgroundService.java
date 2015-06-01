@@ -104,7 +104,7 @@ public class OfferCheckBackgroundService extends Service {
 
 
     public void setOfferColors(final Offer offer) {
-        imageLoaderService.loadImage(offer.getImage(), new SimpleImageLoadingListener() {
+        imageLoaderService.loadImage(offer, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 Palette palette = Palette.from(loadedImage).generate();

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.util.Iterator;
 import java.util.List;
 
 import me.loc2.loc2me.R;
@@ -67,42 +68,42 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
             mOfferCompanyName = (TextView) mOfferDescription.findViewById(R.id.offer_company_name);
             mOfferPromoActionName = (TextView) mOfferDescription.findViewById(R.id.offer_promo_name);
             mOfferAvatar = v.findViewById(R.id.avatar);
-            mOfferImageAvatar = (ImageView)v.findViewById(R.id.avatar_image);
-            mSpinner = (ProgressBar)v.findViewById(R.id.loading);
+            mOfferImageAvatar = (ImageView) v.findViewById(R.id.avatar_image);
+            mSpinner = (ProgressBar) v.findViewById(R.id.loading);
         }
 
         public void loadData(final Offer offer) {
 //            if (!imageLoaded) {
-                mSpinner.setVisibility(View.VISIBLE);
-                mOfferItemImage.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                    public boolean onPreDraw() {
-                        // Remove after the first run so it doesn't fire forever
-                        mOfferItemImage.getViewTreeObserver().removeOnPreDrawListener(this);
-                        //ImageLoadingOptions are unique here - they scale the image.
-                        imageLoaderService.loadImage(offer.getImage(), mOfferItemImage, new SimpleImageLoadingListener() {
-                            @Override
-                            public void onLoadingStarted(String imageUri, View view) {
-                                Ln.i("On loading started");
-                                mSpinner.setVisibility(View.VISIBLE);
-                            }
+            mSpinner.setVisibility(View.VISIBLE);
+            mOfferItemImage.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                public boolean onPreDraw() {
+                    // Remove after the first run so it doesn't fire forever
+                    mOfferItemImage.getViewTreeObserver().removeOnPreDrawListener(this);
+                    //ImageLoadingOptions are unique here - they scale the image.
+                    imageLoaderService.loadImage(offer, mOfferItemImage, new SimpleImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+                            Ln.i("On loading started");
+                            mSpinner.setVisibility(View.VISIBLE);
+                        }
 
-                            @Override
-                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                                Ln.i("On loading failed");
-                                mSpinner.setVisibility(View.GONE);
-                            }
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            Ln.i("On loading failed");
+                            mSpinner.setVisibility(View.GONE);
+                        }
 
-                            @Override
-                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                Ln.i("On loading complete");
-                                mSpinner.setVisibility(View.GONE);
-                                loadAvatar(offer);
-                                imageLoaded = true;
-                            }
-                        });
-                        return true;
-                    }
-                });
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            Ln.i("On loading complete");
+                            mSpinner.setVisibility(View.GONE);
+                            loadAvatar(offer);
+                            imageLoaded = true;
+                        }
+                    });
+                    return true;
+                }
+            });
 //            }
             mOfferPromoActionName.setText(offer.getName());
             mOfferCompanyName.setText(offer.getOrganization_name());
@@ -202,5 +203,20 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
 
     public DisplayMetrics getMetrics() {
         return metrics;
+    }
+
+    public void updateOffer(Offer offer) {
+        int index = -1;
+        Iterator<Offer> iterator = mDataSet.iterator();
+        while (iterator.hasNext()) {
+            index++;
+            Offer oldOffer = iterator.next();
+            if (oldOffer.getId().equals(offer.getId())) {
+                mDataSet.remove(index);
+                mDataSet.add(index, offer);
+                notifyItemChanged(index);
+                break;
+            }
+        }
     }
 }
