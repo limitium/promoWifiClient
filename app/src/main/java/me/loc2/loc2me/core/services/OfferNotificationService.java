@@ -62,7 +62,7 @@ public class OfferNotificationService {
         stackBuilder.addNextIntent(resultIntent);
         // Gets a PendingIntent containing the entire back stack
         PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                stackBuilder.getPendingIntent((int) System.currentTimeMillis(), PendingIntent.FLAG_UPDATE_CURRENT);
 //        PendingIntent resultPendingIntent =
 //                PendingIntent.getActivity(
 //                        context,
