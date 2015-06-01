@@ -47,6 +47,7 @@
 -dontwarn org.joda.convert.**
 -dontwarn org.joda.time.**
 -keep class org.joda.time.** { *; }
+-keep class me.loc2.loc2me.** { *; }
 -keep interface org.joda.time.** { *; }
 
 
