@@ -142,7 +142,7 @@ public class OfferDetailsActivity extends AppCompatActivity {
 
         closeNotificationIfExists();
 
-        eventBus.post(new OfferUsedEvent(offer));
+//        eventBus.post(new OfferUsedEvent(offer));
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
