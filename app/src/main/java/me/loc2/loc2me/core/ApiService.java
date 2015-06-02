@@ -4,7 +4,7 @@ package me.loc2.loc2me.core;
 import java.util.List;
 
 import me.loc2.loc2me.core.models.Offer;
-import me.loc2.loc2me.core.models.UsedOffer;
+import me.loc2.loc2me.core.models.Usage;
 import me.loc2.loc2me.core.models.WifiRequest;
 import me.loc2.loc2me.core.rest.WifiOffersService;
 import me.loc2.loc2me.util.SafeAsyncTask;
@@ -49,12 +49,12 @@ public class ApiService {
         return wifiOffers;
     }
 
-    public void sendUsedOffer(final Integer offerId, final UsedOffer usedOffer) {
-        new SafeAsyncTask<UsedOffer>() {
-            public UsedOffer call() throws Exception {
-                getWifiOfferService().sendUsedOffer(offerId, usedOffer, new Callback<UsedOffer>() {
+    public void postUsage(final Integer offerId, final Usage usage) {
+        new SafeAsyncTask<Usage>() {
+            public Usage call() throws Exception {
+                getWifiOfferService().postUsage(offerId, usage, new Callback<Usage>() {
                     @Override
-                    public void success(UsedOffer usedOffer, Response response) {
+                    public void success(Usage usage, Response response) {
                         //
                     }
 

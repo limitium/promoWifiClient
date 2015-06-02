@@ -1,13 +1,13 @@
 package me.loc2.loc2me.core.models;
 
-public class UsedOffer {
+public class Usage {
 
     private String mac;
 
-    public UsedOffer() {
+    public Usage() {
     }
 
-    public UsedOffer(String mac) {
+    public Usage(String mac) {
         this.mac = mac;
     }
 

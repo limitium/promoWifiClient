@@ -29,7 +29,7 @@ import me.loc2.loc2me.core.events.LoadedOffersEvent;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.events.NewWifiNetworkEvent;
 import me.loc2.loc2me.core.models.Offer;
-import me.loc2.loc2me.core.models.UsedOffer;
+import me.loc2.loc2me.core.models.Usage;
 import me.loc2.loc2me.core.models.WifiRequest;
 import me.loc2.loc2me.events.OfferUsedEvent;
 import me.loc2.loc2me.util.Ln;
@@ -148,7 +148,7 @@ public class OfferCheckBackgroundService extends Service {
     public void onUsedEvent(OfferUsedEvent offerUsedEvent) {
         Offer offer = offerUsedEvent.getOffer();
         Ln.i("Offer:" + offer + " is marked as used");
-        apiService.sendUsedOffer(offer.getId(), new UsedOffer(mac));
+        apiService.postUsage(offer.getId(), new Usage(mac));
     }
 
     @Subscribe
