@@ -148,7 +148,7 @@ public class OfferCheckBackgroundService extends Service {
     public void onUsedEvent(OfferUsedEvent offerUsedEvent) {
         Offer offer = offerUsedEvent.getOffer();
         Ln.i("Offer:" + offer + " is marked as used");
-        apiService.sendUsedOffer(new UsedOffer(offer.getId(), mac));
+        apiService.sendUsedOffer(offer.getId(), new UsedOffer(mac));
     }
 
     @Subscribe

@@ -45,8 +45,8 @@ public class ApiService {
         return wifiOffers;
     }
 
-    public void sendUsedOffer(UsedOffer usedOffer) {
-        getWifiOfferService().sendUsedOffer(usedOffer);
+    public void sendUsedOffer(Integer offerId, UsedOffer usedOffer) {
+        getWifiOfferService().sendUsedOffer(offerId, usedOffer);
     }
 
 }
