@@ -9,5 +9,5 @@ import retrofit.http.Query;
 
 public interface WifiOffersService {
     @GET("/api/offers/search")
-    List<Offer> getWifiOffers(@Query("name") String name);
+    List<Offer> getWifiOffers(@Query("name") String name, @Query("filter") List<String> filters);
 }

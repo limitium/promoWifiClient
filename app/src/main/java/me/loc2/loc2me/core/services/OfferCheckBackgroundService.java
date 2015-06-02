@@ -15,6 +15,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,6 +45,8 @@ public class OfferCheckBackgroundService extends Service {
     protected OfferNotificationService offerNotificationService;
     @Inject
     protected ImageLoaderService imageLoaderService;
+    @Inject
+    protected FilterService filterService;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -123,7 +126,7 @@ public class OfferCheckBackgroundService extends Service {
     @Subscribe
     public void onNewWifiNetworkEvent(NewWifiNetworkEvent wifiNetworkEvent) {
         Ln.i("New network: " + wifiNetworkEvent.getWifiInfo().getName());
-        offerLoaderService.loadWifiOffers(wifiNetworkEvent.getWifiInfo());
+        offerLoaderService.loadWifiOffers(wifiNetworkEvent.getWifiInfo(), filterService.findAllActive());
     }
 
     @Subscribe

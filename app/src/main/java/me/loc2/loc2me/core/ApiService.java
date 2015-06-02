@@ -1,8 +1,9 @@
 
 package me.loc2.loc2me.core;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.List;
-import java.util.Random;
 
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.rest.WifiOffersService;
@@ -38,8 +39,8 @@ public class ApiService {
         return restAdapter;
     }
 
-    public List<Offer> getWifiOffers(String name) {
-        List<Offer> wifiOffers = getWifiOfferService().getWifiOffers(name);
+    public List<Offer> getWifiOffers(String name, ImmutableList<String> filters) {
+        List<Offer> wifiOffers = getWifiOfferService().getWifiOffers(name, filters);
         return wifiOffers;
     }
 

@@ -17,6 +17,8 @@
 
     <!-- Settings -->
     <string name="pref_title">Settings</string>
+    <string name="pref_notifications">pref_notifications</string>
+    <string name="pref_notifications_title">Notifications</string>
     <string name="pref_notification_sound">pref_notification_sound</string>
     <string name="pref_notification_sound_summary">Play a sound on a new offer</string>
     <string name="pref_notification_sound_summary_title">Notification sound</string>
@@ -28,6 +30,16 @@
     <string name="pref_notification_show">pref_notification_show</string>
     <string name="pref_notification_show_summary">Show notifications on a new offer</string>
     <string name="pref_notification_show_summary_title">Notifications</string>
+    <!-- Filters -->
+    <string name="pref_filters">pref_filters</string>
+    <string name="pref_filters_title">Filters</string>
+
+    <string name="pref_filter_food">pref_filter_food</string>
+    <string name="pref_filter_food_title">Food</string>
+
+    <string name="pref_filter_cosmetics">pref_filter_cosmetics</string>
+    <string name="pref_filter_cosmetics_title">Cosmetics</string>
+
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
     <string name="use">Use</string>

@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="@string/pref_notification_sound"
-        android:summary="@string/pref_notification_sound_summary"
-        android:title="@string/pref_notification_sound_summary_title" />
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="@string/pref_notification_vibro"
-        android:summary="@string/pref_notification_vibro_summary"
-        android:title="@string/pref_notification_vibro_summary_title" />
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="@string/pref_notification_show"
-        android:summary="@string/pref_notification_show_summary"
-        android:title="@string/pref_notification_show_summary_title" />
+
+    <PreferenceCategory
+        android:key="pref_notifications"
+        android:title="@string/pref_notifications_title">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_notification_sound"
+            android:summary="@string/pref_notification_sound_summary"
+            android:title="@string/pref_notification_sound_summary_title" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/pref_notification_vibro"
+            android:summary="@string/pref_notification_vibro_summary"
+            android:title="@string/pref_notification_vibro_summary_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_notification_show"
+            android:summary="@string/pref_notification_show_summary"
+            android:title="@string/pref_notification_show_summary_title" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="@string/pref_filters"
+        android:title="@string/pref_filters_title">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_filter_food"
+            android:title="@string/pref_filter_food_title"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_filter_cosmetics"
+            android:title="@string/pref_filter_cosmetics_title"/>
+    </PreferenceCategory>
 </PreferenceScreen>

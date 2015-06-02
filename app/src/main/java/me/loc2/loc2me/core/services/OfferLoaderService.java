@@ -1,5 +1,6 @@
 package me.loc2.loc2me.core.services;
 
+import com.google.common.collect.ImmutableList;
 import com.squareup.otto.Bus;
 
 import java.util.List;
@@ -21,13 +22,13 @@ public class OfferLoaderService {
     protected Bus eventBus;
 
 
-    public void loadWifiOffers(final WifiInfo wifi) {
+    public void loadWifiOffers(final WifiInfo wifi, final ImmutableList<String> filters) {
         if(wifi.getName().isEmpty()){
             return;
         }
         new SafeAsyncTask<List<Offer>>() {
             public List<Offer> call() throws Exception {
-                return apiService.getWifiOffers(wifi.getName());
+                return apiService.getWifiOffers(wifi.getName(), filters);
             }
 
             @Override
