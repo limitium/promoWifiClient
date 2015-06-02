@@ -18,18 +18,20 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import me.loc2.loc2me.Injector;
+import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.core.dao.OfferPersistService;
 import me.loc2.loc2me.core.events.LoadedOffersEvent;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.events.NewWifiNetworkEvent;
 import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.core.models.UsedOffer;
 import me.loc2.loc2me.core.models.WifiRequest;
+import me.loc2.loc2me.events.OfferUsedEvent;
 import me.loc2.loc2me.util.Ln;
 
 import static me.loc2.loc2me.core.Constants.Notification.SCAN_NOTIFICATION_ID;
@@ -51,6 +53,8 @@ public class OfferCheckBackgroundService extends Service {
     protected ImageLoaderService imageLoaderService;
     @Inject
     protected FilterService filterService;
+    @Inject
+    protected ApiService apiService;
 
     private String mac;
 
@@ -138,6 +142,13 @@ public class OfferCheckBackgroundService extends Service {
         Ln.i("New network: " + wifiNetworkEvent.getWifiInfo().getName());
         WifiRequest request = new WifiRequest(wifiNetworkEvent.getWifiInfo(), filterService.findAllActive(), mac);
         offerLoaderService.loadWifiOffers(request);
+    }
+
+    @Subscribe
+    public void onUsedEvent(OfferUsedEvent offerUsedEvent) {
+        Offer offer = offerUsedEvent.getOffer();
+        Ln.i("Offer:" + offer + " is marked as used");
+        apiService.sendUsedOffer(new UsedOffer(offer.getId(), mac));
     }
 
     @Subscribe

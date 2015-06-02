@@ -4,6 +4,7 @@ package me.loc2.loc2me.core;
 import java.util.List;
 
 import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.core.models.UsedOffer;
 import me.loc2.loc2me.core.models.WifiRequest;
 import me.loc2.loc2me.core.rest.WifiOffersService;
 import retrofit.RestAdapter;
@@ -34,6 +35,7 @@ public class ApiService {
         return wifiOffersService;
     }
 
+
     private RestAdapter getRestAdapter() {
         return restAdapter;
     }
@@ -41,6 +43,10 @@ public class ApiService {
     public List<Offer> getWifiOffers(final WifiRequest request) {
         List<Offer> wifiOffers = getWifiOfferService().getWifiOffers(request.getWifi().getName(), request.getFilters(), request.getMac());
         return wifiOffers;
+    }
+
+    public void sendUsedOffer(UsedOffer usedOffer) {
+        getWifiOfferService().sendUsedOffer(usedOffer);
     }
 
 }

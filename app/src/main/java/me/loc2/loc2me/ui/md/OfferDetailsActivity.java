@@ -46,6 +46,7 @@ import me.loc2.loc2me.core.events.OfferChangedEvent;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.services.ImageLoaderService;
 import me.loc2.loc2me.core.services.OfferNotificationService;
+import me.loc2.loc2me.events.OfferUsedEvent;
 import me.loc2.loc2me.ui.MainActivity;
 import me.loc2.loc2me.util.ColorUtil;
 import me.loc2.loc2me.util.Ln;
@@ -270,6 +271,8 @@ public class OfferDetailsActivity extends AppCompatActivity {
                                        @Override
                                        public void onClick(View v) {
                                            final OfferDetailsActivity offerDetailsActivity = OfferDetailsActivity.this;
+
+                                           eventBus.post(new OfferUsedEvent(offer));
                                            new AlertDialog.Builder(OfferDetailsActivity.this)
                                                    .setTitle(offerDetailsActivity.getString(R.string.use_title))
                                                    .setMessage(offerDetailsActivity.getString(R.string.use_question))
