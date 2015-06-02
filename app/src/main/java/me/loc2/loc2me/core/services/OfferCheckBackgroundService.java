@@ -3,9 +3,12 @@ package me.loc2.loc2me.core.services;
 
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.support.v7.graphics.Palette;
 import android.view.View;
@@ -26,6 +29,7 @@ import me.loc2.loc2me.core.events.LoadedOffersEvent;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.events.NewWifiNetworkEvent;
 import me.loc2.loc2me.core.models.Offer;
+import me.loc2.loc2me.core.models.WifiRequest;
 import me.loc2.loc2me.util.Ln;
 
 import static me.loc2.loc2me.core.Constants.Notification.SCAN_NOTIFICATION_ID;
@@ -48,6 +52,8 @@ public class OfferCheckBackgroundService extends Service {
     @Inject
     protected FilterService filterService;
 
+    private String mac;
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -63,6 +69,10 @@ public class OfferCheckBackgroundService extends Service {
 
         wifiScanService.register(this);
         offerLoaderService.register();
+
+        final WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+        final WifiInfo connectionInfo = wifiManager.getConnectionInfo();
+        mac = connectionInfo.getMacAddress();
     }
 
     @Override
@@ -126,7 +136,8 @@ public class OfferCheckBackgroundService extends Service {
     @Subscribe
     public void onNewWifiNetworkEvent(NewWifiNetworkEvent wifiNetworkEvent) {
         Ln.i("New network: " + wifiNetworkEvent.getWifiInfo().getName());
-        offerLoaderService.loadWifiOffers(wifiNetworkEvent.getWifiInfo(), filterService.findAllActive());
+        WifiRequest request = new WifiRequest(wifiNetworkEvent.getWifiInfo(), filterService.findAllActive(), mac);
+        offerLoaderService.loadWifiOffers(request);
     }
 
     @Subscribe

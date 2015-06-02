@@ -1,6 +1,5 @@
 package me.loc2.loc2me.core.services;
 
-import com.google.common.collect.ImmutableList;
 import com.squareup.otto.Bus;
 
 import java.util.List;
@@ -11,6 +10,7 @@ import me.loc2.loc2me.core.ApiService;
 import me.loc2.loc2me.core.events.LoadedOffersEvent;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.WifiInfo;
+import me.loc2.loc2me.core.models.WifiRequest;
 import me.loc2.loc2me.util.SafeAsyncTask;
 import retrofit.RetrofitError;
 
@@ -22,13 +22,13 @@ public class OfferLoaderService {
     protected Bus eventBus;
 
 
-    public void loadWifiOffers(final WifiInfo wifi, final ImmutableList<String> filters) {
-        if(wifi.getName().isEmpty()){
+    public void loadWifiOffers(final WifiRequest request) {
+        if (request.getWifi().getName().isEmpty()) {
             return;
         }
         new SafeAsyncTask<List<Offer>>() {
             public List<Offer> call() throws Exception {
-                return apiService.getWifiOffers(wifi.getName(), filters);
+                return apiService.getWifiOffers(request);
             }
 
             @Override
@@ -44,7 +44,7 @@ public class OfferLoaderService {
 
             @Override
             public void onSuccess(final List<Offer> offers) {
-                    onWifiInfo(wifi,offers);
+                onWifiInfo(request.getWifi(), offers);
             }
 
             @Override
@@ -55,7 +55,7 @@ public class OfferLoaderService {
     }
 
     private void onWifiInfo(WifiInfo wifi, List<Offer> offers) {
-        eventBus.post(new LoadedOffersEvent(wifi,offers));
+        eventBus.post(new LoadedOffersEvent(wifi, offers));
     }
 
     public void register() {
