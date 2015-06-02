@@ -27,7 +27,7 @@ public class WifiScanService extends BroadcastReceiver {
     @Inject
     WifiManager wifiManager;
     private HashMap<String, Long> checked = new HashMap<String, Long>();
-    private int cachedTime = 1000 * 60 * 60 * 3;
+    private long cachedTime = 1000 * 60 * 60 * 3;
     private boolean force = false;
 
     public boolean scan() {
@@ -49,8 +49,9 @@ public class WifiScanService extends BroadcastReceiver {
         long currentTimeMillis = System.currentTimeMillis();
         cleanCache(currentTimeMillis);
         for (ScanResult scanResult : wifiManager.getScanResults()) {
-            if (!checked.containsKey(scanResult.SSID + scanResult.BSSID)) {
-                checked.put(scanResult.SSID + scanResult.BSSID, currentTimeMillis);
+            String wifiKey = scanResult.SSID + scanResult.BSSID;
+            if (!checked.containsKey(wifiKey)) {
+                checked.put(wifiKey, currentTimeMillis);
                 eventBus.post(new NewWifiNetworkEvent(new WifiInfo(scanResult)));
             }
         }
@@ -69,7 +70,7 @@ public class WifiScanService extends BroadcastReceiver {
 
     @Subscribe
     public void onForceReloadEvent(ForceReloadEvent forceReloadEvent) {
-        scan();
         force = true;
+        scan();
     }
 }
