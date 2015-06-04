@@ -11,7 +11,6 @@ import me.loc2.loc2me.core.models.CheckIn;
 import me.loc2.loc2me.core.models.News;
 import me.loc2.loc2me.core.models.User;
 import me.loc2.loc2me.core.UserAgentProvider;
-import com.github.kevinsawicki.http.HttpRequest;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
