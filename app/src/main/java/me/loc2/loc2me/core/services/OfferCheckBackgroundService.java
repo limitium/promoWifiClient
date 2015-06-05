@@ -28,6 +28,8 @@ import me.loc2.loc2me.core.dao.OfferPersistService;
 import me.loc2.loc2me.core.events.LoadedOffersEvent;
 import me.loc2.loc2me.core.events.NewOfferEvent;
 import me.loc2.loc2me.core.events.NewWifiNetworkEvent;
+import me.loc2.loc2me.core.events.OfferChangedEvent;
+import me.loc2.loc2me.core.events.OfferRemoveEvent;
 import me.loc2.loc2me.core.models.Offer;
 import me.loc2.loc2me.core.models.Usage;
 import me.loc2.loc2me.core.models.WifiRequest;
@@ -101,35 +103,40 @@ public class OfferCheckBackgroundService extends Service {
     public void onLoadedOffersEvent(LoadedOffersEvent loadedOffersEvent) {
         List<Offer> offers = loadedOffersEvent.getOffers();
 //TODO: remove or mark deleted offers
-        for (Offer offer : offers) {
+        for (final Offer offer : offers) {
             Ln.i("New offer: " + offer);
             if (!offerPersistService.isDeleted(offer.getId())) {
                 Ln.i("Offer wasn't deleted");
-                Optional<Offer> saved = offerPersistService.findOneReceived(offer.getId());
+                final Optional<Offer> saved = offerPersistService.findOneReceived(offer.getId());
                 Ln.i("Offer was saved before: " + String.valueOf(saved.isPresent()));
                 if (!saved.isPresent() || !saved.get().getUpdated_at().equals(offer.getUpdated_at())) {
-                    if (saved.isPresent()) {
-                        offerPersistService.deleteReceived(offer.getId());
-                    } else {
-                        offer.setAdded_at(System.currentTimeMillis());
-                    }
-                    setOfferColors(offer);
+
+                    imageLoaderService.loadImage(offer, new SimpleImageLoadingListener() {
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            Palette palette = Palette.from(loadedImage).generate();
+                            offer.setBackgroundColor(palette.getDarkVibrantColor(Color.DKGRAY));
+                            offer.setTextColor(palette.getLightMutedColor(Color.WHITE));
+
+                            if (saved.isPresent()) {
+                                offer.setAdded_at(saved.get().getAdded_at());
+                                updateAndPost(offer);
+                            } else {
+                                offer.setAdded_at(System.currentTimeMillis());
+                                saveAndPost(offer);
+                            }
+                        }
+                    });
+
+
                 }
             }
         }
     }
 
-
-    public void setOfferColors(final Offer offer) {
-        imageLoaderService.loadImage(offer, new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                Palette palette = Palette.from(loadedImage).generate();
-                offer.setBackgroundColor(palette.getDarkVibrantColor(Color.DKGRAY));
-                offer.setTextColor(palette.getLightMutedColor(Color.WHITE));
-                saveAndPost(offer);
-            }
-        });
+    private void updateAndPost(Offer offer) {
+        offerPersistService.updateReceived(offer);
+        eventBus.post(new OfferChangedEvent(offer));
     }
 
     private void saveAndPost(Offer offer) {
