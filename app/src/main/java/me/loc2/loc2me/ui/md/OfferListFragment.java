@@ -20,10 +20,13 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -197,14 +200,13 @@ public class OfferListFragment extends Fragment implements BackPressListener {
      * to abstract data initialization.
      */
     private void initDataSet() {
-        mDataSet = FluentIterable.from(offerPersistService.findAllReceived())
-                .toSortedList(new Comparator<Offer>() {
-                                  @Override
-                                  public int compare(Offer lhs, Offer rhs) {
-                                      return (int) (rhs.getAdded_at() - lhs.getAdded_at());
-                                  }
-                              }
-                ).asList();
+        mDataSet = offerPersistService.findAllReceived();
+        Collections.sort(mDataSet, new Comparator<Offer>() {
+            @Override
+            public int compare(Offer lhs, Offer rhs) {
+                return (int) (rhs.getAdded_at() - lhs.getAdded_at());
+            }
+        });
     }
 
     @Override
