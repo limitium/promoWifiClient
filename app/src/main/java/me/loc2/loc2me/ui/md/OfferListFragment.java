@@ -19,10 +19,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.google.common.collect.FluentIterable;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -103,10 +105,11 @@ public class OfferListFragment extends Fragment implements BackPressListener {
 
     @Subscribe
     public void onOfferChangedEvent(OfferChangedEvent offerChangedEvent) {
-        if(mAdapter!=null){
+        if (mAdapter != null) {
             mAdapter.updateOffer(offerChangedEvent.getOffer());
         }
     }
+
     private void setUpListData() {
         mAdapter = new OfferListAdapter(mDataSet, imageLoaderService);
 
@@ -194,7 +197,14 @@ public class OfferListFragment extends Fragment implements BackPressListener {
      * to abstract data initialization.
      */
     private void initDataSet() {
-        mDataSet = offerPersistService.findAllReceived();
+        mDataSet = FluentIterable.from(offerPersistService.findAllReceived())
+                .toSortedList(new Comparator<Offer>() {
+                                  @Override
+                                  public int compare(Offer lhs, Offer rhs) {
+                                      return (int) (rhs.getAdded_at() - lhs.getAdded_at());
+                                  }
+                              }
+                ).asList();
     }
 
     @Override
