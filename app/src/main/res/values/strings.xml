@@ -5,7 +5,7 @@
     <string name="card_to_details">card_to_details</string>
     <string name="toolbar_transition">toolbar_transition</string>
 
-    <string name="no_offers_found">No offers</string>
+    <string name="no_offers_found">Привет! Несколько слов про то, как работает приложение и почему у тебя сейчас ничего нет. Это приложение создано исключительно тебе в помощь! Акции, спецпредложения и тому подобное появляются тогда, когда ты находишься рядом с источником предложения. Например, в торговом центре проходишь мимо любимого магазина, а у него для владельцев приложения есть скидка. Или заходишь в кафе перекусить, а приложение сообщает о том, что к сандвичу кофе бесплатно. Удачи!</string>
     <string name="menu_back">Back</string>
     <string name="menu_refresh">Refresh</string>
     <string name="description_details_transition">description_details_transition</string>
